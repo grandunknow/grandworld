@@ -2,460 +2,937 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grand World — An Endless Adventure</title>
-<meta name="description" content="Explore Grand World, an open-world MMORPG filled with secrets, challenges and adventure.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2D3126">
+  <title>Grand World — An Unwritten World</title>
+  <meta name="description" content="Enter Grand World, an open-world dark fantasy MMORPG. Explore, discover, and create your own adventure.">
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap');
+  <!-- Elegant editorial typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-:root {
-  --olive: #2D3126;
-  --olive-light: #414635;
-  --stone: #8C8A7A;
-  --ivory: #E2DFCF;
-  --parchment: #F5F1E4;
-  --gold: #C9A96E;
-  --bronze: #7A5E34;
-}
+  <style>
+    :root {
+      --olive: #2D3126;
+      --olive-light: #414536;
+      --stone: #8C8A7A;
+      --ivory: #E2DFCF;
+      --paper: #F5F1E4;
+      --gold: #C9A96E;
+      --bronze: #7A5E34;
+      --ink: #24251F;
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "Manrope", Arial, sans-serif;
+    }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 85px;
+    }
 
-body {
-  background: var(--parchment);
-  color: var(--olive);
-  font-family: 'DM Sans', sans-serif;
-}
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      overflow-x: hidden;
+    }
 
-nav {
-  height: 76px;
-  padding: 0 7%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--olive);
-  color: var(--ivory);
-  border-bottom: 1px solid #786846;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-.logo {
-  font-family: 'Cinzel', serif;
-  font-size: 21px;
-  letter-spacing: 3px;
-  color: var(--gold);
-}
+    button {
+      font: inherit;
+    }
 
-.nav-links {
-  display: flex;
-  gap: 32px;
-}
+    /* NAVIGATION */
 
-.nav-links a, .footer a {
-  color: var(--ivory);
-  text-decoration: none;
-  font-size: 12px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
+    .nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 7%;
+      color: var(--paper);
+      border-bottom: 1px solid rgba(245,241,228,.16);
+      background: rgba(35,38,29,.72);
+      backdrop-filter: blur(14px);
+      transition: background .3s, padding .3s;
+    }
 
-.nav-links a:hover { color: var(--gold); }
+    .nav.scrolled {
+      background: rgba(35,38,29,.96);
+      padding-top: 14px;
+      padding-bottom: 14px;
+    }
 
-.menu-button {
-  display: none;
-  background: none;
-  color: var(--ivory);
-  border: 1px solid var(--gold);
-  padding: 9px 13px;
-  cursor: pointer;
-}
+    .logo {
+      font-family: var(--serif);
+      font-size: 27px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--gold);
+    }
 
-.hero {
-  min-height: 650px;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: 100px 20px;
-  color: var(--ivory);
-  background:
-    linear-gradient(rgba(20,23,17,.48), rgba(20,23,17,.78)),
-    url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=2000&q=85') center/cover;
-}
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
 
-.hero-content { max-width: 780px; }
+    .nav-links a {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ivory);
+      transition: color .25s;
+    }
 
-.eyebrow {
-  color: var(--gold);
-  font-size: 11px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-}
+    .nav-links a:hover {
+      color: var(--gold);
+    }
 
-.hero h1 {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(45px, 9vw, 100px);
-  font-weight: 500;
-  letter-spacing: 5px;
-  margin: 24px 0 10px;
-}
+    .nav-discord {
+      border: 1px solid var(--gold);
+      padding: 11px 17px;
+    }
 
-.hero h2 {
-  font-family: 'Cinzel', serif;
-  font-size: 17px;
-  font-weight: 400;
-  color: var(--gold);
-  letter-spacing: 5px;
-}
+    .menu-toggle {
+      display: none;
+      color: var(--paper);
+      background: none;
+      border: 0;
+      font-size: 25px;
+      cursor: pointer;
+    }
 
-.hero p {
-  max-width: 530px;
-  margin: 30px auto;
-  line-height: 1.9;
-  color: #E5E0D1;
-}
+    /* HERO */
 
-.button {
-  display: inline-block;
-  padding: 15px 28px;
-  border: 1px solid var(--gold);
-  color: var(--ivory);
-  text-decoration: none;
-  font-family: 'Cinzel', serif;
-  font-size: 11px;
-  letter-spacing: 2px;
-  transition: .25s;
-}
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      color: var(--paper);
+      background: var(--olive);
+      isolation: isolate;
+    }
 
-.button:hover {
-  background: var(--gold);
-  color: var(--olive);
-}
+    .hero-video {
+      position: absolute;
+      z-index: -3;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      pointer-events: none;
+      transform: scale(1.18);
+      opacity: .8;
+    }
 
-.section {
-  padding: 100px 8%;
-}
+    .hero-video iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
 
-.section-heading {
-  text-align: center;
-  margin-bottom: 55px;
-}
+    .hero::before {
+      content: "";
+      position: absolute;
+      z-index: -2;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(24,27,21,.68),
+        rgba(24,27,21,.24),
+        rgba(24,27,21,.68)
+      );
+    }
 
-.section-heading span {
-  color: var(--bronze);
-  letter-spacing: 4px;
-  font-size: 10px;
-}
+    .hero::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(20,22,17,.25),
+        transparent 45%,
+        rgba(20,22,17,.8)
+      );
+    }
 
-.section-heading h2 {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(27px, 4vw, 42px);
-  font-weight: 500;
-  margin-top: 13px;
-}
+    .hero-content {
+      width: min(900px, 90%);
+      padding: 120px 0 90px;
+      animation: heroEnter 1.4s ease both;
+    }
 
-.intro {
-  background: var(--parchment);
-}
+    .eyebrow {
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+    }
 
-.intro-text {
-  max-width: 760px;
-  margin: auto;
-  text-align: center;
-  line-height: 2;
-  color: #626052;
-}
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(75px, 13vw, 155px);
+      line-height: .8;
+      font-weight: 500;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      text-shadow: 0 8px 35px rgba(0,0,0,.35);
+    }
 
-.features {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin-top: 60px;
-}
+    .hero-subtitle {
+      margin: 35px auto 0;
+      max-width: 570px;
+      color: var(--ivory);
+      font-family: var(--serif);
+      font-size: clamp(20px, 3vw, 29px);
+      font-style: italic;
+      line-height: 1.4;
+    }
 
-.feature {
-  text-align: center;
-  padding: 35px 22px;
-  border-top: 1px solid #C9A96E;
-}
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 38px;
+    }
 
-.feature .symbol {
-  color: var(--bronze);
-  font-size: 30px;
-  margin-bottom: 20px;
-}
+    .button {
+      display: inline-block;
+      padding: 16px 27px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: .3s ease;
+    }
 
-.feature h3 {
-  font-family: 'Cinzel', serif;
-  font-weight: 500;
-  margin-bottom: 12px;
-}
+    .button-gold {
+      color: var(--olive);
+      background: var(--gold);
+      border: 1px solid var(--gold);
+    }
 
-.feature p {
-  font-size: 13px;
-  line-height: 1.8;
-  color: #777364;
-}
+    .button-gold:hover {
+      background: var(--paper);
+      border-color: var(--paper);
+      transform: translateY(-3px);
+    }
 
-.world {
-  background: var(--olive);
-  color: var(--ivory);
-}
+    .button-outline {
+      color: var(--paper);
+      border: 1px solid rgba(245,241,228,.7);
+      background: rgba(0,0,0,.12);
+    }
 
-.world .section-heading h2 { color: var(--ivory); }
+    .button-outline:hover {
+      color: var(--olive);
+      background: var(--paper);
+      transform: translateY(-3px);
+    }
 
-.world .section-heading span { color: var(--gold); }
+    .scroll-note {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: var(--ivory);
+      text-transform: uppercase;
+      opacity: .8;
+    }
 
-.world-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
+    /* GENERAL SECTIONS */
 
-.world-card {
-  min-height: 260px;
-  display: flex;
-  align-items: end;
-  padding: 28px;
-  border: 1px solid #77705A;
-  background: linear-gradient(transparent, rgba(0,0,0,.8)),
-              var(--olive-light);
-  transition: .3s;
-}
+    section {
+      position: relative;
+    }
 
-.world-card:hover {
-  border-color: var(--gold);
-  transform: translateY(-4px);
-}
+    .section-inner {
+      width: min(1150px, 86%);
+      margin: auto;
+    }
 
-.world-card h3 {
-  font-family: 'Cinzel', serif;
-  color: var(--gold);
-  font-size: 23px;
-  font-weight: 500;
-}
+    .section-label {
+      color: var(--bronze);
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
 
-.world-card p {
-  font-size: 12px;
-  color: var(--ivory);
-  margin-top: 8px;
-}
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(43px, 6vw, 76px);
+      line-height: .98;
+      font-weight: 500;
+    }
 
-.wiki {
-  background: var(--ivory);
-}
+    .section-copy {
+      max-width: 650px;
+      color: #666457;
+      font-size: 14px;
+      line-height: 2;
+    }
 
-.wiki-list {
-  max-width: 800px;
-  margin: auto;
-}
+    /* ABOUT */
 
-details {
-  border-bottom: 1px solid #BDB7A5;
-  padding: 20px 5px;
-}
+    .about {
+      padding: 145px 0;
+      background: var(--paper);
+    }
 
-summary {
-  cursor: pointer;
-  font-family: 'Cinzel', serif;
-  font-size: 17px;
-}
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 90px;
+      align-items: center;
+    }
 
-details p {
-  padding: 15px 0 0;
-  color: #666354;
-  line-height: 1.8;
-}
+    .about-text .section-copy {
+      margin-top: 30px;
+    }
 
-.updates {
-  background: var(--parchment);
-  text-align: center;
-}
+    .about-mark {
+      min-height: 420px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid rgba(122,94,52,.4);
+      background:
+        radial-gradient(circle at center, rgba(201,169,110,.19), transparent 60%),
+        var(--ivory);
+      position: relative;
+      overflow: hidden;
+    }
 
-.updates p {
-  color: #777364;
-  line-height: 1.8;
-}
+    .about-mark::before,
+    .about-mark::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border: 1px solid rgba(122,94,52,.25);
+      border-radius: 50%;
+      animation: rotate 35s linear infinite;
+    }
 
-.footer {
-  background: #20241C;
-  color: var(--ivory);
-  padding: 55px 8%;
-  text-align: center;
-}
+    .about-mark::after {
+      width: 330px;
+      height: 330px;
+      animation-direction: reverse;
+    }
 
-.footer .logo { margin-bottom: 20px; }
+    .about-mark span {
+      font-family: var(--serif);
+      font-size: 110px;
+      color: var(--bronze);
+      z-index: 1;
+    }
 
-.footer p {
-  color: var(--stone);
-  font-size: 12px;
-  margin: 20px 0;
-}
+    /* DARK FEATURE SECTION */
 
-.footer a { margin: 10px; }
+    .features {
+      padding: 135px 0;
+      background: var(--olive);
+      color: var(--paper);
+    }
 
-@media(max-width: 700px) {
-  nav { padding: 0 5%; }
-  .menu-button { display: block; }
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: 76px;
-    left: 0;
-    right: 0;
-    background: var(--olive);
-    padding: 25px;
-    flex-direction: column;
-    gap: 22px;
-    z-index: 5;
-  }
-  .nav-links.open { display: flex; }
-  .features, .world-grid { grid-template-columns: 1fr; }
-  .section { padding: 75px 7%; }
-  .hero { min-height: 570px; }
-}
-</style>
+    .features .section-label {
+      color: var(--gold);
+    }
+
+    .features .section-copy {
+      color: var(--stone);
+      margin-top: 25px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin-top: 70px;
+      background: rgba(201,169,110,.25);
+      border: 1px solid rgba(201,169,110,.25);
+    }
+
+    .feature-card {
+      min-height: 260px;
+      padding: 38px 30px;
+      background: var(--olive);
+      transition: background .35s, transform .35s;
+    }
+
+    .feature-card:hover {
+      background: var(--olive-light);
+      transform: translateY(-5px);
+    }
+
+    .feature-number {
+      color: var(--gold);
+      font-family: var(--serif);
+      font-size: 28px;
+    }
+
+    .feature-card h3 {
+      margin: 30px 0 13px;
+      font-family: var(--serif);
+      font-size: 30px;
+      font-weight: 500;
+    }
+
+    .feature-card p {
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    /* WORLD */
+
+    .world {
+      padding: 145px 0;
+      background: var(--ivory);
+    }
+
+    .world-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 30px;
+      margin-bottom: 55px;
+    }
+
+    .world-note {
+      max-width: 350px;
+      font-size: 13px;
+      line-height: 1.9;
+      color: #68675B;
+    }
+
+    .world-banner {
+      min-height: 390px;
+      display: flex;
+      align-items: end;
+      padding: 45px;
+      color: var(--paper);
+      background:
+        linear-gradient(to top, rgba(23,26,20,.88), rgba(23,26,20,.05)),
+        radial-gradient(ellipse at 65% 30%, #77745E, #35392D 55%, #20241C);
+      overflow: hidden;
+      transition: background-size .5s;
+    }
+
+    .world-banner h3 {
+      font-family: var(--serif);
+      font-size: clamp(40px, 6vw, 65px);
+      font-weight: 500;
+    }
+
+    .world-banner p {
+      margin-top: 8px;
+      color: var(--ivory);
+      font-size: 12px;
+    }
+
+    /* ENCYCLOPEDIA */
+
+    .encyclopedia {
+      padding: 140px 0;
+      background: var(--paper);
+    }
+
+    .encyclopedia-list {
+      margin-top: 55px;
+      border-top: 1px solid rgba(122,94,52,.35);
+    }
+
+    .encyclopedia-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 5px;
+      border-bottom: 1px solid rgba(122,94,52,.35);
+      transition: padding .3s;
+    }
+
+    .encyclopedia-item:hover {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .encyclopedia-item span:first-child {
+      font-family: var(--serif);
+      font-size: clamp(24px, 4vw, 34px);
+    }
+
+    .encyclopedia-item span:last-child {
+      color: var(--bronze);
+      font-size: 18px;
+    }
+
+    /* COMMUNITY */
+
+    .community {
+      padding: 125px 0;
+      text-align: center;
+      color: var(--paper);
+      background:
+        radial-gradient(ellipse at center, #464A39, transparent 70%),
+        var(--olive);
+    }
+
+    .community .section-label {
+      color: var(--gold);
+    }
+
+    .community .section-title {
+      max-width: 750px;
+      margin: auto;
+    }
+
+    .community p {
+      max-width: 550px;
+      margin: 25px auto 0;
+      color: var(--stone);
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    .community .hero-actions {
+      margin-top: 35px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 35px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      color: var(--ivory);
+      background: #20231C;
+    }
+
+    .footer-logo {
+      font-family: var(--serif);
+      color: var(--gold);
+      font-size: 25px;
+      letter-spacing: 2px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: var(--ivory);
+    }
+
+    .footer-links a:hover {
+      color: var(--gold);
+    }
+
+    .copyright {
+      width: 100%;
+      color: var(--stone);
+      font-size: 10px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(245,241,228,.12);
+    }
+
+    /* ANIMATIONS */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity .9s ease, transform .9s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes heroEnter {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 800px) {
+      .nav {
+        padding: 17px 6%;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding: 25px 7%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 23px;
+        background: rgba(35,38,29,.98);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .about-layout {
+        grid-template-columns: 1fr;
+        gap: 45px;
+      }
+
+      .about-mark {
+        min-height: 300px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .world-heading {
+        display: block;
+      }
+
+      .world-note {
+        margin-top: 20px;
+      }
+
+      .world-banner {
+        min-height: 300px;
+        padding: 25px;
+      }
+
+      footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<nav>
-  <div class="logo">✧ GRAND WORLD</div>
-  <button class="menu-button" onclick="toggleMenu()">MENU</button>
-  <div class="nav-links" id="navLinks">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#world">World</a>
-    <a href="#wiki">Encyclopedia</a>
-    <a href="#updates">Updates</a>
-  </div>
-</nav>
+  <!-- NAVIGATION -->
+  <header class="nav" id="navbar">
+    <a class="logo" href="#home">GRAND WORLD</a>
 
-<header class="hero" id="home">
-  <div class="hero-content">
-    <div class="eyebrow">A world waiting to be discovered</div>
-    <h1>GRAND WORLD</h1>
-    <h2>AN OPEN WORLD MMORPG</h2>
-    <p>
-      Explore a vast and mysterious world. Discover hidden secrets,
-      face powerful enemies, and create an adventure that is entirely yours.
-    </p>
-    <a href="#about" class="button">DISCOVER GRAND WORLD</a>
-  </div>
-</header>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">
+      ☰
+    </button>
 
-<section class="section intro" id="about">
-  <div class="section-heading">
-    <span>THE BEGINNING OF YOUR STORY</span>
-    <h2>What is Grand World?</h2>
-  </div>
-  <p class="intro-text">
-    Grand World is an open-world MMORPG with dark fantasy and anime-inspired
-    elements. Explore a huge world, discover hidden secrets, fight enemies,
-    and create your own adventure. There is no single path you have to follow.
-    Explore different regions, take on challenges, and progress at your own pace.
-  </p>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#world">The World</a>
+      <a href="#encyclopedia">Encyclopedia</a>
+      <a href="#community">Community</a>
+      <a class="nav-discord" href="https://discord.gg/8yZ4nhfQhH" target="_blank" rel="noopener noreferrer">Join Discord ↗</a>
+    </nav>
+  </header>
 
-  <div class="features">
-    <div class="feature">
-      <div class="symbol">✧</div>
-      <h3>Explore</h3>
-      <p>Travel through a vast world and uncover places waiting to be discovered.</p>
+  <!-- HERO: STREAMABLE BACKGROUND -->
+  <main>
+    <section class="hero" id="home">
+
+      <div class="hero-video" aria-hidden="true">
+        <iframe
+          src="https://streamable.com/e/yq8s3y?autoplay=1&muted=1&loop=1"
+          title="Grand World background"
+          allow="autoplay; fullscreen"
+          loading="eager">
+        </iframe>
+      </div>
+
+      <div class="hero-content">
+        <div class="eyebrow">A world without boundaries</div>
+        <h1>Grand<br>World</h1>
+        <p class="hero-subtitle">
+          Your story. Your choices. An unwritten world.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#about" class="button button-gold">Discover the world</a>
+          <a href="https://discord.gg/8yZ4nhfQhH"
+             target="_blank" rel="noopener noreferrer"
+             class="button button-outline">Join our Discord ↗</a>
+        </div>
+      </div>
+
+      <div class="scroll-note">Scroll to explore ↓</div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+      <div class="section-inner about-layout">
+        <div class="about-text reveal">
+          <div class="section-label">01 — The beginning</div>
+          <h2 class="section-title">An adventure<br>of your own.</h2>
+
+          <p class="section-copy">
+            Grand World is an open-world MMORPG set in a dark fantasy universe.
+            Explore a vast world, discover hidden secrets, face challenges and
+            create your own adventure.
+            <br><br>
+            There is no single path you must follow. Travel through different
+            regions, uncover their stories and progress at your own pace.
+            Inspired by the worlds and adventures we love, Grand World aims
+            to create an identity of its own.
+          </p>
+        </div>
+
+        <div class="about-mark reveal">
+          <span>GW</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+      <div class="section-inner">
+        <div class="reveal">
+          <div class="section-label">02 — The experience</div>
+          <h2 class="section-title">Beyond the known.</h2>
+          <p class="section-copy">
+            A world shaped by exploration, discovery and the choices you make.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card reveal">
+            <div class="feature-number">I</div>
+            <h3>Explore</h3>
+            <p>
+              Discover different regions, forgotten places and secrets hidden
+              throughout the world.
+            </p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="feature-number">II</div>
+            <h3>Discover</h3>
+            <p>
+              Uncover stories, mysteries and the history behind the world of
+              Grand World.
+            </p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="feature-number">III</div>
+            <h3>Become</h3>
+            <p>
+              Shape your own journey, develop your character and decide how
+              your adventure unfolds.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORLD -->
+    <section class="world" id="world">
+      <div class="section-inner">
+        <div class="world-heading reveal">
+          <div>
+            <div class="section-label">03 — The lands beyond</div>
+            <h2 class="section-title">A world to uncover.</h2>
+          </div>
+
+          <p class="world-note">
+            Every region holds something waiting to be discovered.
+            What lies beyond the horizon is yours to find.
+          </p>
+        </div>
+
+        <div class="world-banner reveal">
+          <div>
+            <div class="section-label">The journey begins</div>
+            <h3>Enter the unknown.</h3>
+            <p>Explore. Discover. Write your story.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENCYCLOPEDIA -->
+    <section class="encyclopedia" id="encyclopedia">
+      <div class="section-inner">
+        <div class="reveal">
+          <div class="section-label">04 — Knowledge & lore</div>
+          <h2 class="section-title">The Encyclopedia.</h2>
+          <p class="section-copy">
+            A growing collection of knowledge about the world, its people
+            and everything that exists within it.
+          </p>
+        </div>
+
+        <div class="encyclopedia-list reveal">
+          <a class="encyclopedia-item" href="#community">
+            <span>Races & Origins</span><span>↗</span>
+          </a>
+          <a class="encyclopedia-item" href="#community">
+            <span>Abilities & Powers</span><span>↗</span>
+          </a>
+          <a class="encyclopedia-item" href="#community">
+            <span>Weapons & Items</span><span>↗</span>
+          </a>
+          <a class="encyclopedia-item" href="#community">
+            <span>Enemies & Bosses</span><span>↗</span>
+          </a>
+          <a class="encyclopedia-item" href="#community">
+            <span>Lore & History</span><span>↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMUNITY -->
+    <section class="community" id="community">
+      <div class="section-inner reveal">
+        <div class="section-label">05 — Join the community</div>
+        <h2 class="section-title">Your adventure<br>doesn't end here.</h2>
+
+        <p>
+          Be part of the Grand World community. Follow development,
+          meet other players and stay up to date with everything happening
+          in the world.
+        </p>
+
+        <div class="hero-actions">
+          <a href="https://discord.gg/8yZ4nhfQhH"
+             target="_blank" rel="noopener noreferrer"
+             class="button button-gold">Join our Discord ↗</a>
+
+          <a href="https://www.tiktok.com/@grand_unknow"
+             target="_blank" rel="noopener noreferrer"
+             class="button button-outline">Follow us on TikTok ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#home" class="footer-logo">GRAND WORLD</a>
+
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#world">World</a>
+      <a href="https://discord.gg/8yZ4nhfQhH"
+         target="_blank" rel="noopener noreferrer">Discord ↗</a>
+      <a href="https://www.tiktok.com/@grand_unknow"
+         target="_blank" rel="noopener noreferrer">TikTok ↗</a>
     </div>
-    <div class="feature">
-      <div class="symbol">⚔</div>
-      <h3>Fight</h3>
-      <p>Face enemies, overcome challenges, and develop your abilities.</p>
+
+    <div class="copyright">
+      © 2026 Grand World. All rights reserved.
     </div>
-    <div class="feature">
-      <div class="symbol">❖</div>
-      <h3>Discover</h3>
-      <p>Find secrets, uncover stories, and make your own journey.</p>
-    </div>
-  </div>
-</section>
+  </footer>
 
-<section class="section world" id="world">
-  <div class="section-heading">
-    <span>BEYOND THE HORIZON</span>
-    <h2>Explore the World</h2>
-  </div>
+  <script>
+    // Mobile navigation
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
 
-  <div class="world-grid">
-    <div class="world-card">
-      <div><h3>Regions</h3><p>Discover the different lands of Grand World.</p></div>
-    </div>
-    <div class="world-card">
-      <div><h3>Characters</h3><p>Meet the people who shape the world.</p></div>
-    </div>
-    <div class="world-card">
-      <div><h3>Creatures</h3><p>Learn about the beings found throughout your journey.</p></div>
-    </div>
-    <div class="world-card">
-      <div><h3>Secrets</h3><p>Uncover mysteries hidden across the world.</p></div>
-    </div>
-  </div>
-</section>
+    menuToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("open");
+      menuToggle.textContent =
+        navLinks.classList.contains("open") ? "×" : "☰";
+    });
 
-<section class="section wiki" id="wiki">
-  <div class="section-heading">
-    <span>THE GRAND WORLD ARCHIVE</span>
-    <h2>Encyclopedia</h2>
-  </div>
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.textContent = "☰";
+      });
+    });
 
-  <div class="wiki-list">
-    <details>
-      <summary>Races & Origins</summary>
-      <p>Discover the different races and their origins. More information coming soon.</p>
-    </details>
-    <details>
-      <summary>Abilities & Powers</summary>
-      <p>Explore abilities and powers found in Grand World. More information coming soon.</p>
-    </details>
-    <details>
-      <summary>Weapons & Items</summary>
-      <p>Learn about equipment and items. More information coming soon.</p>
-    </details>
-    <details>
-      <summary>Enemies & Bosses</summary>
-      <p>Discover the enemies and challenges of Grand World. More information coming soon.</p>
-    </details>
-    <details>
-      <summary>Lore & History</summary>
-      <p>Uncover the stories and mysteries behind the world. More information coming soon.</p>
-    </details>
-  </div>
-</section>
+    // Navigation changes when scrolling
+    const navbar = document.getElementById("navbar");
 
-<section class="section updates" id="updates">
-  <div class="section-heading">
-    <span>NEWS FROM THE WORLD</span>
-    <h2>Latest Updates</h2>
-  </div>
-  <p>News, announcements and development updates will appear here.</p>
-</section>
+    window.addEventListener("scroll", () => {
+      navbar.classList.toggle("scrolled", window.scrollY > 50);
+    });
 
-<footer class="footer">
-  <div class="logo">✧ GRAND WORLD</div>
-  <p>An open world. An endless adventure.</p>
-  <a href="#home">HOME</a>
-  <a href="#world">WORLD</a>
-  <a href="#wiki">ENCYCLOPEDIA</a>
-  <p>© Grand World. All rights reserved.</p>
-</footer>
+    // Reveal sections as they enter the screen
+    const revealElements = document.querySelectorAll(".reveal");
 
-<script>
-function toggleMenu() {
-  document.getElementById('navLinks').classList.toggle('open');
-}
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12
+      });
 
-document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => {
-    document.getElementById('navLinks').classList.remove('open');
-  });
-});
-</script>
+      revealElements.forEach(element => observer.observe(element));
+    } else {
+      revealElements.forEach(element => element.classList.add("visible"));
+    }
+  </script>
 
 </body>
 </html>
