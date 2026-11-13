@@ -5,10 +5,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101e20">
+
 <title>Grand World — Forge Your Own Legend</title>
 <link rel="icon" href="grandworld-pfp.webp">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
 
 <style>
@@ -24,11 +26,16 @@
   --muted: #a69d88;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 html {
   scroll-behavior: smooth;
   background: var(--ocean);
+  scroll-padding-top: 80px;
 }
 
 body {
@@ -38,25 +45,50 @@ body {
   overflow-x: hidden;
 }
 
-a { color: inherit; text-decoration: none; }
-button { font: inherit; }
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
 ::selection {
   background: var(--gold);
   color: var(--ink);
 }
 
-/* GRAIN AND ATMOSPHERE */
+/* TEXTURE */
 
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: 20;
+  z-index: 90;
   pointer-events: none;
-  opacity: .09;
+  opacity: .075;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
 }
+
+/* SCROLL PROGRESS */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 110;
+  pointer-events: none;
+}
+
+.scroll-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/* GENERAL */
 
 .eyebrow {
   color: var(--gold);
@@ -74,12 +106,16 @@ body::before {
   letter-spacing: -.04em;
 }
 
-.gold { color: var(--gold); }
+.gold {
+  color: var(--gold);
+}
 
 .reveal {
   opacity: 0;
-  transform: translateY(38px);
-  transition: opacity 1s ease, transform 1s cubic-bezier(.2,.7,.2,1);
+  transform: translateY(40px);
+  transition:
+    opacity 1s ease,
+    transform 1s cubic-bezier(.2,.7,.2,1);
 }
 
 .reveal.visible {
@@ -94,7 +130,7 @@ body::before {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 50;
+  z-index: 80;
   padding: 19px 6%;
   display: flex;
   align-items: center;
@@ -108,7 +144,7 @@ body::before {
 .nav.scrolled {
   padding-top: 12px;
   padding-bottom: 12px;
-  background: rgba(16,30,32,.95);
+  background: rgba(16,30,32,.96);
 }
 
 .brand {
@@ -142,7 +178,9 @@ body::before {
   transition: color .3s;
 }
 
-.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover {
+  color: var(--gold);
+}
 
 .nav-join {
   border: 1px solid rgba(197,163,106,.7);
@@ -170,6 +208,7 @@ body::before {
   text-align: center;
   overflow: hidden;
   padding: 130px 20px 100px;
+
   background:
     radial-gradient(ellipse at 50% 65%, rgba(94,91,64,.28), transparent 48%),
     radial-gradient(ellipse at 20% 30%, rgba(42,92,86,.48), transparent 45%),
@@ -179,11 +218,13 @@ body::before {
 .hero::before {
   content: "";
   position: absolute;
-  inset: 0;
-  opacity: .45;
+  inset: -4%;
+  opacity: .5;
   background:
     repeating-linear-gradient(115deg, transparent 0 90px, rgba(222,194,140,.035) 91px, transparent 93px),
     radial-gradient(ellipse at 50% 100%, transparent 20%, #101e20 90%);
+  transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px));
+  transition: transform .3s ease-out;
 }
 
 .hero::after {
@@ -193,14 +234,36 @@ body::before {
   height: 850px;
   border: 1px solid rgba(197,163,106,.12);
   border-radius: 50%;
-  box-shadow: 0 0 0 55px rgba(197,163,106,.025), 0 0 0 110px rgba(197,163,106,.02);
+  box-shadow:
+    0 0 0 55px rgba(197,163,106,.025),
+    0 0 0 110px rgba(197,163,106,.02);
   pointer-events: none;
+  animation: ringPulse 8s ease-in-out infinite;
+}
+
+@keyframes ringPulse {
+  0%,100% { transform: scale(.96); opacity: .5; }
+  50% { transform: scale(1.04); opacity: 1; }
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
   max-width: 950px;
+  animation: cinematicEnter 1.6s cubic-bezier(.2,.7,.2,1) both;
+}
+
+@keyframes cinematicEnter {
+  from {
+    opacity: 0;
+    transform: translateY(45px) scale(.97);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
 }
 
 .hero-logo {
@@ -225,6 +288,7 @@ body::before {
   letter-spacing: .42em;
   text-transform: uppercase;
   margin-bottom: 20px;
+  animation: fadeUp 1s .2s both;
 }
 
 .hero h1 {
@@ -234,6 +298,31 @@ body::before {
   letter-spacing: .06em;
   line-height: 1;
   text-shadow: 0 8px 40px rgba(0,0,0,.4);
+  animation: titleReveal 1.5s .3s both;
+}
+
+@keyframes titleReveal {
+  from {
+    opacity: 0;
+    letter-spacing: .22em;
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    letter-spacing: .06em;
+    filter: blur(0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-subtitle {
@@ -244,6 +333,7 @@ body::before {
   margin: 25px auto 36px;
   max-width: 620px;
   line-height: 1.7;
+  animation: fadeUp 1.2s .7s both;
 }
 
 .status {
@@ -278,6 +368,7 @@ body::before {
   justify-content: center;
   gap: 14px;
   flex-wrap: wrap;
+  animation: fadeUp 1.2s 1s both;
 }
 
 .btn {
@@ -297,6 +388,7 @@ body::before {
 .btn-primary:hover {
   background: #e0c28c;
   transform: translateY(-3px);
+  box-shadow: 0 10px 35px rgba(197,163,106,.2);
 }
 
 .btn-outline {
@@ -307,6 +399,7 @@ body::before {
 .btn-outline:hover {
   border-color: var(--gold);
   color: var(--gold);
+  transform: translateY(-3px);
 }
 
 .scroll-note {
@@ -328,13 +421,14 @@ body::before {
   height: 42px;
   background: var(--gold);
   margin: 14px auto 0;
+  transform-origin: top;
   animation: scrollline 2s infinite;
 }
 
 @keyframes scrollline {
-  0% { transform: scaleY(0); transform-origin: top; }
-  50% { transform: scaleY(1); transform-origin: top; }
-  100% { transform: scaleY(0); transform-origin: bottom; }
+  0% { transform: scaleY(0); }
+  50% { transform: scaleY(1); }
+  100% { transform: scaleY(0); }
 }
 
 /* INTRODUCTION */
@@ -367,7 +461,9 @@ body::before {
   z-index: 1;
 }
 
-.intro .eyebrow { color: #856a40; }
+.intro .eyebrow {
+  color: #856a40;
+}
 
 .intro-grid {
   display: grid;
@@ -390,7 +486,9 @@ body::before {
   line-height: 2;
 }
 
-.intro-copy p + p { margin-top: 18px; }
+.intro-copy p + p {
+  margin-top: 18px;
+}
 
 .ink-line {
   width: 65px;
@@ -446,7 +544,10 @@ body::before {
     linear-gradient(180deg, transparent 0%, rgba(8,17,17,.92) 100%),
     radial-gradient(ellipse at 50% 25%, rgba(157,123,75,.35), transparent 55%),
     #263d38;
-  transition: transform .5s, border-color .5s;
+  transition:
+    transform .5s,
+    border-color .5s,
+    box-shadow .5s;
 }
 
 .story-card:nth-child(2) {
@@ -466,6 +567,7 @@ body::before {
 .story-card:hover {
   transform: translateY(-10px);
   border-color: var(--gold);
+  box-shadow: 0 20px 50px rgba(0,0,0,.22);
 }
 
 .card-number {
@@ -486,6 +588,12 @@ body::before {
   font-family: 'Cinzel', serif;
   color: rgba(220,190,135,.25);
   font-size: 100px;
+  transition: .6s ease;
+}
+
+.story-card:hover .card-symbol {
+  color: rgba(220,190,135,.55);
+  transform: translateX(-50%) translateY(-12px) scale(1.1);
 }
 
 .story-card h3 {
@@ -493,6 +601,11 @@ body::before {
   font-size: 22px;
   font-weight: 500;
   margin-bottom: 12px;
+  transition: color .4s;
+}
+
+.story-card:hover h3 {
+  color: var(--gold);
 }
 
 .story-card p {
@@ -544,7 +657,9 @@ body::before {
   z-index: 1;
 }
 
-.world .eyebrow { color: #876b40; }
+.world .eyebrow {
+  color: #876b40;
+}
 
 .world h2 {
   margin: 20px 0;
@@ -557,6 +672,8 @@ body::before {
   font-size: 15px;
   line-height: 2;
 }
+
+/* MAP */
 
 .map-art {
   position: relative;
@@ -584,13 +701,42 @@ body::before {
   position: absolute;
   border-radius: 48% 52% 42% 58%;
   background: #65735a;
-  box-shadow: inset -12px -8px 0 rgba(34,58,44,.2), 0 8px 12px rgba(60,45,25,.15);
+  box-shadow:
+    inset -12px -8px 0 rgba(34,58,44,.2),
+    0 8px 12px rgba(60,45,25,.15);
   transform: rotate(-20deg);
+  animation: islandFloat 7s ease-in-out infinite;
 }
 
-.island-one { width: 105px; height: 65px; left: 18%; top: 28%; }
-.island-two { width: 130px; height: 85px; left: 47%; top: 48%; transform: rotate(25deg); }
-.island-three { width: 75px; height: 55px; right: 12%; top: 20%; transform: rotate(40deg); }
+.island-one {
+  width: 105px;
+  height: 65px;
+  left: 18%;
+  top: 28%;
+}
+
+.island-two {
+  width: 130px;
+  height: 85px;
+  left: 47%;
+  top: 48%;
+  transform: rotate(25deg);
+  animation-delay: -2s;
+}
+
+.island-three {
+  width: 75px;
+  height: 55px;
+  right: 12%;
+  top: 20%;
+  transform: rotate(40deg);
+  animation-delay: -4s;
+}
+
+@keyframes islandFloat {
+  0%,100% { translate: 0 0; }
+  50% { translate: 0 -9px; }
+}
 
 .map-route {
   position: absolute;
@@ -601,6 +747,18 @@ body::before {
   border-top: 2px dashed rgba(133,62,49,.8);
   border-radius: 50%;
   transform: rotate(20deg);
+  animation: mapJourney 5s ease-in-out infinite;
+}
+
+@keyframes mapJourney {
+  0%,100% {
+    opacity: .4;
+    scale: .96;
+  }
+  50% {
+    opacity: 1;
+    scale: 1.04;
+  }
 }
 
 .map-label {
@@ -611,9 +769,20 @@ body::before {
   letter-spacing: .12em;
 }
 
-.map-label.one { top: 15%; left: 13%; }
-.map-label.two { bottom: 17%; left: 46%; }
-.map-label.three { top: 12%; right: 10%; }
+.map-label.one {
+  top: 15%;
+  left: 13%;
+}
+
+.map-label.two {
+  bottom: 17%;
+  left: 46%;
+}
+
+.map-label.three {
+  top: 12%;
+  right: 10%;
+}
 
 .map-compass {
   position: absolute;
@@ -628,9 +797,14 @@ body::before {
   font-family: 'Cinzel', serif;
   color: #6e4937;
   font-size: 23px;
+  animation: compassTurn 24s linear infinite;
 }
 
-/* ADVENTURE STRIP */
+@keyframes compassTurn {
+  to { transform: rotate(360deg); }
+}
+
+/* QUOTE */
 
 .quote-section {
   padding: 130px 8%;
@@ -689,6 +863,8 @@ body::before {
 }
 
 .community-links a {
+  position: relative;
+  overflow: hidden;
   border: 1px solid rgba(197,163,106,.5);
   padding: 17px 27px;
   color: var(--gold);
@@ -698,9 +874,22 @@ body::before {
   transition: .3s;
 }
 
+.community-links a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(197,163,106,.15);
+  transform: translateX(-105%);
+  transition: transform .4s ease;
+}
+
+.community-links a:hover::before {
+  transform: translateX(0);
+}
+
 .community-links a:hover {
-  background: var(--gold);
-  color: var(--ink);
+  color: #f1dfbd;
+  border-color: var(--gold);
 }
 
 /* FOOTER */
@@ -732,9 +921,11 @@ footer {
   border-radius: 50%;
 }
 
-footer a:hover { color: var(--gold); }
+footer a:hover {
+  color: var(--gold);
+}
 
-/* RESPONSIVE */
+/* MOBILE */
 
 @media(max-width: 800px) {
   .nav-links {
@@ -751,36 +942,83 @@ footer a:hover { color: var(--gold); }
     border-bottom: 1px solid rgba(197,163,106,.2);
   }
 
-  .nav-links.open { display: flex; }
-  .menu-toggle { display: block; }
-  .intro-grid { grid-template-columns: 1fr; gap: 30px; }
-  .story-grid { grid-template-columns: 1fr; }
-  .story-card { min-height: 270px; }
-  .map-art { height: 260px; }
-  footer { flex-direction: column; text-align: center; }
+  .nav-links.open {
+    display: flex;
+    animation: fadeUp .3s ease both;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .intro-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .story-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .story-card {
+    min-height: 270px;
+  }
+
+  .map-art {
+    height: 260px;
+  }
+
+  .map-label {
+    font-size: 8px;
+  }
+
+  footer {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
+/* ACCESSIBILITY */
+
 @media(prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     scroll-behavior: auto !important;
     animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
 
-  .reveal { opacity: 1; transform: none; }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<div class="scroll-progress">
+  <span id="progressBar"></span>
+</div>
+
+<!-- NAVIGATION -->
+
 <nav class="nav" id="navbar">
+
   <a href="#home" class="brand">
     <img src="grandworld-pfp.webp" alt="Grand World logo">
     GRAND WORLD
   </a>
 
-  <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">☰</button>
+  <button
+    class="menu-toggle"
+    id="menuToggle"
+    aria-label="Open menu"
+    aria-expanded="false"
+  >☰</button>
 
   <div class="nav-links" id="navLinks">
     <a href="#about">The Story</a>
@@ -788,222 +1026,391 @@ footer a:hover { color: var(--gold); }
     <a href="#world">The World</a>
     <a href="#community" class="nav-join">Join the Crew</a>
   </div>
+
 </nav>
 
 <main>
 
-  <!-- HERO -->
+<!-- HERO -->
 
-  <section class="hero" id="home">
-    <div class="hero-content">
-      <img src="grandworld-pfp.webp" class="hero-logo" alt="Grand World emblem">
+<section class="hero" id="home">
 
-      <div class="hero-kicker">An open world beyond imagination</div>
+  <div class="hero-content">
 
-      <h1>GRAND WORLD</h1>
+    <img
+      src="grandworld-pfp.webp"
+      class="hero-logo"
+      alt="Grand World emblem"
+    >
 
-      <p class="hero-subtitle">
-        An endless world. A thousand paths. One legend waiting to be written.
-      </p>
-
-      <div class="status">
-        <span class="status-dot"></span>
-        Still in development
-      </div>
-
-      <div class="hero-buttons">
-        <a href="#about" class="btn btn-primary">Discover the world</a>
-        <a href="https://discord.gg/8yZ4nhfQhH" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Join our Discord</a>
-      </div>
+    <div class="hero-kicker">
+      An open world beyond imagination
     </div>
 
-    <div class="scroll-note">Scroll to discover</div>
-  </section>
+    <h1>GRAND WORLD</h1>
 
-  <!-- INTRO -->
+    <p class="hero-subtitle">
+      An endless world. A thousand paths.
+      One legend waiting to be written.
+    </p>
 
-  <section class="intro" id="about">
-    <div class="intro-inner">
-      <div class="eyebrow reveal">01 — The beginning</div>
-
-      <div class="intro-grid">
-        <div class="reveal">
-          <h2>A world without a <span style="color:#873e39">single path.</span></h2>
-          <div class="ink-line"></div>
-        </div>
-
-        <div class="intro-copy reveal">
-          <p>
-            Grand World is an open-world MMORPG set in a dark fantasy universe.
-            A world filled with secrets, challenges and places waiting to be discovered.
-          </p>
-
-          <p>
-            You decide where to go, what to pursue and how your adventure unfolds.
-            There is no single road you must follow.
-          </p>
-
-          <p>
-            Explore at your own pace. Create your own story. Forge your own legend.
-          </p>
-        </div>
-      </div>
+    <div class="status">
+      <span class="status-dot"></span>
+      Still in development
     </div>
-  </section>
 
-  <!-- ADVENTURE -->
+    <div class="hero-buttons">
 
-  <section class="story" id="adventure">
-    <div class="story-inner">
-      <div class="story-heading reveal">
-        <div class="eyebrow">02 — Your journey</div>
-        <h2 class="section-title">Every legend begins <span class="gold">somewhere.</span></h2>
+      <a href="#about" class="btn btn-primary">
+        Discover the world
+      </a>
+
+      <a
+        href="https://discord.gg/8yZ4nhfQhH"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-outline"
+      >
+        Join our Discord
+      </a>
+
+    </div>
+
+  </div>
+
+  <div class="scroll-note">
+    Scroll to discover
+  </div>
+
+</section>
+
+<!-- INTRODUCTION -->
+
+<section class="intro" id="about">
+
+  <div class="intro-inner">
+
+    <div class="eyebrow reveal">
+      01 — The beginning
+    </div>
+
+    <div class="intro-grid">
+
+      <div class="reveal">
+
+        <h2>
+          A world without a
+          <span style="color:#873e39">single path.</span>
+        </h2>
+
+        <div class="ink-line"></div>
+
+      </div>
+
+      <div class="intro-copy reveal">
+
         <p>
-          The world is yours to explore. Discover what lies beyond the horizon
-          and decide what kind of adventure you want to create.
+          Grand World is an open-world MMORPG set in a
+          dark fantasy universe. A world filled with secrets,
+          challenges and places waiting to be discovered.
         </p>
+
+        <p>
+          You decide where to go, what to pursue and how
+          your adventure unfolds. There is no single road
+          you must follow.
+        </p>
+
+        <p>
+          Explore at your own pace. Create your own story.
+          Forge your own legend.
+        </p>
+
       </div>
 
-      <div class="story-grid">
-        <article class="story-card reveal">
-          <div class="card-number">I — EXPLORE</div>
-          <div class="card-symbol">✧</div>
-          <h3>Uncharted Lands</h3>
-          <p>
-            Travel through mysterious regions, uncover hidden places
-            and discover secrets scattered throughout the world.
-          </p>
-        </article>
-
-        <article class="story-card reveal">
-          <div class="card-number">II — CONQUER</div>
-          <div class="card-symbol">⚔</div>
-          <h3>Face the Unknown</h3>
-          <p>
-            Take on enemies, overcome challenges and prove yourself
-            in a world that rewards courage and determination.
-          </p>
-        </article>
-
-        <article class="story-card reveal">
-          <div class="card-number">III — BECOME</div>
-          <div class="card-symbol">⌘</div>
-          <h3>Write Your Legend</h3>
-          <p>
-            Choose your own direction, discover your possibilities
-            and shape an adventure that belongs to you.
-          </p>
-        </article>
-      </div>
     </div>
-  </section>
 
-  <!-- WORLD -->
+  </div>
 
-  <section class="world" id="world">
-    <div class="world-inner">
-      <div class="eyebrow reveal">03 — Beyond the horizon</div>
+</section>
 
-      <h2 class="section-title reveal">The world is <span style="color:#873e39">waiting.</span></h2>
+<!-- ADVENTURE -->
 
-      <p class="world-description reveal">
-        From unexplored lands to forgotten mysteries, Grand World is built
-        around discovery. Every journey can lead somewhere unexpected.
-      </p>
+<section class="story" id="adventure">
 
-      <div class="map-art reveal" aria-label="Decorative fantasy map illustration">
-        <span class="map-label one">THE WESTERN REACH</span>
-        <span class="map-label two">FORGOTTEN LANDS</span>
-        <span class="map-label three">UNKNOWN TERRITORY</span>
-        <div class="map-island island-one"></div>
-        <div class="map-island island-two"></div>
-        <div class="map-island island-three"></div>
-        <div class="map-route"></div>
-        <div class="map-compass">✥</div>
+  <div class="story-inner">
+
+    <div class="story-heading reveal">
+
+      <div class="eyebrow">
+        02 — Your journey
       </div>
-    </div>
-  </section>
 
-  <!-- QUOTE -->
-
-  <section class="quote-section">
-    <div class="eyebrow reveal">A world of possibilities</div>
-    <blockquote class="reveal">
-      "The greatest adventures are the ones whose endings have yet to be written."
-    </blockquote>
-    <div class="quote-credit reveal">The Grand World philosophy</div>
-  </section>
-
-  <!-- COMMUNITY -->
-
-  <section class="community" id="community">
-    <div class="community-inner">
-      <div class="eyebrow reveal">04 — Your story starts here</div>
-
-      <h2 class="section-title reveal">
-        The world is better <span class="gold">together.</span>
+      <h2 class="section-title">
+        Every legend begins
+        <span class="gold">somewhere.</span>
       </h2>
 
-      <p class="reveal">
-        Follow the development of Grand World, meet the community
-        and stay up to date as the adventure continues to grow.
+      <p>
+        The world is yours to explore. Discover what lies
+        beyond the horizon and decide what kind of adventure
+        you want to create.
       </p>
 
-      <div class="community-links reveal">
-        <a href="https://discord.gg/8yZ4nhfQhH" target="_blank" rel="noopener noreferrer">Join Discord ↗</a>
-        <a href="https://www.tiktok.com/@grand_unknow" target="_blank" rel="noopener noreferrer">Follow TikTok ↗</a>
-      </div>
     </div>
-  </section>
+
+    <div class="story-grid">
+
+      <article class="story-card reveal">
+
+        <div class="card-number">
+          I — EXPLORE
+        </div>
+
+        <div class="card-symbol">✧</div>
+
+        <h3>Uncharted Lands</h3>
+
+        <p>
+          Travel through mysterious regions, uncover hidden
+          places and discover secrets scattered throughout
+          the world.
+        </p>
+
+      </article>
+
+      <article class="story-card reveal">
+
+        <div class="card-number">
+          II — CONQUER
+        </div>
+
+        <div class="card-symbol">⚔</div>
+
+        <h3>Face the Unknown</h3>
+
+        <p>
+          Take on enemies, overcome challenges and prove
+          yourself in a world that rewards courage and
+          determination.
+        </p>
+
+      </article>
+
+      <article class="story-card reveal">
+
+        <div class="card-number">
+          III — BECOME
+        </div>
+
+        <div class="card-symbol">⌘</div>
+
+        <h3>Write Your Legend</h3>
+
+        <p>
+          Choose your own direction, discover your
+          possibilities and shape an adventure that
+          belongs to you.
+        </p>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- WORLD MAP -->
+
+<section class="world" id="world">
+
+  <div class="world-inner">
+
+    <div class="eyebrow reveal">
+      03 — Beyond the horizon
+    </div>
+
+    <h2 class="section-title reveal">
+      The world is
+      <span style="color:#873e39">waiting.</span>
+    </h2>
+
+    <p class="world-description reveal">
+      From unexplored lands to forgotten mysteries,
+      Grand World is built around discovery.
+      Every journey can lead somewhere unexpected.
+    </p>
+
+    <div class="map-art reveal">
+
+      <span class="map-label one">
+        THE WESTERN REACH
+      </span>
+
+      <span class="map-label two">
+        FORGOTTEN LANDS
+      </span>
+
+      <span class="map-label three">
+        UNKNOWN TERRITORY
+      </span>
+
+      <div class="map-island island-one"></div>
+      <div class="map-island island-two"></div>
+      <div class="map-island island-three"></div>
+
+      <div class="map-route"></div>
+
+      <div class="map-compass">
+        ✥
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- QUOTE -->
+
+<section class="quote-section">
+
+  <div class="eyebrow reveal">
+    A world of possibilities
+  </div>
+
+  <blockquote class="reveal">
+    "The greatest adventures are the ones whose
+    endings have yet to be written."
+  </blockquote>
+
+  <div class="quote-credit reveal">
+    The Grand World philosophy
+  </div>
+
+</section>
+
+<!-- COMMUNITY -->
+
+<section class="community" id="community">
+
+  <div class="community-inner">
+
+    <div class="eyebrow reveal">
+      04 — Your story starts here
+    </div>
+
+    <h2 class="section-title reveal">
+      The world is better
+      <span class="gold">together.</span>
+    </h2>
+
+    <p class="reveal">
+      Follow the development of Grand World,
+      meet the community and stay up to date
+      as the adventure continues to grow.
+    </p>
+
+    <div class="community-links reveal">
+
+      <a
+        href="https://discord.gg/8yZ4nhfQhH"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Join Discord ↗
+      </a>
+
+      <a
+        href="https://www.tiktok.com/@grand_unknow"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Follow TikTok ↗
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
 
 </main>
 
+<!-- FOOTER -->
+
 <footer>
+
   <a href="#home" class="footer-brand">
     <img src="grandworld-pfp.webp" alt="">
     GRAND WORLD
   </a>
 
-  <span>© 2026 GRAND WORLD. ALL RIGHTS RESERVED.</span>
+  <span>
+    © 2026 GRAND WORLD. ALL RIGHTS RESERVED.
+  </span>
 
-  <a href="#home">BACK TO TOP ↑</a>
+  <a href="#home">
+    BACK TO TOP ↑
+  </a>
+
 </footer>
 
 <script>
-/* NAVIGATION */
+
+/* ELEMENTS */
 
 const navbar = document.getElementById("navbar");
 const menuToggle = document.getElementById("menuToggle");
 const navLinks = document.getElementById("navLinks");
+const hero = document.querySelector(".hero");
+const progressBar = document.getElementById("progressBar");
 
-window.addEventListener("scroll", () => {
-  navbar.classList.toggle("scrolled", window.scrollY > 50);
-});
+const reduceMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches;
+
+/* MOBILE NAVIGATION */
 
 menuToggle.addEventListener("click", () => {
+
   const isOpen = navLinks.classList.toggle("open");
+
   menuToggle.setAttribute("aria-expanded", isOpen);
   menuToggle.textContent = isOpen ? "✕" : "☰";
+
 });
 
 navLinks.querySelectorAll("a").forEach(link => {
+
   link.addEventListener("click", () => {
+
     navLinks.classList.remove("open");
+
     menuToggle.setAttribute("aria-expanded", "false");
     menuToggle.textContent = "☰";
+
   });
+
 });
 
 /* SCROLL REVEALS */
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, index) => {
+const observer = new IntersectionObserver(entries => {
+
+  entries.forEach(entry => {
+
     if (entry.isIntersecting) {
-      entry.target.style.transitionDelay = `${Math.min(index * 70, 280)}ms`;
+
       entry.target.classList.add("visible");
+
       observer.unobserve(entry.target);
+
     }
+
   });
+
 }, {
   threshold: 0.12
 });
@@ -1011,6 +1418,73 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll(".reveal").forEach(element => {
   observer.observe(element);
 });
+
+/* SCROLL PROGRESS + NAVIGATION */
+
+let ticking = false;
+
+function updateScrollEffects() {
+
+  const scrollY = window.scrollY;
+
+  const maxScroll =
+    document.documentElement.scrollHeight -
+    window.innerHeight;
+
+  navbar.classList.toggle("scrolled", scrollY > 50);
+
+  progressBar.style.transform =
+    `scaleX(${maxScroll > 0 ? scrollY / maxScroll : 0})`;
+
+  if (!reduceMotion && hero) {
+
+    const shift = Math.min(scrollY * 0.22, 150);
+
+    hero.style.backgroundPosition =
+      `center ${shift}px`;
+
+  }
+
+  ticking = false;
+
+}
+
+window.addEventListener("scroll", () => {
+
+  if (!ticking) {
+
+    window.requestAnimationFrame(updateScrollEffects);
+
+    ticking = true;
+
+  }
+
+}, { passive: true });
+
+updateScrollEffects();
+
+/* SUBTLE MOUSE MOVEMENT */
+
+if (
+  !reduceMotion &&
+  window.matchMedia("(pointer: fine)").matches
+) {
+
+  window.addEventListener("mousemove", event => {
+
+    const x =
+      (event.clientX / window.innerWidth - 0.5) * 12;
+
+    const y =
+      (event.clientY / window.innerHeight - 0.5) * 12;
+
+    hero?.style.setProperty("--mouse-x", `${x}px`);
+    hero?.style.setProperty("--mouse-y", `${y}px`);
+
+  }, { passive: true });
+
+}
+
 </script>
 
 </body>
