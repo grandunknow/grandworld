@@ -4,11 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#2D3126">
-  <title>Grand World — An Unwritten World</title>
-  <meta name="description" content="Enter Grand World, an open-world dark fantasy MMORPG. Explore, discover, and create your own adventure.">
+  <meta name="theme-color" content="#20231C">
 
-  <!-- Elegant editorial typography -->
+  <title>Grand World</title>
+  <meta name="description" content="Explore a vast open-world, MMORPG. Discover secrets, fight enemies and create your own adventure in Grand World.">
+
+  <link rel="icon" type="image/webp" href="grandworld-pfp.webp">
+
+  <!-- Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -23,6 +26,7 @@
       --gold: #C9A96E;
       --bronze: #7A5E34;
       --ink: #24251F;
+
       --serif: "Cormorant Garamond", Georgia, serif;
       --sans: "Manrope", Arial, sans-serif;
     }
@@ -35,7 +39,7 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 85px;
+      scroll-padding-top: 90px;
     }
 
     body {
@@ -46,74 +50,85 @@
     }
 
     a {
-      color: inherit;
       text-decoration: none;
-    }
-
-    button {
-      font: inherit;
+      color: inherit;
     }
 
     /* NAVIGATION */
 
     .nav {
       position: fixed;
-      inset: 0 0 auto;
       z-index: 100;
+      top: 0;
+      left: 0;
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 7%;
-      color: var(--paper);
-      border-bottom: 1px solid rgba(245,241,228,.16);
-      background: rgba(35,38,29,.72);
-      backdrop-filter: blur(14px);
-      transition: background .3s, padding .3s;
+      padding: 16px 7%;
+      background: rgba(32,35,28,.75);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(245,241,228,.12);
+      transition: .3s ease;
     }
 
     .nav.scrolled {
-      background: rgba(35,38,29,.96);
-      padding-top: 14px;
-      padding-bottom: 14px;
+      background: rgba(32,35,28,.97);
+      padding-top: 11px;
+      padding-bottom: 11px;
     }
 
-    .logo {
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .brand img {
+      width: 43px;
+      height: 43px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+    }
+
+    .brand-name {
+      color: var(--paper);
       font-family: var(--serif);
-      font-size: 27px;
-      font-weight: 700;
+      font-size: 25px;
       letter-spacing: 3px;
-      color: var(--gold);
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 32px;
+      gap: 30px;
     }
 
     .nav-links a {
+      color: var(--ivory);
       font-size: 10px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--ivory);
-      transition: color .25s;
+      transition: color .3s;
     }
 
     .nav-links a:hover {
       color: var(--gold);
     }
 
-    .nav-discord {
+    .nav-links .discord-link {
+      padding: 12px 17px;
       border: 1px solid var(--gold);
-      padding: 11px 17px;
+      color: var(--gold);
     }
 
     .menu-toggle {
       display: none;
-      color: var(--paper);
       background: none;
-      border: 0;
-      font-size: 25px;
+      border: none;
+      color: var(--paper);
+      font-size: 27px;
       cursor: pointer;
     }
 
@@ -126,60 +141,53 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      overflow: hidden;
       color: var(--paper);
-      background: var(--olive);
+      background:
+        radial-gradient(ellipse at 50% 45%, rgba(94,91,73,.42), transparent 55%),
+        linear-gradient(140deg, #171A15, #34382B 50%, #171A15);
+      overflow: hidden;
       isolation: isolate;
-    }
-
-    .hero-video {
-      position: absolute;
-      z-index: -3;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      pointer-events: none;
-      transform: scale(1.18);
-      opacity: .8;
-    }
-
-    .hero-video iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
     }
 
     .hero::before {
       content: "";
       position: absolute;
-      z-index: -2;
       inset: 0;
-      background: linear-gradient(
-        90deg,
-        rgba(24,27,21,.68),
-        rgba(24,27,21,.24),
-        rgba(24,27,21,.68)
-      );
+      z-index: -1;
+      background:
+        radial-gradient(circle at 20% 25%, rgba(201,169,110,.15), transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(201,169,110,.12), transparent 30%);
+      animation: atmosphere 12s ease-in-out infinite alternate;
     }
 
     .hero::after {
       content: "";
       position: absolute;
-      z-index: -1;
       inset: 0;
+      z-index: -1;
       background: linear-gradient(
         to bottom,
-        rgba(20,22,17,.25),
-        transparent 45%,
-        rgba(20,22,17,.8)
+        rgba(15,17,13,.2),
+        transparent 50%,
+        rgba(15,17,13,.75)
       );
     }
 
     .hero-content {
       width: min(900px, 90%);
-      padding: 120px 0 90px;
-      animation: heroEnter 1.4s ease both;
+      padding: 130px 0 100px;
+      animation: heroEnter 1.5s ease both;
+    }
+
+    .hero-symbol {
+      width: clamp(110px, 17vw, 190px);
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 1px solid rgba(201,169,110,.7);
+      box-shadow: 0 0 65px rgba(201,169,110,.17);
+      margin-bottom: 35px;
+      animation: float 6s ease-in-out infinite;
     }
 
     .eyebrow {
@@ -192,29 +200,29 @@
 
     .hero h1 {
       font-family: var(--serif);
-      font-size: clamp(75px, 13vw, 155px);
-      line-height: .8;
+      font-size: clamp(65px, 12vw, 135px);
       font-weight: 500;
+      line-height: .85;
       letter-spacing: 5px;
       text-transform: uppercase;
-      text-shadow: 0 8px 35px rgba(0,0,0,.35);
+      text-shadow: 0 8px 35px rgba(0,0,0,.4);
     }
 
     .hero-subtitle {
-      margin: 35px auto 0;
-      max-width: 570px;
-      color: var(--ivory);
+      margin: 30px auto 0;
+      max-width: 600px;
       font-family: var(--serif);
-      font-size: clamp(20px, 3vw, 29px);
+      font-size: clamp(21px, 3vw, 29px);
       font-style: italic;
-      line-height: 1.4;
+      color: var(--ivory);
+      line-height: 1.5;
     }
 
     .hero-actions {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 15px;
       margin-top: 38px;
     }
 
@@ -236,19 +244,18 @@
     .button-gold:hover {
       background: var(--paper);
       border-color: var(--paper);
-      transform: translateY(-3px);
+      transform: translateY(-4px);
     }
 
     .button-outline {
       color: var(--paper);
-      border: 1px solid rgba(245,241,228,.7);
-      background: rgba(0,0,0,.12);
+      border: 1px solid rgba(245,241,228,.65);
     }
 
     .button-outline:hover {
-      color: var(--olive);
       background: var(--paper);
-      transform: translateY(-3px);
+      color: var(--olive);
+      transform: translateY(-4px);
     }
 
     .scroll-note {
@@ -260,14 +267,10 @@
       letter-spacing: 4px;
       color: var(--ivory);
       text-transform: uppercase;
-      opacity: .8;
+      animation: pulse 2s infinite;
     }
 
     /* GENERAL SECTIONS */
-
-    section {
-      position: relative;
-    }
 
     .section-inner {
       width: min(1150px, 86%);
@@ -279,21 +282,21 @@
       font-size: 10px;
       letter-spacing: 4px;
       text-transform: uppercase;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .section-title {
       font-family: var(--serif);
-      font-size: clamp(43px, 6vw, 76px);
-      line-height: .98;
+      font-size: clamp(45px, 6vw, 78px);
       font-weight: 500;
+      line-height: .98;
     }
 
     .section-copy {
-      max-width: 650px;
-      color: #666457;
+      max-width: 680px;
+      color: #69685D;
       font-size: 14px;
-      line-height: 2;
+      line-height: 2.1;
     }
 
     /* ABOUT */
@@ -305,53 +308,36 @@
 
     .about-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 90px;
+      grid-template-columns: 1.15fr .85fr;
       align-items: center;
+      gap: 80px;
     }
 
     .about-text .section-copy {
       margin-top: 30px;
     }
 
-    .about-mark {
-      min-height: 420px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 1px solid rgba(122,94,52,.4);
-      background:
-        radial-gradient(circle at center, rgba(201,169,110,.19), transparent 60%),
-        var(--ivory);
+    .about-image {
       position: relative;
       overflow: hidden;
+      padding: 12px;
+      border: 1px solid rgba(122,94,52,.5);
+      background: var(--ivory);
     }
 
-    .about-mark::before,
-    .about-mark::after {
-      content: "";
-      position: absolute;
-      width: 260px;
-      height: 260px;
-      border: 1px solid rgba(122,94,52,.25);
-      border-radius: 50%;
-      animation: rotate 35s linear infinite;
+    .about-image img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      transition: transform .8s ease;
     }
 
-    .about-mark::after {
-      width: 330px;
-      height: 330px;
-      animation-direction: reverse;
+    .about-image:hover img {
+      transform: scale(1.045);
     }
 
-    .about-mark span {
-      font-family: var(--serif);
-      font-size: 110px;
-      color: var(--bronze);
-      z-index: 1;
-    }
-
-    /* DARK FEATURE SECTION */
+    /* FEATURES */
 
     .features {
       padding: 135px 0;
@@ -373,39 +359,39 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 1px;
       margin-top: 70px;
-      background: rgba(201,169,110,.25);
       border: 1px solid rgba(201,169,110,.25);
+      background: rgba(201,169,110,.25);
     }
 
     .feature-card {
-      min-height: 260px;
+      min-height: 270px;
       padding: 38px 30px;
       background: var(--olive);
-      transition: background .35s, transform .35s;
+      transition: .4s ease;
     }
 
     .feature-card:hover {
       background: var(--olive-light);
-      transform: translateY(-5px);
+      transform: translateY(-7px);
     }
 
     .feature-number {
-      color: var(--gold);
       font-family: var(--serif);
-      font-size: 28px;
+      font-size: 30px;
+      color: var(--gold);
     }
 
     .feature-card h3 {
       margin: 30px 0 13px;
       font-family: var(--serif);
-      font-size: 30px;
+      font-size: 31px;
       font-weight: 500;
     }
 
     .feature-card p {
       color: var(--stone);
       font-size: 12px;
-      line-height: 1.9;
+      line-height: 2;
     }
 
     /* WORLD */
@@ -419,86 +405,67 @@
       display: flex;
       justify-content: space-between;
       align-items: end;
-      gap: 30px;
+      gap: 35px;
       margin-bottom: 55px;
     }
 
     .world-note {
-      max-width: 350px;
-      font-size: 13px;
-      line-height: 1.9;
+      max-width: 370px;
       color: #68675B;
+      font-size: 13px;
+      line-height: 2;
     }
 
     .world-banner {
-      min-height: 390px;
+      position: relative;
+      min-height: 420px;
       display: flex;
       align-items: end;
       padding: 45px;
+      overflow: hidden;
       color: var(--paper);
       background:
-        linear-gradient(to top, rgba(23,26,20,.88), rgba(23,26,20,.05)),
-        radial-gradient(ellipse at 65% 30%, #77745E, #35392D 55%, #20241C);
-      overflow: hidden;
-      transition: background-size .5s;
+        radial-gradient(ellipse at 70% 25%, rgba(201,169,110,.24), transparent 35%),
+        linear-gradient(130deg, #1B2019, #464A39 55%, #20231C);
+    }
+
+    .world-banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(201,169,110,.4);
+      margin: 15px;
+      pointer-events: none;
+    }
+
+    .world-banner-content {
+      position: relative;
+      z-index: 1;
     }
 
     .world-banner h3 {
       font-family: var(--serif);
-      font-size: clamp(40px, 6vw, 65px);
+      font-size: clamp(43px, 7vw, 75px);
       font-weight: 500;
     }
 
     .world-banner p {
-      margin-top: 8px;
+      margin-top: 12px;
       color: var(--ivory);
-      font-size: 12px;
-    }
-
-    /* ENCYCLOPEDIA */
-
-    .encyclopedia {
-      padding: 140px 0;
-      background: var(--paper);
-    }
-
-    .encyclopedia-list {
-      margin-top: 55px;
-      border-top: 1px solid rgba(122,94,52,.35);
-    }
-
-    .encyclopedia-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 24px 5px;
-      border-bottom: 1px solid rgba(122,94,52,.35);
-      transition: padding .3s;
-    }
-
-    .encyclopedia-item:hover {
-      padding-left: 18px;
-      padding-right: 18px;
-    }
-
-    .encyclopedia-item span:first-child {
       font-family: var(--serif);
-      font-size: clamp(24px, 4vw, 34px);
+      font-size: 23px;
+      font-style: italic;
+      letter-spacing: 1px;
     }
 
-    .encyclopedia-item span:last-child {
-      color: var(--bronze);
-      font-size: 18px;
-    }
-
-    /* COMMUNITY */
+    /* INFORMATION / COMMUNITY */
 
     .community {
-      padding: 125px 0;
+      padding: 145px 0;
       text-align: center;
       color: var(--paper);
       background:
-        radial-gradient(ellipse at center, #464A39, transparent 70%),
+        radial-gradient(ellipse at center, #454A39, transparent 70%),
         var(--olive);
     }
 
@@ -507,52 +474,71 @@
     }
 
     .community .section-title {
-      max-width: 750px;
+      max-width: 850px;
       margin: auto;
     }
 
-    .community p {
-      max-width: 550px;
-      margin: 25px auto 0;
+    .community-copy {
+      max-width: 650px;
+      margin: 30px auto 0;
       color: var(--stone);
-      font-size: 13px;
-      line-height: 2;
+      font-size: 14px;
+      line-height: 2.1;
     }
 
     .community .hero-actions {
+      margin-top: 40px;
+    }
+
+    .social-note {
       margin-top: 35px;
+      color: var(--stone);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
     }
 
     /* FOOTER */
 
     footer {
-      padding: 35px 7%;
+      padding: 38px 7%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 20px;
       flex-wrap: wrap;
+      gap: 25px;
       color: var(--ivory);
       background: #20231C;
     }
 
-    .footer-logo {
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       font-family: var(--serif);
       color: var(--gold);
       font-size: 25px;
       letter-spacing: 2px;
     }
 
+    .footer-brand img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
     .footer-links {
       display: flex;
-      gap: 24px;
+      gap: 25px;
       flex-wrap: wrap;
     }
 
     .footer-links a {
+      color: var(--ivory);
       font-size: 10px;
       letter-spacing: 1px;
-      color: var(--ivory);
+      transition: color .3s;
     }
 
     .footer-links a:hover {
@@ -561,10 +547,10 @@
 
     .copyright {
       width: 100%;
+      padding-top: 20px;
+      border-top: 1px solid rgba(245,241,228,.12);
       color: var(--stone);
       font-size: 10px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(245,241,228,.12);
     }
 
     /* ANIMATIONS */
@@ -583,7 +569,7 @@
     @keyframes heroEnter {
       from {
         opacity: 0;
-        transform: translateY(25px);
+        transform: translateY(30px);
       }
       to {
         opacity: 1;
@@ -591,15 +577,26 @@
       }
     }
 
-    @keyframes rotate {
-      to { transform: rotate(360deg); }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    @keyframes atmosphere {
+      from { transform: scale(1); opacity: .6; }
+      to { transform: scale(1.15); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: .55; }
+      50% { opacity: 1; }
     }
 
     /* MOBILE */
 
     @media (max-width: 800px) {
       .nav {
-        padding: 17px 6%;
+        padding: 14px 6%;
       }
 
       .menu-toggle {
@@ -615,8 +612,8 @@
         padding: 25px 7%;
         flex-direction: column;
         align-items: flex-start;
-        gap: 23px;
-        background: rgba(35,38,29,.98);
+        gap: 24px;
+        background: rgba(32,35,28,.98);
       }
 
       .nav-links.open {
@@ -628,10 +625,6 @@
         gap: 45px;
       }
 
-      .about-mark {
-        min-height: 300px;
-      }
-
       .feature-grid {
         grid-template-columns: 1fr;
       }
@@ -641,25 +634,25 @@
       }
 
       .world-note {
-        margin-top: 20px;
+        margin-top: 22px;
       }
 
       .world-banner {
-        min-height: 300px;
-        padding: 25px;
+        min-height: 330px;
+        padding: 28px;
       }
 
       footer {
-        align-items: flex-start;
         flex-direction: column;
+        align-items: flex-start;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
-        scroll-behavior: auto !important;
         animation-duration: .01ms !important;
         transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
       }
 
       .reveal {
@@ -674,7 +667,11 @@
 
   <!-- NAVIGATION -->
   <header class="nav" id="navbar">
-    <a class="logo" href="#home">GRAND WORLD</a>
+
+    <a class="brand" href="#home">
+      <img src="grandworld-pfp.webp" alt="Grand World logo">
+      <span class="brand-name">GRAND WORLD</span>
+    </a>
 
     <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">
       ☰
@@ -683,87 +680,123 @@
     <nav class="nav-links" id="navLinks">
       <a href="#home">Home</a>
       <a href="#about">About</a>
+      <a href="#features">Experience</a>
       <a href="#world">The World</a>
-      <a href="#encyclopedia">Encyclopedia</a>
       <a href="#community">Community</a>
-      <a class="nav-discord" href="https://discord.gg/8yZ4nhfQhH" target="_blank" rel="noopener noreferrer">Join Discord ↗</a>
+      <a class="discord-link" href="https://discord.gg/8yZ4nhfQhH" target="_blank" rel="noopener noreferrer">Discord ↗</a>
     </nav>
+
   </header>
 
-  <!-- HERO: STREAMABLE BACKGROUND -->
   <main>
+
+    <!-- HERO -->
     <section class="hero" id="home">
 
-      <div class="hero-video" aria-hidden="true">
-        <iframe
-          src="https://streamable.com/e/yq8s3y?autoplay=1&muted=1&loop=1"
-          title="Grand World background"
-          allow="autoplay; fullscreen"
-          loading="eager">
-        </iframe>
-      </div>
-
       <div class="hero-content">
+
         <div class="eyebrow">A world without boundaries</div>
+
+        <img
+          class="hero-symbol"
+          src="grandworld-pfp.webp"
+          alt="Grand World artwork">
+
         <h1>Grand<br>World</h1>
+
         <p class="hero-subtitle">
-          Your story. Your choices. An unwritten world.
+          A world of endless possibilities. A story yet to be written.
         </p>
 
         <div class="hero-actions">
-          <a href="#about" class="button button-gold">Discover the world</a>
+          <a href="#about" class="button button-gold">
+            Discover Grand World
+          </a>
+
           <a href="https://discord.gg/8yZ4nhfQhH"
-             target="_blank" rel="noopener noreferrer"
-             class="button button-outline">Join our Discord ↗</a>
+             target="_blank"
+             rel="noopener noreferrer"
+             class="button button-outline">
+            Join our Discord ↗
+          </a>
         </div>
+
       </div>
 
       <div class="scroll-note">Scroll to explore ↓</div>
+
     </section>
 
     <!-- ABOUT -->
     <section class="about" id="about">
+
       <div class="section-inner about-layout">
+
         <div class="about-text reveal">
-          <div class="section-label">01 — The beginning</div>
-          <h2 class="section-title">An adventure<br>of your own.</h2>
+
+          <div class="section-label">01 — What is Grand World?</div>
+
+          <h2 class="section-title">
+            More than a world.<br>
+            Your own adventure.
+          </h2>
 
           <p class="section-copy">
             Grand World is an open-world MMORPG set in a dark fantasy universe.
-            Explore a vast world, discover hidden secrets, face challenges and
-            create your own adventure.
+
+            Explore a huge world, discover hidden secrets, fight enemies,
+            and create your own adventure.
+
             <br><br>
-            There is no single path you must follow. Travel through different
-            regions, uncover their stories and progress at your own pace.
-            Inspired by the worlds and adventures we love, Grand World aims
-            to create an identity of its own.
+
+            Grand World is non-linear. You are not forced to follow one
+            specific path. Explore different regions, take on challenges,
+            and progress at your own pace.
+
+            <br><br>
+
+            The world is also inspired by different anime, including
+            series such as Naruto and One Piece. Our goal is to bring
+            together the things people love about these worlds while
+            making Grand World feel like its own unique experience.
           </p>
+
         </div>
 
-        <div class="about-mark reveal">
-          <span>GW</span>
+        <div class="about-image reveal">
+          <img src="grandworld-pfp.webp" alt="Grand World game artwork">
         </div>
+
       </div>
+
     </section>
 
     <!-- FEATURES -->
-    <section class="features">
+    <section class="features" id="features">
+
       <div class="section-inner">
+
         <div class="reveal">
           <div class="section-label">02 — The experience</div>
-          <h2 class="section-title">Beyond the known.</h2>
+
+          <h2 class="section-title">
+            Beyond the known.
+          </h2>
+
           <p class="section-copy">
-            A world shaped by exploration, discovery and the choices you make.
+            There is more to this world than what first meets the eye.
+            Every journey is different. Every discovery has a story.
           </p>
         </div>
 
         <div class="feature-grid">
+
           <article class="feature-card reveal">
             <div class="feature-number">I</div>
             <h3>Explore</h3>
             <p>
-              Discover different regions, forgotten places and secrets hidden
-              throughout the world.
+              Venture across different regions and uncover places
+              hidden beyond the familiar.
             </p>
           </article>
 
@@ -771,8 +804,8 @@
             <div class="feature-number">II</div>
             <h3>Discover</h3>
             <p>
-              Uncover stories, mysteries and the history behind the world of
-              Grand World.
+              Find secrets, uncover mysteries and learn what lies
+              beneath the surface of this world.
             </p>
           </article>
 
@@ -780,112 +813,137 @@
             <div class="feature-number">III</div>
             <h3>Become</h3>
             <p>
-              Shape your own journey, develop your character and decide how
-              your adventure unfolds.
+              Face challenges, grow stronger and shape a journey
+              that belongs to you alone.
             </p>
           </article>
+
         </div>
+
       </div>
+
     </section>
 
-    <!-- WORLD -->
+    <!-- THE WORLD -->
     <section class="world" id="world">
+
       <div class="section-inner">
+
         <div class="world-heading reveal">
+
           <div>
             <div class="section-label">03 — The lands beyond</div>
-            <h2 class="section-title">A world to uncover.</h2>
+            <h2 class="section-title">
+              What lies beyond?
+            </h2>
           </div>
 
           <p class="world-note">
-            Every region holds something waiting to be discovered.
-            What lies beyond the horizon is yours to find.
+            Not everything is meant to be revealed.
+            Some secrets are waiting to be found.
+            Some paths are waiting to be taken.
           </p>
+
         </div>
 
         <div class="world-banner reveal">
-          <div>
-            <div class="section-label">The journey begins</div>
-            <h3>Enter the unknown.</h3>
-            <p>Explore. Discover. Write your story.</p>
+
+          <div class="world-banner-content">
+
+            <div class="section-label">
+              Beyond the horizon
+            </div>
+
+            <h3>The unknown awaits.</h3>
+
+            <p>
+              Explore. Discover. Embrace the unknown.
+            </p>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
-    <!-- ENCYCLOPEDIA -->
-    <section class="encyclopedia" id="encyclopedia">
-      <div class="section-inner">
-        <div class="reveal">
-          <div class="section-label">04 — Knowledge & lore</div>
-          <h2 class="section-title">The Encyclopedia.</h2>
-          <p class="section-copy">
-            A growing collection of knowledge about the world, its people
-            and everything that exists within it.
-          </p>
-        </div>
-
-        <div class="encyclopedia-list reveal">
-          <a class="encyclopedia-item" href="#community">
-            <span>Races & Origins</span><span>↗</span>
-          </a>
-          <a class="encyclopedia-item" href="#community">
-            <span>Abilities & Powers</span><span>↗</span>
-          </a>
-          <a class="encyclopedia-item" href="#community">
-            <span>Weapons & Items</span><span>↗</span>
-          </a>
-          <a class="encyclopedia-item" href="#community">
-            <span>Enemies & Bosses</span><span>↗</span>
-          </a>
-          <a class="encyclopedia-item" href="#community">
-            <span>Lore & History</span><span>↗</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- COMMUNITY -->
+    <!-- COMMUNITY / MORE INFORMATION -->
     <section class="community" id="community">
-      <div class="section-inner reveal">
-        <div class="section-label">05 — Join the community</div>
-        <h2 class="section-title">Your adventure<br>doesn't end here.</h2>
 
-        <p>
-          Be part of the Grand World community. Follow development,
-          meet other players and stay up to date with everything happening
-          in the world.
+      <div class="section-inner reveal">
+
+        <div class="section-label">
+          04 — Beyond this page
+        </div>
+
+        <h2 class="section-title">
+          Curious about what lies ahead?
+        </h2>
+
+        <p class="community-copy">
+          There is much more to Grand World than what you see here.
+          For more information, updates and announcements, join our
+          Discord server or watch our latest TikTok videos.
+
+          <br><br>
+
+          The world is still unfolding. Stay close.
         </p>
 
         <div class="hero-actions">
+
           <a href="https://discord.gg/8yZ4nhfQhH"
-             target="_blank" rel="noopener noreferrer"
-             class="button button-gold">Join our Discord ↗</a>
+             target="_blank"
+             rel="noopener noreferrer"
+             class="button button-gold">
+            Join our Discord ↗
+          </a>
 
           <a href="https://www.tiktok.com/@grand_unknow"
-             target="_blank" rel="noopener noreferrer"
-             class="button button-outline">Follow us on TikTok ↗</a>
+             target="_blank"
+             rel="noopener noreferrer"
+             class="button button-outline">
+            Watch our TikToks ↗
+          </a>
+
         </div>
+
+        <div class="social-note">
+          The story is only beginning.
+        </div>
+
       </div>
+
     </section>
+
   </main>
 
   <!-- FOOTER -->
   <footer>
-    <a href="#home" class="footer-logo">GRAND WORLD</a>
+
+    <a href="#home" class="footer-brand">
+      <img src="grandworld-pfp.webp" alt="">
+      GRAND WORLD
+    </a>
 
     <div class="footer-links">
       <a href="#about">About</a>
-      <a href="#world">World</a>
+      <a href="#world">The World</a>
       <a href="https://discord.gg/8yZ4nhfQhH"
-         target="_blank" rel="noopener noreferrer">Discord ↗</a>
+         target="_blank" rel="noopener noreferrer">
+        Discord ↗
+      </a>
       <a href="https://www.tiktok.com/@grand_unknow"
-         target="_blank" rel="noopener noreferrer">TikTok ↗</a>
+         target="_blank" rel="noopener noreferrer">
+        TikTok ↗
+      </a>
     </div>
 
     <div class="copyright">
       © 2026 Grand World. All rights reserved.
     </div>
+
   </footer>
 
   <script>
@@ -895,6 +953,7 @@
 
     menuToggle.addEventListener("click", () => {
       navLinks.classList.toggle("open");
+
       menuToggle.textContent =
         navLinks.classList.contains("open") ? "×" : "☰";
     });
@@ -906,31 +965,43 @@
       });
     });
 
-    // Navigation changes when scrolling
+    // Navigation background on scroll
     const navbar = document.getElementById("navbar");
 
     window.addEventListener("scroll", () => {
       navbar.classList.toggle("scrolled", window.scrollY > 50);
     });
 
-    // Reveal sections as they enter the screen
+    // Scroll reveal animations
     const revealElements = document.querySelectorAll(".reveal");
 
     if ("IntersectionObserver" in window) {
+
       const observer = new IntersectionObserver((entries) => {
+
         entries.forEach(entry => {
+
           if (entry.isIntersecting) {
             entry.target.classList.add("visible");
             observer.unobserve(entry.target);
           }
+
         });
+
       }, {
         threshold: 0.12
       });
 
-      revealElements.forEach(element => observer.observe(element));
+      revealElements.forEach(element => {
+        observer.observe(element);
+      });
+
     } else {
-      revealElements.forEach(element => element.classList.add("visible"));
+
+      revealElements.forEach(element => {
+        element.classList.add("visible");
+      });
+
     }
   </script>
 
