@@ -4,26 +4,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101e20">
-
-<title>Grand World — Forge Your Own Legend</title>
+<meta name="theme-color" content="#090b0c">
+<title>Grand World — Your World. Your Adventure.</title>
 <link rel="icon" href="grandworld-pfp.webp">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --ocean: #101e20;
-  --deep: #172a2b;
-  --teal: #34514d;
+  --bg: #090b0c;
+  --surface: #111516;
+  --surface-light: #191f20;
+  --white: #f5f3ed;
+  --muted: #9a9d98;
   --gold: #c5a36a;
-  --cream: #e9dfc9;
-  --paper: #d7c7a6;
-  --ink: #24251f;
-  --red: #873e39;
-  --muted: #a69d88;
+  --line: rgba(255,255,255,.12);
 }
 
 * {
@@ -34,14 +30,12 @@
 
 html {
   scroll-behavior: smooth;
-  background: var(--ocean);
-  scroll-padding-top: 80px;
 }
 
 body {
-  background: var(--ocean);
-  color: var(--cream);
-  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  font-family: "DM Sans", sans-serif;
   overflow-x: hidden;
 }
 
@@ -50,132 +44,64 @@ a {
   text-decoration: none;
 }
 
+button {
+  font: inherit;
+}
+
 ::selection {
   background: var(--gold);
-  color: var(--ink);
-}
-
-/* TEXTURE */
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  pointer-events: none;
-  opacity: .075;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
-}
-
-/* SCROLL PROGRESS */
-
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  z-index: 110;
-  pointer-events: none;
-}
-
-.scroll-progress span {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left;
-}
-
-/* GENERAL */
-
-.eyebrow {
-  color: var(--gold);
-  font-size: 10px;
-  letter-spacing: .3em;
-  text-transform: uppercase;
-  font-weight: 700;
-}
-
-.section-title {
-  font-family: 'Cinzel', serif;
-  font-weight: 500;
-  font-size: clamp(38px, 6vw, 76px);
-  line-height: 1.1;
-  letter-spacing: -.04em;
-}
-
-.gold {
-  color: var(--gold);
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition:
-    opacity 1s ease,
-    transform 1s cubic-bezier(.2,.7,.2,1);
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+  color: #090b0c;
 }
 
 /* NAVIGATION */
 
-.nav {
+.navbar {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 80;
-  padding: 19px 6%;
+  inset: 0 0 auto;
+  z-index: 100;
+  height: 76px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(233,223,201,.12);
-  background: rgba(16,30,32,.72);
-  backdrop-filter: blur(18px);
-  transition: background .3s, padding .3s;
+  padding: 0 7%;
+  background: rgba(9,11,12,.72);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  transition: background .3s, height .3s;
 }
 
-.nav.scrolled {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  background: rgba(16,30,32,.96);
+.navbar.scrolled {
+  height: 64px;
+  background: rgba(9,11,12,.94);
 }
 
-.brand {
+.nav-brand {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-family: 'Cinzel', serif;
-  font-size: 14px;
-  letter-spacing: .14em;
+  font-family: Cinzel, serif;
+  font-size: 17px;
+  letter-spacing: 3px;
 }
 
-.brand img {
-  width: 38px;
-  height: 38px;
-  object-fit: cover;
+.nav-brand img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
   border-radius: 50%;
-  border: 1px solid var(--gold);
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 35px;
+  gap: 34px;
+  font-size: 12px;
+  color: #c3c4bf;
 }
 
 .nav-links a {
-  color: #d0c7b5;
-  font-size: 11px;
-  letter-spacing: .13em;
-  text-transform: uppercase;
-  transition: color .3s;
+  transition: color .25s;
 }
 
 .nav-links a:hover {
@@ -183,16 +109,17 @@ body::before {
 }
 
 .nav-join {
-  border: 1px solid rgba(197,163,106,.7);
-  padding: 12px 20px;
-  color: var(--gold) !important;
+  padding: 10px 19px;
+  border: 1px solid rgba(197,163,106,.6);
+  border-radius: 30px;
+  color: var(--gold);
 }
 
 .menu-toggle {
   display: none;
-  border: 0;
   background: none;
-  color: var(--cream);
+  border: 0;
+  color: white;
   font-size: 25px;
   cursor: pointer;
 }
@@ -206,770 +133,498 @@ body::before {
   align-items: center;
   justify-content: center;
   text-align: center;
+  padding: 130px 24px 100px;
   overflow: hidden;
-  padding: 130px 20px 100px;
-
   background:
-    radial-gradient(ellipse at 50% 65%, rgba(94,91,64,.28), transparent 48%),
-    radial-gradient(ellipse at 20% 30%, rgba(42,92,86,.48), transparent 45%),
-    linear-gradient(180deg, #101e20 0%, #203b39 55%, #111f20 100%);
+    radial-gradient(ellipse at 50% 35%, rgba(60,83,75,.32), transparent 45%),
+    radial-gradient(ellipse at 15% 90%, rgba(112,76,45,.13), transparent 35%),
+    linear-gradient(180deg, #101819 0%, #090b0c 85%);
 }
 
 .hero::before {
   content: "";
   position: absolute;
-  inset: -4%;
-  opacity: .5;
-  background:
-    repeating-linear-gradient(115deg, transparent 0 90px, rgba(222,194,140,.035) 91px, transparent 93px),
-    radial-gradient(ellipse at 50% 100%, transparent 20%, #101e20 90%);
-  transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px));
-  transition: transform .3s ease-out;
+  inset: 0;
+  opacity: .25;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 70px 70px;
+  mask-image: linear-gradient(to bottom, black, transparent 90%);
 }
 
-.hero::after {
-  content: "";
+.hero-glow {
   position: absolute;
-  width: 850px;
-  height: 850px;
-  border: 1px solid rgba(197,163,106,.12);
+  width: 600px;
+  height: 600px;
   border-radius: 50%;
-  box-shadow:
-    0 0 0 55px rgba(197,163,106,.025),
-    0 0 0 110px rgba(197,163,106,.02);
-  pointer-events: none;
-  animation: ringPulse 8s ease-in-out infinite;
-}
-
-@keyframes ringPulse {
-  0%,100% { transform: scale(.96); opacity: .5; }
-  50% { transform: scale(1.04); opacity: 1; }
+  background: rgba(197,163,106,.08);
+  filter: blur(100px);
+  animation: glow 7s ease-in-out infinite alternate;
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
   max-width: 950px;
-  animation: cinematicEnter 1.6s cubic-bezier(.2,.7,.2,1) both;
-}
-
-@keyframes cinematicEnter {
-  from {
-    opacity: 0;
-    transform: translateY(45px) scale(.97);
-    filter: blur(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-  }
 }
 
 .hero-logo {
-  width: 112px;
-  height: 112px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 1px solid rgba(197,163,106,.8);
-  box-shadow: 0 0 60px rgba(197,163,106,.15);
-  margin-bottom: 30px;
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  margin-bottom: 32px;
+  filter: drop-shadow(0 0 35px rgba(197,163,106,.2));
   animation: float 6s ease-in-out infinite;
 }
 
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
-
-.hero-kicker {
+.eyebrow {
   color: var(--gold);
-  font-size: 10px;
-  letter-spacing: .42em;
+  font-size: 11px;
+  letter-spacing: 5px;
   text-transform: uppercase;
-  margin-bottom: 20px;
-  animation: fadeUp 1s .2s both;
+  margin-bottom: 23px;
 }
 
 .hero h1 {
-  font-family: 'Cinzel', serif;
+  font-family: Cinzel, serif;
   font-weight: 500;
-  font-size: clamp(48px, 10vw, 112px);
-  letter-spacing: .06em;
-  line-height: 1;
-  text-shadow: 0 8px 40px rgba(0,0,0,.4);
-  animation: titleReveal 1.5s .3s both;
+  font-size: clamp(48px, 9vw, 112px);
+  line-height: 1.05;
+  letter-spacing: 4px;
+  margin-bottom: 25px;
 }
 
-@keyframes titleReveal {
-  from {
-    opacity: 0;
-    letter-spacing: .22em;
-    filter: blur(8px);
-  }
-  to {
-    opacity: 1;
-    letter-spacing: .06em;
-    filter: blur(0);
-  }
+.hero h1 span {
+  color: var(--gold);
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.hero-description {
+  max-width: 570px;
+  margin: 0 auto;
+  color: #b4b8b2;
+  font-size: 16px;
+  line-height: 1.9;
 }
 
-.hero-subtitle {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  color: #c9c1ad;
-  font-size: clamp(17px, 2vw, 23px);
-  margin: 25px auto 36px;
-  max-width: 620px;
-  line-height: 1.7;
-  animation: fadeUp 1.2s .7s both;
-}
-
-.status {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  border: 1px solid rgba(197,163,106,.35);
-  padding: 10px 17px;
-  color: #d9c8a6;
-  font-size: 9px;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  margin-bottom: 32px;
-  background: rgba(16,30,32,.3);
-}
-
-.status-dot {
-  width: 7px;
-  height: 7px;
-  background: #c5a36a;
-  border-radius: 50%;
-  box-shadow: 0 0 12px var(--gold);
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  50% { opacity: .35; }
-}
-
-.hero-buttons {
+.hero-actions {
+  margin-top: 38px;
   display: flex;
   justify-content: center;
   gap: 14px;
   flex-wrap: wrap;
-  animation: fadeUp 1.2s 1s both;
 }
 
-.btn {
-  display: inline-block;
-  padding: 16px 26px;
-  font-size: 10px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  transition: .3s;
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 26px;
+  border-radius: 40px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: transform .25s, background .25s, border-color .25s;
 }
 
-.btn-primary {
+.button:hover {
+  transform: translateY(-3px);
+}
+
+.button-primary {
+  color: #111;
+  background: var(--white);
+}
+
+.button-primary:hover {
   background: var(--gold);
-  color: #17201d;
 }
 
-.btn-primary:hover {
-  background: #e0c28c;
-  transform: translateY(-3px);
-  box-shadow: 0 10px 35px rgba(197,163,106,.2);
+.button-secondary {
+  border: 1px solid rgba(255,255,255,.25);
+  color: var(--white);
 }
 
-.btn-outline {
-  border: 1px solid rgba(233,223,201,.45);
-  color: var(--cream);
-}
-
-.btn-outline:hover {
+.button-secondary:hover {
   border-color: var(--gold);
-  color: var(--gold);
-  transform: translateY(-3px);
 }
 
 .scroll-note {
   position: absolute;
-  bottom: 30px;
+  bottom: 35px;
   left: 50%;
   transform: translateX(-50%);
-  color: #a99e86;
-  font-size: 9px;
-  letter-spacing: .3em;
+  color: #777d78;
+  font-size: 10px;
+  letter-spacing: 3px;
   text-transform: uppercase;
-  z-index: 2;
 }
 
 .scroll-note::after {
   content: "";
   display: block;
   width: 1px;
-  height: 42px;
-  background: var(--gold);
+  height: 35px;
   margin: 14px auto 0;
-  transform-origin: top;
-  animation: scrollline 2s infinite;
+  background: linear-gradient(var(--gold), transparent);
 }
 
-@keyframes scrollline {
-  0% { transform: scaleY(0); }
-  50% { transform: scaleY(1); }
-  100% { transform: scaleY(0); }
-}
-
-/* INTRODUCTION */
+/* INTRO */
 
 .intro {
-  position: relative;
   padding: 150px 8%;
-  background:
-    radial-gradient(ellipse at 80% 50%, rgba(197,163,106,.09), transparent 40%),
-    #e4d6b9;
-  color: var(--ink);
-  overflow: hidden;
-}
-
-.intro::before {
-  content: "GW";
-  position: absolute;
-  right: -30px;
-  top: 10px;
-  font-family: 'Cinzel', serif;
-  font-size: clamp(180px, 32vw, 420px);
-  color: rgba(80,65,42,.045);
-  pointer-events: none;
-}
-
-.intro-inner {
-  max-width: 1100px;
-  margin: auto;
-  position: relative;
-  z-index: 1;
+  text-align: center;
+  background: #f0ece2;
+  color: #171a18;
 }
 
 .intro .eyebrow {
-  color: #856a40;
-}
-
-.intro-grid {
-  display: grid;
-  grid-template-columns: 1.1fr .9fr;
-  gap: 80px;
-  align-items: center;
-  margin-top: 35px;
+  color: #8a7048;
 }
 
 .intro h2 {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(38px, 5vw, 66px);
+  max-width: 900px;
+  margin: 0 auto 30px;
+  font-family: Cinzel, serif;
+  font-size: clamp(34px, 5.5vw, 66px);
+  line-height: 1.25;
   font-weight: 500;
-  line-height: 1.15;
 }
 
-.intro-copy {
-  color: #5d5546;
-  font-size: 15px;
-  line-height: 2;
+.intro h2 span {
+  color: #96784a;
 }
 
-.intro-copy p + p {
-  margin-top: 18px;
-}
-
-.ink-line {
-  width: 65px;
-  height: 2px;
-  background: var(--red);
-  margin: 27px 0;
-}
-
-/* STORY */
-
-.story {
-  padding: 145px 8%;
-  position: relative;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(54,93,83,.35), transparent 60%),
-    #142626;
-}
-
-.story-inner {
-  max-width: 1100px;
+.intro p {
+  max-width: 650px;
   margin: auto;
-}
-
-.story-heading {
-  max-width: 700px;
-  margin-bottom: 80px;
-}
-
-.story-heading p {
-  color: #b8b3a4;
-  max-width: 520px;
+  color: #62645e;
   line-height: 1.9;
-  margin-top: 25px;
+  font-size: 15px;
 }
 
-.story-grid {
+/* FEATURE SECTIONS */
+
+.section {
+  padding: 130px 9%;
+}
+
+.section-heading {
+  max-width: 720px;
+  margin: 0 auto 70px;
+  text-align: center;
+}
+
+.section-heading .eyebrow {
+  margin-bottom: 20px;
+}
+
+.section-heading h2 {
+  font-family: Cinzel, serif;
+  font-size: clamp(35px, 5vw, 62px);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.section-heading p {
+  color: var(--muted);
+  line-height: 1.8;
+  margin-top: 22px;
+  font-size: 15px;
+}
+
+.feature {
+  min-height: 420px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 55px 0;
 }
 
-.story-card {
-  min-height: 360px;
-  padding: 32px 26px;
+.feature + .feature {
+  border-top: 1px solid var(--line);
+}
+
+.feature.reverse .feature-copy {
+  order: 2;
+}
+
+.feature.reverse .feature-art {
+  order: 1;
+}
+
+.feature-number {
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 4px;
+  margin-bottom: 24px;
+}
+
+.feature-copy h3 {
+  font-family: Cinzel, serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 22px;
+}
+
+.feature-copy p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.9;
+  max-width: 440px;
+}
+
+.feature-art {
+  min-height: 340px;
   position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
-  border: 1px solid rgba(197,163,106,.28);
+  border-radius: 8px;
   background:
-    linear-gradient(180deg, transparent 0%, rgba(8,17,17,.92) 100%),
-    radial-gradient(ellipse at 50% 25%, rgba(157,123,75,.35), transparent 55%),
-    #263d38;
-  transition:
-    transform .5s,
-    border-color .5s,
-    box-shadow .5s;
+    radial-gradient(ellipse at 50% 40%, rgba(197,163,106,.18), transparent 50%),
+    linear-gradient(145deg, #1d2928, #101516);
+  border: 1px solid rgba(255,255,255,.08);
 }
 
-.story-card:nth-child(2) {
-  background:
-    linear-gradient(180deg, transparent 0%, rgba(8,17,17,.92) 100%),
-    radial-gradient(ellipse at 50% 25%, rgba(111,65,58,.5), transparent 55%),
-    #352b29;
-}
-
-.story-card:nth-child(3) {
-  background:
-    linear-gradient(180deg, transparent 0%, rgba(8,17,17,.92) 100%),
-    radial-gradient(ellipse at 50% 25%, rgba(63,107,103,.5), transparent 55%),
-    #253b3a;
-}
-
-.story-card:hover {
-  transform: translateY(-10px);
-  border-color: var(--gold);
-  box-shadow: 0 20px 50px rgba(0,0,0,.22);
-}
-
-.card-number {
-  position: absolute;
-  top: 25px;
-  left: 26px;
-  color: var(--gold);
-  font-family: 'Cinzel', serif;
-  font-size: 13px;
-  letter-spacing: .15em;
-}
-
-.card-symbol {
-  position: absolute;
-  top: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: 'Cinzel', serif;
-  color: rgba(220,190,135,.25);
-  font-size: 100px;
-  transition: .6s ease;
-}
-
-.story-card:hover .card-symbol {
-  color: rgba(220,190,135,.55);
-  transform: translateX(-50%) translateY(-12px) scale(1.1);
-}
-
-.story-card h3 {
-  font-family: 'Cinzel', serif;
-  font-size: 22px;
-  font-weight: 500;
-  margin-bottom: 12px;
-  transition: color .4s;
-}
-
-.story-card:hover h3 {
-  color: var(--gold);
-}
-
-.story-card p {
-  color: #c1bdaf;
-  font-size: 13px;
-  line-height: 1.8;
-}
-
-/* WORLD MAP */
-
-.world {
-  position: relative;
-  padding: 150px 8%;
-  text-align: center;
-  overflow: hidden;
-  color: var(--ink);
-  background:
-    radial-gradient(ellipse at 50% 50%, rgba(244,224,185,.92), rgba(190,164,119,.95)),
-    #d7c7a6;
-}
-
-.world::before,
-.world::after {
+.feature-art::before,
+.feature-art::after {
   content: "";
   position: absolute;
-  border: 1px solid rgba(73,62,42,.18);
+  border: 1px solid rgba(197,163,106,.2);
   border-radius: 50%;
-  pointer-events: none;
 }
 
-.world::before {
-  width: 600px;
-  height: 600px;
-  top: -300px;
-  left: -200px;
+.feature-art::before {
+  width: 250px;
+  height: 250px;
 }
 
-.world::after {
-  width: 800px;
-  height: 800px;
-  bottom: -500px;
-  right: -250px;
+.feature-art::after {
+  width: 180px;
+  height: 180px;
 }
 
-.world-inner {
-  max-width: 900px;
-  margin: auto;
+.art-symbol {
   position: relative;
   z-index: 1;
+  color: var(--gold);
+  font-family: Cinzel, serif;
+  font-size: 100px;
+  opacity: .85;
+  text-shadow: 0 0 50px rgba(197,163,106,.3);
+  animation: float 6s ease-in-out infinite;
 }
 
-.world .eyebrow {
-  color: #876b40;
+.art-label {
+  position: absolute;
+  bottom: 25px;
+  color: #9b9e96;
+  letter-spacing: 4px;
+  font-size: 9px;
+}
+
+/* WORLD STATEMENT */
+
+.world {
+  padding: 160px 8%;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at center, rgba(58,77,68,.25), transparent 60%),
+    #0d1213;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 .world h2 {
-  margin: 20px 0;
-}
-
-.world-description {
-  max-width: 610px;
+  max-width: 1000px;
   margin: 0 auto;
-  color: #615744;
-  font-size: 15px;
-  line-height: 2;
+  font-family: Cinzel, serif;
+  font-size: clamp(38px, 7vw, 82px);
+  font-weight: 500;
+  line-height: 1.2;
 }
 
-/* MAP */
-
-.map-art {
-  position: relative;
-  max-width: 850px;
-  height: 340px;
-  margin: 65px auto 0;
-  border: 1px solid rgba(91,68,38,.45);
-  background:
-    repeating-linear-gradient(25deg, transparent 0 45px, rgba(94,76,48,.08) 46px, transparent 48px),
-    radial-gradient(ellipse at 25% 50%, rgba(95,116,87,.25), transparent 20%),
-    radial-gradient(ellipse at 72% 32%, rgba(95,116,87,.28), transparent 17%),
-    radial-gradient(ellipse at 55% 75%, rgba(95,116,87,.22), transparent 13%),
-    rgba(179,153,108,.2);
-  overflow: hidden;
-}
-
-.map-art::before {
-  content: "";
-  position: absolute;
-  inset: 25px;
-  border: 1px dashed rgba(92,67,38,.35);
-}
-
-.map-island {
-  position: absolute;
-  border-radius: 48% 52% 42% 58%;
-  background: #65735a;
-  box-shadow:
-    inset -12px -8px 0 rgba(34,58,44,.2),
-    0 8px 12px rgba(60,45,25,.15);
-  transform: rotate(-20deg);
-  animation: islandFloat 7s ease-in-out infinite;
-}
-
-.island-one {
-  width: 105px;
-  height: 65px;
-  left: 18%;
-  top: 28%;
-}
-
-.island-two {
-  width: 130px;
-  height: 85px;
-  left: 47%;
-  top: 48%;
-  transform: rotate(25deg);
-  animation-delay: -2s;
-}
-
-.island-three {
-  width: 75px;
-  height: 55px;
-  right: 12%;
-  top: 20%;
-  transform: rotate(40deg);
-  animation-delay: -4s;
-}
-
-@keyframes islandFloat {
-  0%,100% { translate: 0 0; }
-  50% { translate: 0 -9px; }
-}
-
-.map-route {
-  position: absolute;
-  width: 46%;
-  height: 40%;
-  left: 27%;
-  top: 30%;
-  border-top: 2px dashed rgba(133,62,49,.8);
-  border-radius: 50%;
-  transform: rotate(20deg);
-  animation: mapJourney 5s ease-in-out infinite;
-}
-
-@keyframes mapJourney {
-  0%,100% {
-    opacity: .4;
-    scale: .96;
-  }
-  50% {
-    opacity: 1;
-    scale: 1.04;
-  }
-}
-
-.map-label {
-  position: absolute;
-  color: #51432e;
-  font-family: 'Cinzel', serif;
-  font-size: 10px;
-  letter-spacing: .12em;
-}
-
-.map-label.one {
-  top: 15%;
-  left: 13%;
-}
-
-.map-label.two {
-  bottom: 17%;
-  left: 46%;
-}
-
-.map-label.three {
-  top: 12%;
-  right: 10%;
-}
-
-.map-compass {
-  position: absolute;
-  bottom: 22px;
-  right: 28px;
-  width: 55px;
-  height: 55px;
-  border: 1px solid rgba(76,58,36,.65);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-family: 'Cinzel', serif;
-  color: #6e4937;
-  font-size: 23px;
-  animation: compassTurn 24s linear infinite;
-}
-
-@keyframes compassTurn {
-  to { transform: rotate(360deg); }
-}
-
-/* QUOTE */
-
-.quote-section {
-  padding: 130px 8%;
-  text-align: center;
-  background:
-    radial-gradient(ellipse at 50% 50%, rgba(116,59,49,.35), transparent 60%),
-    #202c29;
-}
-
-.quote-section blockquote {
-  max-width: 850px;
-  margin: 25px auto;
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(26px, 4vw, 46px);
-  font-style: italic;
-  line-height: 1.5;
-  color: #e2d5bd;
-}
-
-.quote-credit {
+.world h2 span {
   color: var(--gold);
-  font-size: 9px;
-  letter-spacing: .25em;
-  text-transform: uppercase;
+}
+
+.world p {
+  max-width: 580px;
+  margin: 30px auto 0;
+  color: var(--muted);
+  line-height: 1.9;
 }
 
 /* COMMUNITY */
 
 .community {
-  position: relative;
-  padding: 140px 8%;
   text-align: center;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse at 50% 100%, rgba(139,66,54,.35), transparent 55%),
-    #111e20;
+  padding: 140px 24px;
 }
 
-.community-inner {
-  max-width: 800px;
-  margin: auto;
+.community h2 {
+  font-family: Cinzel, serif;
+  font-size: clamp(38px, 6vw, 70px);
+  font-weight: 500;
 }
 
 .community p {
-  color: #bcb5a5;
-  line-height: 1.9;
-  max-width: 560px;
-  margin: 25px auto 35px;
+  color: var(--muted);
+  margin: 22px auto 32px;
+  max-width: 480px;
+  line-height: 1.8;
 }
 
 .community-links {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 14px;
-}
-
-.community-links a {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(197,163,106,.5);
-  padding: 17px 27px;
-  color: var(--gold);
-  font-size: 10px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  transition: .3s;
-}
-
-.community-links a::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(197,163,106,.15);
-  transform: translateX(-105%);
-  transition: transform .4s ease;
-}
-
-.community-links a:hover::before {
-  transform: translateX(0);
-}
-
-.community-links a:hover {
-  color: #f1dfbd;
-  border-color: var(--gold);
+  gap: 13px;
 }
 
 /* FOOTER */
 
 footer {
-  padding: 30px 7%;
+  padding: 35px 7%;
+  border-top: 1px solid var(--line);
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  border-top: 1px solid rgba(233,223,201,.12);
-  color: #8f9386;
-  font-size: 10px;
-  letter-spacing: .08em;
+  color: #777d78;
+  font-size: 11px;
 }
 
 .footer-brand {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: 'Cinzel', serif;
-  color: var(--cream);
-  letter-spacing: .12em;
+  color: var(--white);
+  font-family: Cinzel, serif;
+  letter-spacing: 2px;
 }
 
 .footer-brand img {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
+  width: 27px;
+  height: 27px;
+  object-fit: contain;
 }
 
-footer a:hover {
+.footer-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-links a:hover {
   color: var(--gold);
+}
+
+/* ANIMATIONS */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity .9s ease, transform .9s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes glow {
+  from { transform: scale(.9); opacity: .5; }
+  to { transform: scale(1.15); opacity: 1; }
 }
 
 /* MOBILE */
 
-@media(max-width: 800px) {
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    padding: 25px 7%;
-    background: rgba(16,30,32,.98);
-    flex-direction: column;
-    align-items: stretch;
-    gap: 24px;
-    border-bottom: 1px solid rgba(197,163,106,.2);
-  }
-
-  .nav-links.open {
-    display: flex;
-    animation: fadeUp .3s ease both;
+@media (max-width: 760px) {
+  .navbar {
+    padding: 0 6%;
   }
 
   .menu-toggle {
     display: block;
   }
 
-  .intro-grid {
+  .nav-links {
+    position: absolute;
+    top: 76px;
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 12px 6% 24px;
+    background: rgba(9,11,12,.98);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: 15px 0;
+  }
+
+  .nav-join {
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .hero {
+    min-height: 90svh;
+  }
+
+  .hero-logo {
+    width: 85px;
+    height: 85px;
+  }
+
+  .hero-description {
+    font-size: 14px;
+  }
+
+  .intro,
+  .section,
+  .world {
+    padding: 95px 7%;
+  }
+
+  .feature {
     grid-template-columns: 1fr;
     gap: 30px;
+    padding: 45px 0;
   }
 
-  .story-grid {
-    grid-template-columns: 1fr;
+  .feature.reverse .feature-copy,
+  .feature.reverse .feature-art {
+    order: initial;
   }
 
-  .story-card {
-    min-height: 270px;
+  .feature-art {
+    min-height: 260px;
   }
 
-  .map-art {
-    height: 260px;
+  .art-symbol {
+    font-size: 75px;
   }
 
-  .map-label {
-    font-size: 8px;
+  .section-heading {
+    margin-bottom: 35px;
   }
 
   footer {
@@ -978,15 +633,10 @@ footer a:hover {
   }
 }
 
-/* ACCESSIBILITY */
-
-@media(prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
     scroll-behavior: auto !important;
     animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
 
@@ -1000,417 +650,192 @@ footer a:hover {
 
 <body>
 
-<div class="scroll-progress">
-  <span id="progressBar"></span>
-</div>
-
-<!-- NAVIGATION -->
-
-<nav class="nav" id="navbar">
-
-  <a href="#home" class="brand">
+<nav class="navbar" id="navbar">
+  <a href="#home" class="nav-brand">
     <img src="grandworld-pfp.webp" alt="Grand World logo">
     GRAND WORLD
   </a>
 
-  <button
-    class="menu-toggle"
-    id="menuToggle"
-    aria-label="Open menu"
-    aria-expanded="false"
-  >☰</button>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
 
   <div class="nav-links" id="navLinks">
-    <a href="#about">The Story</a>
-    <a href="#adventure">Adventure</a>
+    <a href="#about">About</a>
     <a href="#world">The World</a>
-    <a href="#community" class="nav-join">Join the Crew</a>
+    <a href="#features">Features</a>
+    <a href="#community">Community</a>
+    <a class="nav-join" href="https://discord.gg/8yZ4nhfQhH" target="_blank" rel="noopener">Join Discord</a>
   </div>
-
 </nav>
 
 <main>
 
-<!-- HERO -->
-
 <section class="hero" id="home">
+  <div class="hero-glow"></div>
 
   <div class="hero-content">
+    <img class="hero-logo" src="grandworld-pfp.webp" alt="Grand World emblem">
 
-    <img
-      src="grandworld-pfp.webp"
-      class="hero-logo"
-      alt="Grand World emblem"
-    >
+    <div class="eyebrow">A world without limits</div>
 
-    <div class="hero-kicker">
-      An open world beyond imagination
-    </div>
+    <h1>GRAND <span>WORLD</span></h1>
 
-    <h1>GRAND WORLD</h1>
-
-    <p class="hero-subtitle">
-      An endless world. A thousand paths.
-      One legend waiting to be written.
+    <p class="hero-description">
+      An open world. Endless possibilities. Your adventure begins
+      wherever you choose to take it.
     </p>
 
-    <div class="status">
-      <span class="status-dot"></span>
-      Still in development
+    <div class="hero-actions">
+      <a class="button button-primary" href="https://discord.gg/8yZ4nhfQhH" target="_blank" rel="noopener">Discover Grand World</a>
+      <a class="button button-secondary" href="https://streamable.com/yq8s3y" target="_blank" rel="noopener">Watch Trailer ↗</a>
     </div>
-
-    <div class="hero-buttons">
-
-      <a href="#about" class="btn btn-primary">
-        Discover the world
-      </a>
-
-      <a
-        href="https://discord.gg/8yZ4nhfQhH"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn btn-outline"
-      >
-        Join our Discord
-      </a>
-
-    </div>
-
   </div>
 
-  <div class="scroll-note">
-    Scroll to discover
-  </div>
-
+  <div class="scroll-note">Scroll to explore</div>
 </section>
-
-<!-- INTRODUCTION -->
 
 <section class="intro" id="about">
+  <div class="eyebrow reveal">Beyond the known</div>
 
-  <div class="intro-inner">
+  <h2 class="reveal">
+    Not just a world to explore.
+    <span>A world to make your own.</span>
+  </h2>
 
-    <div class="eyebrow reveal">
-      01 — The beginning
-    </div>
-
-    <div class="intro-grid">
-
-      <div class="reveal">
-
-        <h2>
-          A world without a
-          <span style="color:#873e39">single path.</span>
-        </h2>
-
-        <div class="ink-line"></div>
-
-      </div>
-
-      <div class="intro-copy reveal">
-
-        <p>
-          Grand World is an open-world MMORPG set in a
-          dark fantasy universe. A world filled with secrets,
-          challenges and places waiting to be discovered.
-        </p>
-
-        <p>
-          You decide where to go, what to pursue and how
-          your adventure unfolds. There is no single road
-          you must follow.
-        </p>
-
-        <p>
-          Explore at your own pace. Create your own story.
-          Forge your own legend.
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
+  <p class="reveal">
+    Grand World is an open-world MMORPG set in a dark fantasy universe.
+    Discover hidden secrets, face powerful enemies, explore distant regions,
+    and create an adventure that belongs to you. There is no single path to follow.
+  </p>
 </section>
 
-<!-- ADVENTURE -->
+<section class="section" id="features">
+  <div class="section-heading reveal">
+    <div class="eyebrow">The experience</div>
+    <h2>Adventure has no single direction.</h2>
+    <p>Every journey is different. Discover what waits beyond the horizon.</p>
+  </div>
 
-<section class="story" id="adventure">
-
-  <div class="story-inner">
-
-    <div class="story-heading reveal">
-
-      <div class="eyebrow">
-        02 — Your journey
-      </div>
-
-      <h2 class="section-title">
-        Every legend begins
-        <span class="gold">somewhere.</span>
-      </h2>
-
+  <div class="feature reveal">
+    <div class="feature-copy">
+      <div class="feature-number">01 — EXPLORE</div>
+      <h3>A world waiting to be discovered.</h3>
       <p>
-        The world is yours to explore. Discover what lies
-        beyond the horizon and decide what kind of adventure
-        you want to create.
+        Travel through different regions, uncover hidden places,
+        and find secrets scattered throughout a world full of mystery.
       </p>
-
     </div>
 
-    <div class="story-grid">
-
-      <article class="story-card reveal">
-
-        <div class="card-number">
-          I — EXPLORE
-        </div>
-
-        <div class="card-symbol">✧</div>
-
-        <h3>Uncharted Lands</h3>
-
-        <p>
-          Travel through mysterious regions, uncover hidden
-          places and discover secrets scattered throughout
-          the world.
-        </p>
-
-      </article>
-
-      <article class="story-card reveal">
-
-        <div class="card-number">
-          II — CONQUER
-        </div>
-
-        <div class="card-symbol">⚔</div>
-
-        <h3>Face the Unknown</h3>
-
-        <p>
-          Take on enemies, overcome challenges and prove
-          yourself in a world that rewards courage and
-          determination.
-        </p>
-
-      </article>
-
-      <article class="story-card reveal">
-
-        <div class="card-number">
-          III — BECOME
-        </div>
-
-        <div class="card-symbol">⌘</div>
-
-        <h3>Write Your Legend</h3>
-
-        <p>
-          Choose your own direction, discover your
-          possibilities and shape an adventure that
-          belongs to you.
-        </p>
-
-      </article>
-
+    <div class="feature-art">
+      <div class="art-symbol">✧</div>
+      <div class="art-label">A WORLD UNKNOWN</div>
     </div>
-
   </div>
 
-</section>
+  <div class="feature reverse reveal">
+    <div class="feature-copy">
+      <div class="feature-number">02 — PROGRESS</div>
+      <h3>Your path. Your choices.</h3>
+      <p>
+        Take on challenges, grow stronger, and decide how you want
+        to experience the world. Your adventure moves at your pace.
+      </p>
+    </div>
 
-<!-- WORLD MAP -->
+    <div class="feature-art">
+      <div class="art-symbol">⚔</div>
+      <div class="art-label">FORGE YOUR DESTINY</div>
+    </div>
+  </div>
+
+  <div class="feature reveal">
+    <div class="feature-copy">
+      <div class="feature-number">03 — CONQUER</div>
+      <h3>Face what lies beyond.</h3>
+      <p>
+        Meet dangerous enemies, overcome difficult challenges,
+        and discover what you are capable of as you explore.
+      </p>
+    </div>
+
+    <div class="feature-art">
+      <div class="art-symbol">◈</div>
+      <div class="art-label">THE UNKNOWN AWAITS</div>
+    </div>
+  </div>
+</section>
 
 <section class="world" id="world">
-
-  <div class="world-inner">
-
-    <div class="eyebrow reveal">
-      03 — Beyond the horizon
-    </div>
-
-    <h2 class="section-title reveal">
-      The world is
-      <span style="color:#873e39">waiting.</span>
-    </h2>
-
-    <p class="world-description reveal">
-      From unexplored lands to forgotten mysteries,
-      Grand World is built around discovery.
-      Every journey can lead somewhere unexpected.
-    </p>
-
-    <div class="map-art reveal">
-
-      <span class="map-label one">
-        THE WESTERN REACH
-      </span>
-
-      <span class="map-label two">
-        FORGOTTEN LANDS
-      </span>
-
-      <span class="map-label three">
-        UNKNOWN TERRITORY
-      </span>
-
-      <div class="map-island island-one"></div>
-      <div class="map-island island-two"></div>
-      <div class="map-island island-three"></div>
-
-      <div class="map-route"></div>
-
-      <div class="map-compass">
-        ✥
-      </div>
-
-    </div>
-
-  </div>
-
+  <div class="eyebrow reveal">One world. Countless stories.</div>
+  <h2 class="reveal">
+    The story isn't written for you.
+    <span>It's yours to create.</span>
+  </h2>
+  <p class="reveal">
+    Explore at your own pace. Choose your own direction.
+    Make every discovery part of your story.
+  </p>
 </section>
-
-<!-- QUOTE -->
-
-<section class="quote-section">
-
-  <div class="eyebrow reveal">
-    A world of possibilities
-  </div>
-
-  <blockquote class="reveal">
-    "The greatest adventures are the ones whose
-    endings have yet to be written."
-  </blockquote>
-
-  <div class="quote-credit reveal">
-    The Grand World philosophy
-  </div>
-
-</section>
-
-<!-- COMMUNITY -->
 
 <section class="community" id="community">
+  <div class="eyebrow reveal">Be part of the journey</div>
+  <h2 class="reveal">The world is waiting.</h2>
+  <p class="reveal">
+    Follow the development of Grand World, connect with the community,
+    and be part of what comes next.
+  </p>
 
-  <div class="community-inner">
-
-    <div class="eyebrow reveal">
-      04 — Your story starts here
-    </div>
-
-    <h2 class="section-title reveal">
-      The world is better
-      <span class="gold">together.</span>
-    </h2>
-
-    <p class="reveal">
-      Follow the development of Grand World,
-      meet the community and stay up to date
-      as the adventure continues to grow.
-    </p>
-
-    <div class="community-links reveal">
-
-      <a
-        href="https://discord.gg/8yZ4nhfQhH"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Join Discord ↗
-      </a>
-
-      <a
-        href="https://www.tiktok.com/@grand_unknow"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Follow TikTok ↗
-      </a>
-
-    </div>
-
+  <div class="community-links reveal">
+    <a class="button button-primary" href="https://discord.gg/8yZ4nhfQhH" target="_blank" rel="noopener">Join Discord ↗</a>
+    <a class="button button-secondary" href="https://www.tiktok.com/@grand_unknow" target="_blank" rel="noopener">Follow on TikTok ↗</a>
   </div>
-
 </section>
 
 </main>
 
-<!-- FOOTER -->
-
 <footer>
-
-  <a href="#home" class="footer-brand">
+  <div class="footer-brand">
     <img src="grandworld-pfp.webp" alt="">
     GRAND WORLD
-  </a>
+  </div>
 
-  <span>
-    © 2026 GRAND WORLD. ALL RIGHTS RESERVED.
-  </span>
+  <div>© 2026 Grand World. All rights reserved.</div>
 
-  <a href="#home">
-    BACK TO TOP ↑
-  </a>
-
+  <div class="footer-links">
+    <a href="https://discord.gg/8yZ4nhfQhH" target="_blank" rel="noopener">Discord</a>
+    <a href="https://www.tiktok.com/@grand_unknow" target="_blank" rel="noopener">TikTok</a>
+  </div>
 </footer>
 
 <script>
-
-/* ELEMENTS */
-
 const navbar = document.getElementById("navbar");
 const menuToggle = document.getElementById("menuToggle");
 const navLinks = document.getElementById("navLinks");
-const hero = document.querySelector(".hero");
-const progressBar = document.getElementById("progressBar");
 
-const reduceMotion = window.matchMedia(
-  "(prefers-reduced-motion: reduce)"
-).matches;
-
-/* MOBILE NAVIGATION */
+window.addEventListener("scroll", () => {
+  navbar.classList.toggle("scrolled", window.scrollY > 30);
+}, { passive: true });
 
 menuToggle.addEventListener("click", () => {
-
   const isOpen = navLinks.classList.toggle("open");
-
-  menuToggle.setAttribute("aria-expanded", isOpen);
-  menuToggle.textContent = isOpen ? "✕" : "☰";
-
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.textContent = isOpen ? "×" : "☰";
 });
 
 navLinks.querySelectorAll("a").forEach(link => {
-
   link.addEventListener("click", () => {
-
     navLinks.classList.remove("open");
-
     menuToggle.setAttribute("aria-expanded", "false");
     menuToggle.textContent = "☰";
-
   });
-
 });
 
-/* SCROLL REVEALS */
-
 const observer = new IntersectionObserver(entries => {
-
   entries.forEach(entry => {
-
     if (entry.isIntersecting) {
-
       entry.target.classList.add("visible");
-
       observer.unobserve(entry.target);
-
     }
-
   });
-
 }, {
   threshold: 0.12
 });
@@ -1418,73 +843,6 @@ const observer = new IntersectionObserver(entries => {
 document.querySelectorAll(".reveal").forEach(element => {
   observer.observe(element);
 });
-
-/* SCROLL PROGRESS + NAVIGATION */
-
-let ticking = false;
-
-function updateScrollEffects() {
-
-  const scrollY = window.scrollY;
-
-  const maxScroll =
-    document.documentElement.scrollHeight -
-    window.innerHeight;
-
-  navbar.classList.toggle("scrolled", scrollY > 50);
-
-  progressBar.style.transform =
-    `scaleX(${maxScroll > 0 ? scrollY / maxScroll : 0})`;
-
-  if (!reduceMotion && hero) {
-
-    const shift = Math.min(scrollY * 0.22, 150);
-
-    hero.style.backgroundPosition =
-      `center ${shift}px`;
-
-  }
-
-  ticking = false;
-
-}
-
-window.addEventListener("scroll", () => {
-
-  if (!ticking) {
-
-    window.requestAnimationFrame(updateScrollEffects);
-
-    ticking = true;
-
-  }
-
-}, { passive: true });
-
-updateScrollEffects();
-
-/* SUBTLE MOUSE MOVEMENT */
-
-if (
-  !reduceMotion &&
-  window.matchMedia("(pointer: fine)").matches
-) {
-
-  window.addEventListener("mousemove", event => {
-
-    const x =
-      (event.clientX / window.innerWidth - 0.5) * 12;
-
-    const y =
-      (event.clientY / window.innerHeight - 0.5) * 12;
-
-    hero?.style.setProperty("--mouse-x", `${x}px`);
-    hero?.style.setProperty("--mouse-y", `${y}px`);
-
-  }, { passive: true });
-
-}
-
 </script>
 
 </body>
