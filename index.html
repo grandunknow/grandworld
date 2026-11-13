@@ -4,29 +4,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#20231C">
+  <meta name="theme-color" content="#142C32">
 
-  <title>Grand World — Enter the Unknown</title>
-  <meta name="description" content="Explore a vast open-world dark fantasy MMORPG. Discover secrets, fight enemies and create your own adventure in Grand World.">
+  <title>Grand World — The World Awaits</title>
+  <meta name="description" content="Enter Grand World, an open-world dark fantasy MMORPG. Explore unknown lands, discover secrets and create your own adventure.">
 
   <link rel="icon" type="image/webp" href="grandworld-pfp.webp">
 
+  <!-- FONTS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --olive: #2D3126;
-      --olive-light: #414536;
-      --stone: #8C8A7A;
-      --ivory: #E2DFCF;
-      --paper: #F5F1E4;
+      --ocean: #142C32;
+      --ocean-light: #23434A;
+      --deep: #101D21;
+      --parchment: #E8D8B5;
+      --paper: #F3E9D3;
       --gold: #C9A96E;
-      --bronze: #7A5E34;
-      --ink: #24251F;
+      --gold-dark: #8B6D3F;
+      --red: #873E35;
+      --brown: #765638;
+      --ink: #25241F;
+      --muted: #746C5C;
 
       --serif: "Cormorant Garamond", Georgia, serif;
+      --display: "Cinzel", Georgia, serif;
       --sans: "Manrope", Arial, sans-serif;
     }
 
@@ -53,6 +58,10 @@
       color: inherit;
     }
 
+    button {
+      font: inherit;
+    }
+
     /* NAVIGATION */
 
     .nav {
@@ -62,17 +71,17 @@
       left: 0;
       width: 100%;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 16px 7%;
-      background: rgba(32,35,28,.75);
-      backdrop-filter: blur(15px);
-      border-bottom: 1px solid rgba(245,241,228,.12);
+      justify-content: space-between;
+      padding: 17px 7%;
+      background: rgba(16,29,33,.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,169,110,.25);
       transition: .3s ease;
     }
 
     .nav.scrolled {
-      background: rgba(32,35,28,.97);
+      background: rgba(16,29,33,.98);
       padding-top: 11px;
       padding-bottom: 11px;
     }
@@ -92,20 +101,20 @@
     }
 
     .brand-name {
-      color: var(--paper);
-      font-family: var(--serif);
-      font-size: 25px;
+      color: var(--parchment);
+      font-family: var(--display);
+      font-size: 19px;
       letter-spacing: 3px;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 30px;
+      gap: 28px;
     }
 
     .nav-links a {
-      color: var(--ivory);
+      color: var(--parchment);
       font-size: 10px;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -126,7 +135,7 @@
       display: none;
       background: none;
       border: none;
-      color: var(--paper);
+      color: var(--parchment);
       font-size: 27px;
       cursor: pointer;
     }
@@ -141,11 +150,12 @@
       justify-content: center;
       text-align: center;
       color: var(--paper);
-      background:
-        radial-gradient(ellipse at 50% 45%, rgba(94,91,73,.42), transparent 55%),
-        linear-gradient(140deg, #171A15, #34382B 50%, #171A15);
       overflow: hidden;
       isolation: isolate;
+
+      background:
+        radial-gradient(ellipse at 50% 45%, rgba(62,101,105,.38), transparent 55%),
+        linear-gradient(140deg, #101D21, #1C3B42 50%, #101D21);
     }
 
     .hero::before {
@@ -153,10 +163,16 @@
       position: absolute;
       inset: 0;
       z-index: -1;
+      opacity: .35;
       background:
-        radial-gradient(circle at 20% 25%, rgba(201,169,110,.15), transparent 25%),
-        radial-gradient(circle at 80% 70%, rgba(201,169,110,.12), transparent 30%);
-      animation: atmosphere 12s ease-in-out infinite alternate;
+        repeating-linear-gradient(
+          115deg,
+          transparent 0,
+          transparent 70px,
+          rgba(201,169,110,.07) 71px,
+          transparent 72px
+        );
+      animation: mapDrift 25s linear infinite;
     }
 
     .hero::after {
@@ -164,90 +180,90 @@
       position: absolute;
       inset: 0;
       z-index: -1;
-      background: linear-gradient(
-        to bottom,
-        rgba(15,17,13,.2),
-        transparent 50%,
-        rgba(15,17,13,.75)
-      );
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(8,16,18,.2),
+          transparent 50%,
+          rgba(8,16,18,.85)
+        );
     }
 
     .hero-content {
       width: min(900px, 90%);
-      padding: 130px 0 100px;
-      animation: heroEnter 1.5s ease both;
+      padding: 130px 0 110px;
+      animation: heroEnter 1.4s ease both;
+    }
+
+    .hero-topline {
+      color: var(--gold);
+      font-family: var(--display);
+      font-size: 10px;
+      letter-spacing: 5px;
+      margin-bottom: 28px;
     }
 
     .hero-symbol {
-      width: clamp(110px, 17vw, 190px);
+      width: clamp(110px, 16vw, 175px);
       aspect-ratio: 1;
       object-fit: cover;
       border-radius: 50%;
-      border: 1px solid rgba(201,169,110,.7);
-      box-shadow: 0 0 65px rgba(201,169,110,.17);
-      margin-bottom: 35px;
+      border: 1px solid rgba(201,169,110,.8);
+      box-shadow: 0 0 55px rgba(201,169,110,.2);
+      margin-bottom: 32px;
       animation: float 6s ease-in-out infinite;
     }
 
-    .eyebrow {
-      color: var(--gold);
-      font-size: 10px;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      margin-bottom: 25px;
-    }
-
     .hero h1 {
-      font-family: var(--serif);
-      font-size: clamp(65px, 12vw, 135px);
+      font-family: var(--display);
+      font-size: clamp(54px, 11vw, 120px);
       font-weight: 500;
-      line-height: .85;
+      line-height: .95;
       letter-spacing: 5px;
-      text-transform: uppercase;
-      text-shadow: 0 8px 35px rgba(0,0,0,.4);
+      text-shadow: 0 8px 35px rgba(0,0,0,.5);
     }
 
-    /* DEVELOPMENT STATUS */
+    .hero-divider {
+      width: min(280px, 65%);
+      height: 1px;
+      margin: 30px auto;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        var(--gold),
+        transparent
+      );
+    }
 
     .development-status {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      margin-top: 25px;
-      padding: 10px 18px;
-      border: 1px solid rgba(201,169,110,.55);
+      padding: 11px 20px;
+      border: 1px solid rgba(201,169,110,.6);
       color: var(--gold);
-      font-family: var(--sans);
       font-size: 9px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      background: rgba(20,22,17,.4);
-      animation: statusAppear 1.5s ease both;
-      transition: .3s ease;
-    }
-
-    .development-status:hover {
-      background: rgba(201,169,110,.12);
-      border-color: var(--gold);
+      background: rgba(8,16,18,.4);
     }
 
     .development-dot {
       width: 7px;
       height: 7px;
-      flex-shrink: 0;
       border-radius: 50%;
       background: var(--gold);
-      box-shadow: 0 0 10px var(--gold);
+      box-shadow: 0 0 12px var(--gold);
       animation: pulse 1.8s infinite;
     }
 
     .hero-subtitle {
-      margin: 30px auto 0;
-      max-width: 600px;
+      max-width: 620px;
+      margin: 28px auto 0;
+      color: var(--parchment);
       font-family: var(--serif);
-      font-size: clamp(21px, 3vw, 29px);
+      font-size: clamp(22px, 3vw, 31px);
       font-style: italic;
-      color: var(--ivory);
       line-height: 1.5;
     }
 
@@ -269,36 +285,47 @@
     }
 
     .button-gold {
-      color: var(--olive);
+      color: var(--deep);
       background: var(--gold);
       border: 1px solid var(--gold);
     }
 
     .button-gold:hover {
-      background: var(--paper);
-      border-color: var(--paper);
+      background: var(--parchment);
+      border-color: var(--parchment);
       transform: translateY(-4px);
     }
 
     .button-outline {
-      color: var(--paper);
-      border: 1px solid rgba(245,241,228,.65);
+      color: var(--parchment);
+      border: 1px solid rgba(232,216,181,.65);
     }
 
     .button-outline:hover {
-      background: var(--paper);
-      color: var(--olive);
+      color: var(--deep);
+      background: var(--parchment);
       transform: translateY(-4px);
+    }
+
+    .hero-compass {
+      position: absolute;
+      right: 7%;
+      bottom: 9%;
+      color: rgba(201,169,110,.28);
+      font-family: var(--serif);
+      font-size: 75px;
+      animation: slowRotate 35s linear infinite;
+      pointer-events: none;
     }
 
     .scroll-note {
       position: absolute;
-      bottom: 30px;
+      bottom: 27px;
       left: 50%;
       transform: translateX(-50%);
+      color: var(--gold);
       font-size: 9px;
       letter-spacing: 4px;
-      color: var(--ivory);
       text-transform: uppercase;
       animation: pulse 2s infinite;
     }
@@ -306,180 +333,312 @@
     /* GENERAL SECTIONS */
 
     .section-inner {
-      width: min(1150px, 86%);
+      width: min(1120px, 86%);
       margin: auto;
     }
 
     .section-label {
-      color: var(--bronze);
-      font-size: 10px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
       margin-bottom: 20px;
+      color: var(--red);
+      font-family: var(--display);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
     }
 
     .section-title {
       font-family: var(--serif);
-      font-size: clamp(45px, 6vw, 78px);
-      font-weight: 500;
+      font-size: clamp(45px, 6vw, 76px);
+      font-weight: 600;
       line-height: .98;
     }
 
     .section-copy {
-      max-width: 680px;
-      color: #69685D;
+      max-width: 700px;
+      color: var(--muted);
       font-size: 14px;
       line-height: 2.1;
     }
 
-    /* ABOUT */
+    /* ABOUT - ANCIENT DOCUMENT */
 
     .about {
+      position: relative;
       padding: 145px 0;
-      background: var(--paper);
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(118,86,56,.1), transparent 40%),
+        var(--parchment);
     }
 
-    /* Updated: single-column layout, no artwork */
+    .about::before {
+      content: "✦";
+      position: absolute;
+      top: 45px;
+      right: 8%;
+      color: rgba(118,86,56,.18);
+      font-size: 90px;
+      pointer-events: none;
+    }
 
-    .about-layout {
-      display: block;
-      max-width: 850px;
+    .scroll-document {
+      position: relative;
+      max-width: 900px;
+      margin: auto;
+      padding: clamp(30px, 6vw, 70px);
+      border: 1px solid rgba(118,86,56,.5);
+      outline: 1px solid rgba(118,86,56,.15);
+      outline-offset: -9px;
+      background:
+        linear-gradient(rgba(243,233,211,.82), rgba(243,233,211,.82)),
+        repeating-linear-gradient(
+          0deg,
+          transparent 0,
+          transparent 30px,
+          rgba(118,86,56,.08) 31px
+        );
+      box-shadow: 0 18px 55px rgba(56,42,24,.12);
+    }
+
+    .scroll-document::before,
+    .scroll-document::after {
+      content: "✧";
+      position: absolute;
+      color: var(--gold-dark);
+      font-size: 26px;
+    }
+
+    .scroll-document::before {
+      top: 19px;
+      left: 22px;
+    }
+
+    .scroll-document::after {
+      right: 22px;
+      bottom: 19px;
+    }
+
+    .about-text {
+      max-width: 750px;
+      margin: auto;
+    }
+
+    .about-text .section-title {
+      color: var(--ink);
     }
 
     .about-text .section-copy {
       margin-top: 30px;
     }
 
-    /* FEATURES */
+    .document-stamp {
+      display: inline-block;
+      margin-top: 35px;
+      padding: 9px 16px;
+      border: 2px solid rgba(135,62,53,.65);
+      color: var(--red);
+      font-family: var(--display);
+      font-size: 9px;
+      letter-spacing: 3px;
+      transform: rotate(-3deg);
+    }
+
+    /* FEATURES - SCROLL PANELS */
 
     .features {
-      padding: 135px 0;
-      background: var(--olive);
+      position: relative;
+      padding: 140px 0;
       color: var(--paper);
+      background:
+        radial-gradient(ellipse at 80% 20%, rgba(44,81,86,.45), transparent 45%),
+        var(--ocean);
     }
 
     .features .section-label {
       color: var(--gold);
     }
 
+    .features .section-title {
+      color: var(--parchment);
+    }
+
     .features .section-copy {
-      color: var(--stone);
       margin-top: 25px;
+      color: #B8B5A6;
     }
 
     .feature-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
+      gap: 22px;
       margin-top: 70px;
-      border: 1px solid rgba(201,169,110,.25);
-      background: rgba(201,169,110,.25);
     }
 
     .feature-card {
-      min-height: 270px;
+      position: relative;
+      min-height: 300px;
       padding: 38px 30px;
-      background: var(--olive);
+      color: var(--ink);
+      background: var(--parchment);
+      border: 1px solid var(--gold-dark);
+      box-shadow: 7px 8px 0 rgba(0,0,0,.16);
       transition: .4s ease;
     }
 
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border: 1px solid rgba(118,86,56,.22);
+      pointer-events: none;
+    }
+
     .feature-card:hover {
-      background: var(--olive-light);
-      transform: translateY(-7px);
+      transform: translateY(-9px) rotate(-.5deg);
+      box-shadow: 10px 15px 0 rgba(0,0,0,.2);
     }
 
     .feature-number {
-      font-family: var(--serif);
-      font-size: 30px;
-      color: var(--gold);
+      color: var(--red);
+      font-family: var(--display);
+      font-size: 13px;
+      letter-spacing: 3px;
+    }
+
+    .feature-symbol {
+      margin-top: 22px;
+      color: var(--gold-dark);
+      font-size: 28px;
     }
 
     .feature-card h3 {
-      margin: 30px 0 13px;
+      margin: 17px 0 12px;
       font-family: var(--serif);
-      font-size: 31px;
-      font-weight: 500;
+      font-size: 34px;
+      font-weight: 600;
     }
 
     .feature-card p {
-      color: var(--stone);
+      color: #716A5B;
       font-size: 12px;
       line-height: 2;
     }
 
-    /* WORLD */
+    /* WORLD MAP SECTION */
 
     .world {
       padding: 145px 0;
-      background: var(--ivory);
+      background: var(--paper);
     }
 
     .world-heading {
       display: flex;
-      justify-content: space-between;
       align-items: end;
+      justify-content: space-between;
       gap: 35px;
       margin-bottom: 55px;
     }
 
     .world-note {
-      max-width: 370px;
-      color: #68675B;
+      max-width: 360px;
+      color: var(--muted);
       font-size: 13px;
       line-height: 2;
     }
 
-    .world-banner {
+    .map-banner {
       position: relative;
-      min-height: 420px;
+      min-height: 460px;
       display: flex;
       align-items: end;
-      padding: 45px;
+      padding: 50px;
       overflow: hidden;
-      color: var(--paper);
+      color: var(--parchment);
+      border: 1px solid var(--gold-dark);
       background:
-        radial-gradient(ellipse at 70% 25%, rgba(201,169,110,.24), transparent 35%),
-        linear-gradient(130deg, #1B2019, #464A39 55%, #20231C);
+        radial-gradient(ellipse at 70% 30%, rgba(201,169,110,.25), transparent 30%),
+        radial-gradient(ellipse at 20% 70%, rgba(44,81,86,.5), transparent 40%),
+        linear-gradient(135deg, #172D31, #27474B 55%, #142C32);
     }
 
-    .world-banner::before {
+    .map-banner::before {
       content: "";
       position: absolute;
-      inset: 0;
-      border: 1px solid rgba(201,169,110,.4);
-      margin: 15px;
+      inset: 15px;
+      border: 1px solid rgba(201,169,110,.5);
       pointer-events: none;
     }
 
-    .world-banner-content {
+    .map-banner::after {
+      content: "✧     N";
+      position: absolute;
+      top: 45px;
+      right: 55px;
+      color: rgba(201,169,110,.55);
+      font-family: var(--serif);
+      font-size: 35px;
+      letter-spacing: 12px;
+    }
+
+    .map-lines {
+      position: absolute;
+      inset: 0;
+      opacity: .23;
+      background:
+        repeating-radial-gradient(
+          ellipse at 65% 45%,
+          transparent 0,
+          transparent 42px,
+          rgba(201,169,110,.3) 43px,
+          transparent 44px
+        );
+      pointer-events: none;
+    }
+
+    .map-content {
       position: relative;
       z-index: 1;
     }
 
-    .world-banner h3 {
+    .map-content .section-label {
+      color: var(--gold);
+    }
+
+    .map-content h3 {
       font-family: var(--serif);
-      font-size: clamp(43px, 7vw, 75px);
+      font-size: clamp(43px, 7vw, 78px);
       font-weight: 500;
     }
 
-    .world-banner p {
-      margin-top: 12px;
-      color: var(--ivory);
+    .map-content p {
+      margin-top: 15px;
+      color: var(--parchment);
       font-family: var(--serif);
-      font-size: 23px;
+      font-size: 24px;
       font-style: italic;
-      letter-spacing: 1px;
     }
 
     /* COMMUNITY */
 
     .community {
+      position: relative;
       padding: 145px 0;
       text-align: center;
       color: var(--paper);
       background:
-        radial-gradient(ellipse at center, #454A39, transparent 70%),
-        var(--olive);
+        radial-gradient(ellipse at center, #29474A, transparent 70%),
+        var(--deep);
+      overflow: hidden;
+    }
+
+    .community::before {
+      content: "印";
+      position: absolute;
+      top: 25px;
+      right: 8%;
+      color: rgba(135,62,53,.16);
+      font-family: var(--serif);
+      font-size: 140px;
+      pointer-events: none;
     }
 
     .community .section-label {
@@ -489,12 +648,13 @@
     .community .section-title {
       max-width: 850px;
       margin: auto;
+      color: var(--parchment);
     }
 
     .community-copy {
       max-width: 650px;
       margin: 30px auto 0;
-      color: var(--stone);
+      color: #B8B5A6;
       font-size: 14px;
       line-height: 2.1;
     }
@@ -503,52 +663,63 @@
       margin-top: 40px;
     }
 
-    .social-note {
+    .community .button-outline {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .community .button-outline:hover {
+      color: var(--deep);
+      background: var(--gold);
+    }
+
+    .community-note {
       margin-top: 35px;
-      color: var(--stone);
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
+      color: var(--gold);
+      font-family: var(--display);
+      font-size: 9px;
+      letter-spacing: 4px;
     }
 
     /* FOOTER */
 
     footer {
-      padding: 38px 7%;
+      padding: 40px 7%;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       flex-wrap: wrap;
       gap: 25px;
-      color: var(--ivory);
-      background: #20231C;
+      color: var(--parchment);
+      background: #0B171A;
+      border-top: 1px solid rgba(201,169,110,.25);
     }
 
     .footer-brand {
       display: flex;
       align-items: center;
       gap: 12px;
-      font-family: var(--serif);
       color: var(--gold);
-      font-size: 25px;
+      font-family: var(--display);
+      font-size: 17px;
       letter-spacing: 2px;
     }
 
     .footer-brand img {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
+      width: 36px;
+      height: 36px;
       object-fit: cover;
+      border-radius: 50%;
     }
 
     .footer-links {
       display: flex;
-      gap: 25px;
       flex-wrap: wrap;
+      gap: 24px;
     }
 
     .footer-links a {
-      color: var(--ivory);
+      color: var(--parchment);
       font-size: 10px;
       letter-spacing: 1px;
       transition: color .3s;
@@ -561,12 +732,12 @@
     .copyright {
       width: 100%;
       padding-top: 20px;
-      border-top: 1px solid rgba(245,241,228,.12);
-      color: var(--stone);
+      border-top: 1px solid rgba(232,216,181,.12);
+      color: #928B79;
       font-size: 10px;
     }
 
-    /* ANIMATIONS */
+    /* REVEAL ANIMATION */
 
     .reveal {
       opacity: 0;
@@ -578,6 +749,8 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* KEYFRAMES */
 
     @keyframes heroEnter {
       from {
@@ -591,28 +764,38 @@
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
-    }
-
-    @keyframes atmosphere {
-      from { transform: scale(1); opacity: .6; }
-      to { transform: scale(1.15); opacity: 1; }
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-12px);
+      }
     }
 
     @keyframes pulse {
-      0%, 100% { opacity: .55; }
-      50% { opacity: 1; }
+      0%, 100% {
+        opacity: .5;
+      }
+      50% {
+        opacity: 1;
+      }
     }
 
-    @keyframes statusAppear {
+    @keyframes mapDrift {
       from {
-        opacity: 0;
-        transform: translateY(12px);
+        transform: translateX(0);
       }
       to {
-        opacity: 1;
-        transform: translateY(0);
+        transform: translateX(70px);
+      }
+    }
+
+    @keyframes slowRotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
       }
     }
 
@@ -621,6 +804,10 @@
     @media (max-width: 800px) {
       .nav {
         padding: 14px 6%;
+      }
+
+      .brand-name {
+        font-size: 16px;
       }
 
       .menu-toggle {
@@ -637,11 +824,18 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 24px;
-        background: rgba(32,35,28,.98);
+        background: rgba(16,29,33,.98);
+        border-bottom: 1px solid rgba(201,169,110,.25);
       }
 
       .nav-links.open {
         display: flex;
+      }
+
+      .hero-compass {
+        right: 5%;
+        bottom: 8%;
+        font-size: 45px;
       }
 
       .feature-grid {
@@ -656,9 +850,14 @@
         margin-top: 22px;
       }
 
-      .world-banner {
-        min-height: 330px;
-        padding: 28px;
+      .map-banner {
+        min-height: 350px;
+        padding: 30px;
+      }
+
+      .map-banner::after {
+        right: 35px;
+        font-size: 25px;
       }
 
       footer {
@@ -685,6 +884,7 @@
 <body>
 
   <!-- NAVIGATION -->
+
   <header class="nav" id="navbar">
 
     <a class="brand" href="#home">
@@ -692,7 +892,11 @@
       <span class="brand-name">GRAND WORLD</span>
     </a>
 
-    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      aria-label="Open navigation"
+      aria-expanded="false">
       ☰
     </button>
 
@@ -703,10 +907,11 @@
       <a href="#world">The World</a>
       <a href="#community">Community</a>
 
-      <a class="discord-link"
-         href="https://discord.gg/8yZ4nhfQhH"
-         target="_blank"
-         rel="noopener noreferrer">
+      <a
+        class="discord-link"
+        href="https://discord.gg/8yZ4nhfQhH"
+        target="_blank"
+        rel="noopener noreferrer">
         Discord ↗
       </a>
     </nav>
@@ -716,18 +921,23 @@
   <main>
 
     <!-- HERO -->
+
     <section class="hero" id="home">
 
       <div class="hero-content">
 
-        <div class="eyebrow">A world without boundaries</div>
+        <div class="hero-topline">
+          A WORLD WITHOUT BOUNDARIES
+        </div>
 
         <img
           class="hero-symbol"
           src="grandworld-pfp.webp"
-          alt="Grand World artwork">
+          alt="Grand World logo">
 
         <h1>Grand<br>World</h1>
+
+        <div class="hero-divider"></div>
 
         <div class="development-status">
           <span class="development-dot"></span>
@@ -735,7 +945,7 @@
         </div>
 
         <p class="hero-subtitle">
-          A world of endless possibilities. A story yet to be written.
+          Beyond the horizon lies a world waiting to be discovered.
         </p>
 
         <div class="hero-actions">
@@ -744,10 +954,11 @@
             Discover Grand World
           </a>
 
-          <a href="https://discord.gg/8yZ4nhfQhH"
-             target="_blank"
-             rel="noopener noreferrer"
-             class="button button-outline">
+          <a
+            href="https://discord.gg/8yZ4nhfQhH"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="button button-outline">
             Join our Discord ↗
           </a>
 
@@ -755,43 +966,58 @@
 
       </div>
 
-      <div class="scroll-note">Scroll to explore ↓</div>
+      <div class="hero-compass">✧</div>
+
+      <div class="scroll-note">
+        Scroll to explore ↓
+      </div>
 
     </section>
 
-    <!-- ABOUT: ARTWORK REMOVED -->
+    <!-- ABOUT -->
+
     <section class="about" id="about">
 
-      <div class="section-inner about-layout">
+      <div class="section-inner">
 
-        <div class="about-text reveal">
+        <div class="scroll-document reveal">
 
-          <div class="section-label">01 — What is Grand World?</div>
+          <div class="about-text">
 
-          <h2 class="section-title">
-            More than a world.<br>
-            Your own adventure.
-          </h2>
+            <div class="section-label">
+              01 — An introduction to Grand World
+            </div>
 
-          <p class="section-copy">
-            Grand World is an open-world MMORPG set in a dark fantasy universe.
+            <h2 class="section-title">
+              More than a world.<br>
+              Your own adventure.
+            </h2>
 
-            Explore a huge world, discover hidden secrets, fight enemies,
-            and create your own adventure.
+            <p class="section-copy">
+              Grand World is an open-world MMORPG set in a dark fantasy universe.
 
-            <br><br>
+              Explore a huge world, discover hidden secrets, fight enemies,
+              and create your own adventure.
 
-            Grand World is non-linear. You are not forced to follow one
-            specific path. Explore different regions, take on challenges,
-            and progress at your own pace.
+              <br><br>
 
-            <br><br>
+              Grand World is non-linear. You are not forced to follow one
+              specific path. Explore different regions, take on challenges,
+              and progress at your own pace.
 
-            The world is also inspired by different anime, including
-            series such as Naruto and One Piece. Our goal is to bring
-            together the things people love about these worlds while
-            making Grand World feel like its own unique experience.
-          </p>
+              <br><br>
+
+              The world is also inspired by different anime, including
+              series such as Naruto and One Piece. Our goal is to bring
+              together the things people love about these worlds while
+              making Grand World feel like its own unique experience.
+            </p>
+
+            <div class="document-stamp">
+              THE WORLD AWAITS
+            </div>
+
+          </div>
 
         </div>
 
@@ -799,22 +1025,25 @@
 
     </section>
 
-    <!-- FEATURES -->
+    <!-- EXPERIENCE -->
+
     <section class="features" id="features">
 
       <div class="section-inner">
 
         <div class="reveal">
 
-          <div class="section-label">02 — The experience</div>
+          <div class="section-label">
+            02 — The experience
+          </div>
 
           <h2 class="section-title">
-            Beyond the known.
+            Your journey begins here.
           </h2>
 
           <p class="section-copy">
-            There is more to this world than what first meets the eye.
-            Every journey is different. Every discovery has a story.
+            Every journey is different. Every discovery holds a story.
+            The world is yours to explore.
           </p>
 
         </div>
@@ -822,30 +1051,45 @@
         <div class="feature-grid">
 
           <article class="feature-card reveal">
-            <div class="feature-number">I</div>
+
+            <div class="feature-number">CHAPTER I</div>
+            <div class="feature-symbol">✧</div>
+
             <h3>Explore</h3>
+
             <p>
-              Venture across different regions and uncover places
-              hidden beyond the familiar.
+              Venture across different regions, discover unfamiliar
+              places and travel beyond the familiar.
             </p>
+
           </article>
 
           <article class="feature-card reveal">
-            <div class="feature-number">II</div>
+
+            <div class="feature-number">CHAPTER II</div>
+            <div class="feature-symbol">卷</div>
+
             <h3>Discover</h3>
+
             <p>
-              Find secrets, uncover mysteries and learn what lies
-              beneath the surface of this world.
+              Uncover ancient mysteries, hidden secrets and stories
+              buried within the world.
             </p>
+
           </article>
 
           <article class="feature-card reveal">
-            <div class="feature-number">III</div>
+
+            <div class="feature-number">CHAPTER III</div>
+            <div class="feature-symbol">⚔</div>
+
             <h3>Become</h3>
+
             <p>
               Face challenges, grow stronger and shape a journey
               that belongs to you alone.
             </p>
+
           </article>
 
         </div>
@@ -855,6 +1099,7 @@
     </section>
 
     <!-- THE WORLD -->
+
     <section class="world" id="world">
 
       <div class="section-inner">
@@ -862,24 +1107,30 @@
         <div class="world-heading reveal">
 
           <div>
-            <div class="section-label">03 — The lands beyond</div>
+
+            <div class="section-label">
+              03 — The lands beyond
+            </div>
 
             <h2 class="section-title">
               What lies beyond?
             </h2>
+
           </div>
 
           <p class="world-note">
-            Not everything is meant to be revealed.
-            Some secrets are waiting to be found.
-            Some paths are waiting to be taken.
+            Not everything is written on the map.
+            Some places remain unknown.
+            Some secrets are waiting to be uncovered.
           </p>
 
         </div>
 
-        <div class="world-banner reveal">
+        <div class="map-banner reveal">
 
-          <div class="world-banner-content">
+          <div class="map-lines"></div>
+
+          <div class="map-content">
 
             <div class="section-label">
               Beyond the horizon
@@ -900,20 +1151,22 @@
     </section>
 
     <!-- COMMUNITY -->
+
     <section class="community" id="community">
 
       <div class="section-inner reveal">
 
         <div class="section-label">
-          04 — Beyond this page
+          04 — Join the journey
         </div>
 
         <h2 class="section-title">
-          Curious about what lies ahead?
+          Every great adventure begins somewhere.
         </h2>
 
         <p class="community-copy">
           There is much more to Grand World than what you see here.
+
           For more information, updates and announcements, join our
           Discord server or watch our latest TikTok videos.
 
@@ -924,24 +1177,26 @@
 
         <div class="hero-actions">
 
-          <a href="https://discord.gg/8yZ4nhfQhH"
-             target="_blank"
-             rel="noopener noreferrer"
-             class="button button-gold">
+          <a
+            href="https://discord.gg/8yZ4nhfQhH"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="button button-gold">
             Join our Discord ↗
           </a>
 
-          <a href="https://www.tiktok.com/@grand_unknow"
-             target="_blank"
-             rel="noopener noreferrer"
-             class="button button-outline">
+          <a
+            href="https://www.tiktok.com/@grand_unknow"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="button button-outline">
             Watch our TikToks ↗
           </a>
 
         </div>
 
-        <div class="social-note">
-          The story is only beginning.
+        <div class="community-note">
+          THE STORY IS ONLY BEGINNING
         </div>
 
       </div>
@@ -951,6 +1206,7 @@
   </main>
 
   <!-- FOOTER -->
+
   <footer>
 
     <a href="#home" class="footer-brand">
@@ -963,15 +1219,17 @@
       <a href="#about">About</a>
       <a href="#world">The World</a>
 
-      <a href="https://discord.gg/8yZ4nhfQhH"
-         target="_blank"
-         rel="noopener noreferrer">
+      <a
+        href="https://discord.gg/8yZ4nhfQhH"
+        target="_blank"
+        rel="noopener noreferrer">
         Discord ↗
       </a>
 
-      <a href="https://www.tiktok.com/@grand_unknow"
-         target="_blank"
-         rel="noopener noreferrer">
+      <a
+        href="https://www.tiktok.com/@grand_unknow"
+        target="_blank"
+        rel="noopener noreferrer">
         TikTok ↗
       </a>
 
@@ -985,16 +1243,17 @@
 
   <script>
 
-    // Mobile navigation
+    // MOBILE NAVIGATION
+
     const menuToggle = document.getElementById("menuToggle");
     const navLinks = document.getElementById("navLinks");
 
     menuToggle.addEventListener("click", () => {
 
-      navLinks.classList.toggle("open");
+      const isOpen = navLinks.classList.toggle("open");
 
-      menuToggle.textContent =
-        navLinks.classList.contains("open") ? "×" : "☰";
+      menuToggle.textContent = isOpen ? "×" : "☰";
+      menuToggle.setAttribute("aria-expanded", isOpen);
 
     });
 
@@ -1004,21 +1263,27 @@
 
         navLinks.classList.remove("open");
         menuToggle.textContent = "☰";
+        menuToggle.setAttribute("aria-expanded", "false");
 
       });
 
     });
 
-    // Navigation background on scroll
+    // NAVIGATION BACKGROUND ON SCROLL
+
     const navbar = document.getElementById("navbar");
 
     window.addEventListener("scroll", () => {
 
-      navbar.classList.toggle("scrolled", window.scrollY > 50);
+      navbar.classList.toggle(
+        "scrolled",
+        window.scrollY > 50
+      );
 
-    });
+    }, { passive: true });
 
-    // Scroll reveal animations
+    // SCROLL REVEAL ANIMATIONS
+
     const revealElements = document.querySelectorAll(".reveal");
 
     if ("IntersectionObserver" in window) {
