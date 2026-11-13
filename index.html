@@ -4,22 +4,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090b0c">
-<title>Grand World — Your World. Your Adventure.</title>
+<meta name="theme-color" content="#080b0c">
+<title>Grand World — Create Your Own Adventure</title>
 <link rel="icon" href="grandworld-pfp.webp">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg: #090b0c;
-  --surface: #111516;
-  --surface-light: #191f20;
-  --white: #f5f3ed;
-  --muted: #9a9d98;
+  --bg: #080b0c;
+  --panel: rgba(20,27,27,.78);
+  --panel-solid: #141b1b;
   --gold: #c5a36a;
-  --line: rgba(255,255,255,.12);
+  --gold-light: #e1c58e;
+  --white: #f4f1e9;
+  --muted: #929b96;
+  --line: rgba(255,255,255,.1);
+  --ease: cubic-bezier(.2,.8,.2,1);
 }
 
 * {
@@ -30,6 +33,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 90px;
 }
 
 body {
@@ -39,89 +43,226 @@ body {
   overflow-x: hidden;
 }
 
+body.loading {
+  overflow: hidden;
+}
+
 a {
-  color: inherit;
   text-decoration: none;
+  color: inherit;
 }
 
 button {
   font: inherit;
 }
 
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
 ::selection {
   background: var(--gold);
-  color: #090b0c;
+  color: #080b0c;
+}
+
+/* LOADING SCREEN */
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #080b0c;
+  transition: opacity .8s ease, visibility .8s ease;
+}
+
+.loader.done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-content {
+  text-align: center;
+  animation: loaderEnter 1.2s var(--ease) both;
+}
+
+.loader-logo {
+  width: 95px;
+  height: 95px;
+  object-fit: contain;
+  margin-bottom: 25px;
+  filter: drop-shadow(0 0 30px rgba(197,163,106,.3));
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+.loader-title {
+  font-family: Cinzel, serif;
+  font-size: 23px;
+  letter-spacing: 7px;
+}
+
+.loader-subtitle {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 4px;
+  margin-top: 12px;
+  text-transform: uppercase;
+}
+
+.loader-track {
+  width: 180px;
+  height: 2px;
+  margin: 30px auto 0;
+  background: rgba(255,255,255,.1);
+  overflow: hidden;
+}
+
+.loader-progress {
+  height: 100%;
+  width: 0;
+  background: var(--gold);
+  animation: loading 1.7s ease forwards;
+}
+
+/* BACKGROUND */
+
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(49,73,65,.16), transparent 40%),
+    radial-gradient(ellipse at 80% 75%, rgba(116,83,43,.09), transparent 40%);
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  opacity: .12;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
 }
 
 /* NAVIGATION */
 
 .navbar {
   position: fixed;
-  inset: 0 0 auto;
   z-index: 100;
-  height: 76px;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1120px, calc(100% - 40px));
+  height: 68px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 7%;
-  background: rgba(9,11,12,.72);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  border-bottom: 1px solid rgba(255,255,255,.06);
-  transition: background .3s, height .3s;
+  padding: 0 25px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 16px;
+  background: rgba(12,16,16,.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  transition: background .3s, border-color .3s, height .3s;
 }
 
 .navbar.scrolled {
-  height: 64px;
-  background: rgba(9,11,12,.94);
+  height: 60px;
+  background: rgba(8,11,12,.94);
+  border-color: rgba(197,163,106,.2);
 }
 
-.nav-brand {
+.brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 11px;
   font-family: Cinzel, serif;
-  font-size: 17px;
-  letter-spacing: 3px;
+  font-size: 14px;
+  letter-spacing: 2px;
 }
 
-.nav-brand img {
+.brand img {
   width: 34px;
   height: 34px;
   object-fit: contain;
-  border-radius: 50%;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 34px;
+  gap: 29px;
+  color: #c1c5bd;
   font-size: 12px;
-  color: #c3c4bf;
 }
 
 .nav-links a {
-  transition: color .25s;
+  transition: color .2s;
 }
 
 .nav-links a:hover {
-  color: var(--gold);
+  color: var(--gold-light);
 }
 
-.nav-join {
-  padding: 10px 19px;
-  border: 1px solid rgba(197,163,106,.6);
+.nav-cta {
+  padding: 10px 17px;
+  border: 1px solid rgba(197,163,106,.45);
   border-radius: 30px;
-  color: var(--gold);
+  color: var(--gold-light) !important;
 }
 
 .menu-toggle {
   display: none;
-  background: none;
   border: 0;
+  background: none;
   color: white;
   font-size: 25px;
   cursor: pointer;
+}
+
+/* BUTTONS */
+
+.btn {
+  min-height: 47px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 23px;
+  border-radius: 40px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform .25s var(--ease), background .25s, border-color .25s, box-shadow .25s;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+.btn-primary {
+  background: var(--white);
+  color: #101413;
+}
+
+.btn-primary:hover {
+  background: var(--gold-light);
+  box-shadow: 0 8px 30px rgba(197,163,106,.15);
+}
+
+.btn-outline {
+  border-color: rgba(255,255,255,.2);
+  color: var(--white);
+  background: rgba(255,255,255,.025);
+}
+
+.btn-outline:hover {
+  border-color: var(--gold);
+  background: rgba(197,163,106,.08);
 }
 
 /* HERO */
@@ -129,70 +270,67 @@ button {
 .hero {
   min-height: 100svh;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
+  padding: 150px 25px 100px;
   text-align: center;
-  padding: 130px 24px 100px;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 50% 35%, rgba(60,83,75,.32), transparent 45%),
-    radial-gradient(ellipse at 15% 90%, rgba(112,76,45,.13), transparent 35%),
-    linear-gradient(180deg, #101819 0%, #090b0c 85%);
+    radial-gradient(ellipse at 50% 42%, rgba(58,85,73,.24), transparent 48%),
+    linear-gradient(180deg, #101819 0%, #080b0c 100%);
 }
 
-.hero::before {
-  content: "";
+.hero-grid {
   position: absolute;
   inset: 0;
-  opacity: .25;
+  opacity: .18;
   background-image:
-    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-  background-size: 70px 70px;
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 85px 85px;
   mask-image: linear-gradient(to bottom, black, transparent 90%);
 }
 
-.hero-glow {
+.hero-orb {
   position: absolute;
-  width: 600px;
-  height: 600px;
+  width: 500px;
+  height: 500px;
   border-radius: 50%;
-  background: rgba(197,163,106,.08);
-  filter: blur(100px);
-  animation: glow 7s ease-in-out infinite alternate;
+  background: rgba(197,163,106,.09);
+  filter: blur(110px);
+  animation: orbPulse 7s ease-in-out infinite alternate;
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 950px;
+  max-width: 900px;
 }
 
 .hero-logo {
-  width: 110px;
-  height: 110px;
+  width: 105px;
+  height: 105px;
   object-fit: contain;
-  margin-bottom: 32px;
-  filter: drop-shadow(0 0 35px rgba(197,163,106,.2));
-  animation: float 6s ease-in-out infinite;
+  margin-bottom: 30px;
+  filter: drop-shadow(0 0 35px rgba(197,163,106,.25));
+  animation: logoFloat 5s ease-in-out infinite;
 }
 
 .eyebrow {
   color: var(--gold);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 5px;
   text-transform: uppercase;
-  margin-bottom: 23px;
+  margin-bottom: 22px;
 }
 
 .hero h1 {
   font-family: Cinzel, serif;
+  font-size: clamp(48px, 10vw, 112px);
   font-weight: 500;
-  font-size: clamp(48px, 9vw, 112px);
-  line-height: 1.05;
+  line-height: 1.1;
   letter-spacing: 4px;
-  margin-bottom: 25px;
+  margin-bottom: 22px;
 }
 
 .hero h1 span {
@@ -200,304 +338,457 @@ button {
 }
 
 .hero-description {
-  max-width: 570px;
-  margin: 0 auto;
-  color: #b4b8b2;
-  font-size: 16px;
+  max-width: 560px;
+  margin: auto;
+  color: #aeb5ae;
   line-height: 1.9;
+  font-size: 15px;
 }
 
 .hero-actions {
-  margin-top: 38px;
   display: flex;
   justify-content: center;
-  gap: 14px;
   flex-wrap: wrap;
+  gap: 13px;
+  margin-top: 35px;
 }
 
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px 26px;
-  border-radius: 40px;
-  font-size: 13px;
-  font-weight: 600;
-  transition: transform .25s, background .25s, border-color .25s;
-}
-
-.button:hover {
-  transform: translateY(-3px);
-}
-
-.button-primary {
-  color: #111;
-  background: var(--white);
-}
-
-.button-primary:hover {
-  background: var(--gold);
-}
-
-.button-secondary {
-  border: 1px solid rgba(255,255,255,.25);
-  color: var(--white);
-}
-
-.button-secondary:hover {
-  border-color: var(--gold);
-}
-
-.scroll-note {
+.hero-bottom {
   position: absolute;
   bottom: 35px;
   left: 50%;
   transform: translateX(-50%);
-  color: #777d78;
-  font-size: 10px;
-  letter-spacing: 3px;
+  color: #737d77;
+  font-size: 9px;
+  letter-spacing: 4px;
   text-transform: uppercase;
 }
 
-.scroll-note::after {
+.hero-bottom::after {
   content: "";
   display: block;
+  height: 34px;
   width: 1px;
-  height: 35px;
-  margin: 14px auto 0;
+  margin: 13px auto 0;
   background: linear-gradient(var(--gold), transparent);
 }
 
 /* INTRO */
 
 .intro {
-  padding: 150px 8%;
+  padding: 145px 8%;
+  background: #efebe1;
+  color: #171b18;
   text-align: center;
-  background: #f0ece2;
-  color: #171a18;
-}
-
-.intro .eyebrow {
-  color: #8a7048;
 }
 
 .intro h2 {
   max-width: 900px;
-  margin: 0 auto 30px;
+  margin: auto;
   font-family: Cinzel, serif;
-  font-size: clamp(34px, 5.5vw, 66px);
-  line-height: 1.25;
+  font-size: clamp(35px, 6vw, 69px);
   font-weight: 500;
+  line-height: 1.25;
 }
 
 .intro h2 span {
-  color: #96784a;
+  color: #967849;
 }
 
 .intro p {
-  max-width: 650px;
-  margin: auto;
-  color: #62645e;
-  line-height: 1.9;
-  font-size: 15px;
+  max-width: 640px;
+  margin: 25px auto 0;
+  color: #65675f;
+  font-size: 14px;
+  line-height: 2;
 }
 
-/* FEATURE SECTIONS */
+/* SECTION HEADINGS */
 
 .section {
-  padding: 130px 9%;
+  padding: 125px 8%;
 }
 
 .section-heading {
   max-width: 720px;
-  margin: 0 auto 70px;
+  margin: 0 auto 65px;
   text-align: center;
-}
-
-.section-heading .eyebrow {
-  margin-bottom: 20px;
 }
 
 .section-heading h2 {
   font-family: Cinzel, serif;
-  font-size: clamp(35px, 5vw, 62px);
+  font-size: clamp(35px, 5vw, 58px);
   font-weight: 500;
   line-height: 1.2;
 }
 
 .section-heading p {
   color: var(--muted);
-  line-height: 1.8;
-  margin-top: 22px;
-  font-size: 15px;
-}
-
-.feature {
-  min-height: 420px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 80px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 55px 0;
-}
-
-.feature + .feature {
-  border-top: 1px solid var(--line);
-}
-
-.feature.reverse .feature-copy {
-  order: 2;
-}
-
-.feature.reverse .feature-art {
-  order: 1;
-}
-
-.feature-number {
-  color: var(--gold);
-  font-size: 11px;
-  letter-spacing: 4px;
-  margin-bottom: 24px;
-}
-
-.feature-copy h3 {
-  font-family: Cinzel, serif;
-  font-size: clamp(32px, 4vw, 48px);
-  font-weight: 500;
-  line-height: 1.2;
-  margin-bottom: 22px;
-}
-
-.feature-copy p {
-  color: var(--muted);
-  font-size: 15px;
   line-height: 1.9;
-  max-width: 440px;
+  margin-top: 20px;
+  font-size: 14px;
 }
 
-.feature-art {
-  min-height: 340px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-radius: 8px;
-  background:
-    radial-gradient(ellipse at 50% 40%, rgba(197,163,106,.18), transparent 50%),
-    linear-gradient(145deg, #1d2928, #101516);
-  border: 1px solid rgba(255,255,255,.08);
-}
+/* MAP INTERFACE */
 
-.feature-art::before,
-.feature-art::after {
-  content: "";
-  position: absolute;
-  border: 1px solid rgba(197,163,106,.2);
-  border-radius: 50%;
-}
-
-.feature-art::before {
-  width: 250px;
-  height: 250px;
-}
-
-.feature-art::after {
-  width: 180px;
-  height: 180px;
-}
-
-.art-symbol {
-  position: relative;
-  z-index: 1;
-  color: var(--gold);
-  font-family: Cinzel, serif;
-  font-size: 100px;
-  opacity: .85;
-  text-shadow: 0 0 50px rgba(197,163,106,.3);
-  animation: float 6s ease-in-out infinite;
-}
-
-.art-label {
-  position: absolute;
-  bottom: 25px;
-  color: #9b9e96;
-  letter-spacing: 4px;
-  font-size: 9px;
-}
-
-/* WORLD STATEMENT */
-
-.world {
-  padding: 160px 8%;
-  text-align: center;
-  background:
-    radial-gradient(ellipse at center, rgba(58,77,68,.25), transparent 60%),
-    #0d1213;
+.map-section {
+  background: #0b1010;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
 
-.world h2 {
+.map-layout {
+  max-width: 1180px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.6fr .8fr;
+  gap: 20px;
+}
+
+.map-frame {
+  position: relative;
+  min-height: 490px;
+  overflow: hidden;
+  border: 1px solid rgba(197,163,106,.2);
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(49,80,68,.3), transparent 65%),
+    linear-gradient(145deg, #182524, #101617);
+}
+
+.map-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .24;
+  background-image:
+    linear-gradient(rgba(197,163,106,.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(197,163,106,.12) 1px, transparent 1px);
+  background-size: 38px 38px;
+}
+
+.map-watermark {
+  position: absolute;
+  top: 23px;
+  left: 25px;
+  z-index: 2;
+  color: rgba(255,255,255,.35);
+  font-size: 9px;
+  letter-spacing: 4px;
+}
+
+.map-island {
+  position: absolute;
+  width: 150px;
+  height: 95px;
+  background: linear-gradient(145deg, #6a7057, #303e35);
+  border: 1px solid rgba(197,163,106,.55);
+  border-radius: 48% 35% 52% 40%;
+  box-shadow: 0 0 40px rgba(0,0,0,.3), inset 0 0 25px rgba(0,0,0,.3);
+  transform: rotate(-15deg);
+  opacity: .75;
+  pointer-events: none;
+}
+
+.island-one {
+  top: 22%;
+  left: 15%;
+  width: 150px;
+  height: 90px;
+}
+
+.island-two {
+  top: 54%;
+  left: 52%;
+  width: 185px;
+  height: 115px;
+  transform: rotate(22deg);
+}
+
+.island-three {
+  top: 15%;
+  right: 10%;
+  width: 110px;
+  height: 72px;
+  transform: rotate(35deg);
+}
+
+.island-four {
+  bottom: 5%;
+  left: 15%;
+  width: 95px;
+  height: 65px;
+  transform: rotate(-35deg);
+}
+
+.map-route {
+  position: absolute;
+  z-index: 1;
+  left: 22%;
+  top: 37%;
+  width: 52%;
+  height: 28%;
+  border-top: 1px dashed rgba(225,197,142,.5);
+  border-right: 1px dashed rgba(225,197,142,.5);
+  border-radius: 0 50% 0 0;
+  transform: rotate(-10deg);
+  pointer-events: none;
+}
+
+.map-marker {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(225,197,142,.65);
+  border-radius: 50%;
+  background: rgba(10,16,15,.9);
+  color: var(--gold-light);
+  cursor: pointer;
+  transition: transform .25s, background .25s, box-shadow .25s;
+}
+
+.map-marker:hover,
+.map-marker.active {
+  transform: scale(1.18);
+  background: rgba(197,163,106,.2);
+  box-shadow: 0 0 25px rgba(197,163,106,.3);
+}
+
+.marker-one { top: 27%; left: 28%; }
+.marker-two { top: 57%; left: 60%; }
+.marker-three { top: 23%; right: 16%; }
+.marker-four { bottom: 13%; left: 20%; }
+
+.map-compass {
+  position: absolute;
+  bottom: 22px;
+  right: 25px;
+  color: rgba(225,197,142,.65);
+  font-family: Cinzel, serif;
+  font-size: 30px;
+}
+
+.map-hint {
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  color: rgba(255,255,255,.45);
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.map-info {
+  min-height: 490px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--panel);
+  backdrop-filter: blur(20px);
+}
+
+.panel-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 3px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  display: inline-block;
+  border-radius: 50%;
+  background: #9baf7e;
+  box-shadow: 0 0 12px rgba(155,175,126,.5);
+  margin-right: 7px;
+}
+
+.map-info h3 {
+  font-family: Cinzel, serif;
+  font-size: 31px;
+  font-weight: 500;
+  margin: 30px 0 15px;
+}
+
+.map-info p {
+  color: var(--muted);
+  line-height: 1.9;
+  font-size: 13px;
+}
+
+.map-info .region-number {
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.region-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.region-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: rgba(255,255,255,.025);
+  color: #c5c9c2;
+  font-size: 11px;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.region-option:hover,
+.region-option.active {
+  border-color: rgba(197,163,106,.45);
+  color: var(--gold-light);
+  background: rgba(197,163,106,.07);
+}
+
+.region-option span:last-child {
+  color: var(--gold);
+}
+
+/* FEATURE PANELS */
+
+.features-grid {
+  max-width: 1180px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.feature-card {
+  min-height: 310px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 80% 10%, rgba(197,163,106,.1), transparent 50%),
+    var(--panel);
+  transition: transform .35s var(--ease), border-color .35s, background .35s;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(197,163,106,.4);
+  background-color: #182020;
+}
+
+.feature-icon {
+  color: var(--gold);
+  font-family: Cinzel, serif;
+  font-size: 35px;
+}
+
+.feature-card h3 {
+  font-family: Cinzel, serif;
+  font-size: 23px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.feature-card p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.feature-tag {
+  color: var(--gold);
+  font-size: 9px;
+  letter-spacing: 3px;
+  margin-top: 25px;
+}
+
+/* BIG STATEMENT */
+
+.statement {
+  padding: 150px 8%;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at center, rgba(48,75,64,.25), transparent 65%),
+    #0c1111;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.statement h2 {
   max-width: 1000px;
-  margin: 0 auto;
+  margin: auto;
   font-family: Cinzel, serif;
   font-size: clamp(38px, 7vw, 82px);
   font-weight: 500;
   line-height: 1.2;
 }
 
-.world h2 span {
+.statement h2 span {
   color: var(--gold);
 }
 
-.world p {
-  max-width: 580px;
-  margin: 30px auto 0;
+.statement p {
+  max-width: 570px;
+  margin: 25px auto 0;
   color: var(--muted);
   line-height: 1.9;
+  font-size: 14px;
 }
 
 /* COMMUNITY */
 
 .community {
+  padding: 140px 25px;
   text-align: center;
-  padding: 140px 24px;
 }
 
 .community h2 {
   font-family: Cinzel, serif;
-  font-size: clamp(38px, 6vw, 70px);
   font-weight: 500;
+  font-size: clamp(38px, 6vw, 70px);
 }
 
 .community p {
+  max-width: 490px;
+  margin: 20px auto 30px;
   color: var(--muted);
-  margin: 22px auto 32px;
-  max-width: 480px;
-  line-height: 1.8;
+  font-size: 14px;
+  line-height: 1.9;
 }
 
-.community-links {
+.community-actions {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
-  gap: 13px;
+  justify-content: center;
+  gap: 12px;
 }
 
 /* FOOTER */
 
 footer {
-  padding: 35px 7%;
-  border-top: 1px solid var(--line);
+  padding: 30px 7%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  color: #777d78;
-  font-size: 11px;
+  border-top: 1px solid var(--line);
+  color: #747d76;
+  font-size: 10px;
 }
 
 .footer-brand {
@@ -524,12 +815,12 @@ footer {
   color: var(--gold);
 }
 
-/* ANIMATIONS */
+/* SCROLL ANIMATIONS */
 
 .reveal {
   opacity: 0;
-  transform: translateY(35px);
-  transition: opacity .9s ease, transform .9s ease;
+  transform: translateY(30px);
+  transition: opacity .85s ease, transform .85s var(--ease);
 }
 
 .reveal.visible {
@@ -537,21 +828,67 @@ footer {
   transform: translateY(0);
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+/* CURSOR */
+
+.cursor-glow {
+  position: fixed;
+  z-index: 15;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(197,163,106,.035);
+  filter: blur(35px);
+  pointer-events: none;
+  transform: translate(-50%,-50%);
 }
 
-@keyframes glow {
-  from { transform: scale(.9); opacity: .5; }
-  to { transform: scale(1.15); opacity: 1; }
+/* KEYFRAMES */
+
+@keyframes loading {
+  to { width: 100%; }
+}
+
+@keyframes loaderEnter {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+@keyframes orbPulse {
+  from { transform: scale(.85); opacity: .5; }
+  to { transform: scale(1.2); opacity: 1; }
 }
 
 /* MOBILE */
 
-@media (max-width: 760px) {
+@media(max-width: 850px) {
+  .map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .map-info {
+    min-height: auto;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-card {
+    min-height: 250px;
+  }
+}
+
+@media(max-width: 700px) {
   .navbar {
-    padding: 0 6%;
+    top: 10px;
+    width: calc(100% - 22px);
+    padding: 0 17px;
+    height: 61px;
   }
 
   .menu-toggle {
@@ -560,16 +897,18 @@ footer {
 
   .nav-links {
     position: absolute;
-    top: 76px;
+    display: none;
+    top: 69px;
     left: 0;
     right: 0;
-    display: none;
+    padding: 12px 20px 20px;
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    padding: 12px 6% 24px;
-    background: rgba(9,11,12,.98);
-    border-bottom: 1px solid var(--line);
+    background: rgba(9,13,13,.97);
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    backdrop-filter: blur(25px);
   }
 
   .nav-links.open {
@@ -577,10 +916,10 @@ footer {
   }
 
   .nav-links a {
-    padding: 15px 0;
+    padding: 14px 0;
   }
 
-  .nav-join {
+  .nav-cta {
     text-align: center;
     margin-top: 8px;
   }
@@ -590,41 +929,30 @@ footer {
   }
 
   .hero-logo {
-    width: 85px;
-    height: 85px;
+    width: 80px;
+    height: 80px;
   }
 
   .hero-description {
-    font-size: 14px;
+    font-size: 13px;
   }
 
-  .intro,
   .section,
-  .world {
+  .intro,
+  .statement {
     padding: 95px 7%;
   }
 
-  .feature {
-    grid-template-columns: 1fr;
-    gap: 30px;
-    padding: 45px 0;
+  .map-frame {
+    min-height: 380px;
   }
 
-  .feature.reverse .feature-copy,
-  .feature.reverse .feature-art {
-    order: initial;
+  .map-island {
+    transform: scale(.8) rotate(-15deg);
   }
 
-  .feature-art {
-    min-height: 260px;
-  }
-
-  .art-symbol {
-    font-size: 75px;
-  }
-
-  .section-heading {
-    margin-bottom: 35px;
+  .map-info {
+    padding: 23px;
   }
 
   footer {
@@ -633,7 +961,13 @@ footer {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media(hover: none) {
+  .cursor-glow {
+    display: none;
+  }
+}
+
+@media(prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;
     animation-duration: .01ms !important;
@@ -648,29 +982,50 @@ footer {
 </style>
 </head>
 
-<body>
+<body class="loading">
 
+<div class="ambient"></div>
+<div class="grain"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- LOADING SCREEN -->
+<div class="loader" id="loader">
+  <div class="loader-content">
+    <img class="loader-logo" src="grandworld-pfp.webp" alt="Grand World">
+    <div class="loader-title">GRAND WORLD</div>
+    <div class="loader-subtitle">Entering the unknown</div>
+    <div class="loader-track">
+      <div class="loader-progress"></div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
 <nav class="navbar" id="navbar">
-  <a href="#home" class="nav-brand">
-    <img src="grandworld-pfp.webp" alt="Grand World logo">
+  <a href="#home" class="brand">
+    <img src="grandworld-pfp.webp" alt="Grand World">
     GRAND WORLD
   </a>
 
-  <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+  <button class="menu-toggle" id="menuToggle"
+    aria-label="Toggle navigation" aria-expanded="false">☰</button>
 
   <div class="nav-links" id="navLinks">
     <a href="#about">About</a>
-    <a href="#world">The World</a>
-    <a href="#features">Features</a>
+    <a href="#world">World Map</a>
+    <a href="#features">Experience</a>
     <a href="#community">Community</a>
-    <a class="nav-join" href="https://discord.gg/8yZ4nhfQhH" target="_blank" rel="noopener">Join Discord</a>
+    <a class="nav-cta" href="https://discord.gg/8yZ4nhfQhH"
+       target="_blank" rel="noopener">Join Discord ↗</a>
   </div>
 </nav>
 
 <main>
 
+<!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
 
   <div class="hero-content">
     <img class="hero-logo" src="grandworld-pfp.webp" alt="Grand World emblem">
@@ -680,118 +1035,204 @@ footer {
     <h1>GRAND <span>WORLD</span></h1>
 
     <p class="hero-description">
-      An open world. Endless possibilities. Your adventure begins
-      wherever you choose to take it.
+      An open world. Endless possibilities.
+      Discover the unknown, overcome challenges,
+      and create an adventure that belongs to you.
     </p>
 
     <div class="hero-actions">
-      <a class="button button-primary" href="https://discord.gg/8yZ4nhfQhH" target="_blank" rel="noopener">Discover Grand World</a>
-      <a class="button button-secondary" href="https://streamable.com/yq8s3y" target="_blank" rel="noopener">Watch Trailer ↗</a>
+      <a class="btn btn-primary" href="#world">Explore the World ↗</a>
+      <a class="btn btn-outline" href="https://streamable.com/yq8s3y"
+         target="_blank" rel="noopener">Watch Trailer ▶</a>
     </div>
   </div>
 
-  <div class="scroll-note">Scroll to explore</div>
+  <div class="hero-bottom">Scroll to discover</div>
 </section>
 
+<!-- ABOUT -->
 <section class="intro" id="about">
   <div class="eyebrow reveal">Beyond the known</div>
 
   <h2 class="reveal">
-    Not just a world to explore.
+    More than a world to explore.
     <span>A world to make your own.</span>
   </h2>
 
   <p class="reveal">
     Grand World is an open-world MMORPG set in a dark fantasy universe.
-    Discover hidden secrets, face powerful enemies, explore distant regions,
-    and create an adventure that belongs to you. There is no single path to follow.
+    Discover hidden secrets, face enemies, explore different regions,
+    and create your own adventure. There is no single path to follow.
   </p>
 </section>
 
-<section class="section" id="features">
+<!-- INTERACTIVE MAP -->
+<section class="section map-section" id="world">
+
   <div class="section-heading reveal">
-    <div class="eyebrow">The experience</div>
-    <h2>Adventure has no single direction.</h2>
-    <p>Every journey is different. Discover what waits beyond the horizon.</p>
+    <div class="eyebrow">The world of Grand World</div>
+    <h2>Every journey begins somewhere.</h2>
+    <p>
+      Explore the map and select a location to discover more.
+      These are demonstration locations that can be replaced with your actual regions.
+    </p>
   </div>
 
-  <div class="feature reveal">
-    <div class="feature-copy">
-      <div class="feature-number">01 — EXPLORE</div>
-      <h3>A world waiting to be discovered.</h3>
-      <p>
-        Travel through different regions, uncover hidden places,
-        and find secrets scattered throughout a world full of mystery.
-      </p>
+  <div class="map-layout reveal">
+
+    <div class="map-frame">
+      <div class="map-watermark">GRAND WORLD — WORLD CHART</div>
+
+      <div class="map-island island-one"></div>
+      <div class="map-island island-two"></div>
+      <div class="map-island island-three"></div>
+      <div class="map-island island-four"></div>
+      <div class="map-route"></div>
+
+      <button class="map-marker marker-one active"
+        data-region="0" aria-label="Explore Region One">✦</button>
+
+      <button class="map-marker marker-two"
+        data-region="1" aria-label="Explore Region Two">✦</button>
+
+      <button class="map-marker marker-three"
+        data-region="2" aria-label="Explore Region Three">✦</button>
+
+      <button class="map-marker marker-four"
+        data-region="3" aria-label="Explore Region Four">✦</button>
+
+      <div class="map-compass">✥</div>
+      <div class="map-hint">SELECT A MARKER TO EXPLORE</div>
     </div>
 
-    <div class="feature-art">
-      <div class="art-symbol">✧</div>
-      <div class="art-label">A WORLD UNKNOWN</div>
-    </div>
-  </div>
+    <aside class="map-info" aria-live="polite">
+      <div>
+        <div class="panel-top">
+          <span>LOCATION DATABASE</span>
+          <span><i class="status-dot"></i>AVAILABLE</span>
+        </div>
 
-  <div class="feature reverse reveal">
-    <div class="feature-copy">
-      <div class="feature-number">02 — PROGRESS</div>
-      <h3>Your path. Your choices.</h3>
-      <p>
-        Take on challenges, grow stronger, and decide how you want
-        to experience the world. Your adventure moves at your pace.
-      </p>
-    </div>
+        <div class="region-number" id="regionNumber">LOCATION 01</div>
+        <h3 id="regionTitle">The Unknown</h3>
+        <p id="regionDescription">
+          An unexplored location within Grand World.
+          Discover what lies here as you journey through the world.
+        </p>
+      </div>
 
-    <div class="feature-art">
-      <div class="art-symbol">⚔</div>
-      <div class="art-label">FORGE YOUR DESTINY</div>
-    </div>
-  </div>
+      <div>
+        <div class="region-list">
+          <button class="region-option active" data-region="0">
+            <span>01 — The Unknown</span><span>↗</span>
+          </button>
+          <button class="region-option" data-region="1">
+            <span>02 — Lost Frontier</span><span>↗</span>
+          </button>
+          <button class="region-option" data-region="2">
+            <span>03 — Ancient Lands</span><span>↗</span>
+          </button>
+          <button class="region-option" data-region="3">
+            <span>04 — Hidden Shores</span><span>↗</span>
+          </button>
+        </div>
+      </div>
+    </aside>
 
-  <div class="feature reveal">
-    <div class="feature-copy">
-      <div class="feature-number">03 — CONQUER</div>
-      <h3>Face what lies beyond.</h3>
-      <p>
-        Meet dangerous enemies, overcome difficult challenges,
-        and discover what you are capable of as you explore.
-      </p>
-    </div>
-
-    <div class="feature-art">
-      <div class="art-symbol">◈</div>
-      <div class="art-label">THE UNKNOWN AWAITS</div>
-    </div>
   </div>
 </section>
 
-<section class="world" id="world">
-  <div class="eyebrow reveal">One world. Countless stories.</div>
+<!-- FEATURES -->
+<section class="section" id="features">
+
+  <div class="section-heading reveal">
+    <div class="eyebrow">The experience</div>
+    <h2>Adventure has no single direction.</h2>
+    <p>
+      Discover a world where your choices shape the way you explore.
+    </p>
+  </div>
+
+  <div class="features-grid">
+
+    <article class="feature-card reveal">
+      <div class="feature-icon">✧</div>
+      <div>
+        <h3>Explore</h3>
+        <p>
+          Travel through different regions, uncover hidden places,
+          and discover secrets scattered across the world.
+        </p>
+        <div class="feature-tag">01 — DISCOVER</div>
+      </div>
+    </article>
+
+    <article class="feature-card reveal">
+      <div class="feature-icon">⚔</div>
+      <div>
+        <h3>Progress</h3>
+        <p>
+          Take on challenges, grow stronger, and decide
+          how you want to experience your adventure.
+        </p>
+        <div class="feature-tag">02 — EVOLVE</div>
+      </div>
+    </article>
+
+    <article class="feature-card reveal">
+      <div class="feature-icon">◈</div>
+      <div>
+        <h3>Conquer</h3>
+        <p>
+          Face enemies, overcome challenges, and discover
+          what awaits beyond the horizon.
+        </p>
+        <div class="feature-tag">03 — OVERCOME</div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <div class="eyebrow reveal">Your adventure. Your story.</div>
+
   <h2 class="reveal">
     The story isn't written for you.
     <span>It's yours to create.</span>
   </h2>
+
   <p class="reveal">
     Explore at your own pace. Choose your own direction.
     Make every discovery part of your story.
   </p>
 </section>
 
+<!-- COMMUNITY -->
 <section class="community" id="community">
-  <div class="eyebrow reveal">Be part of the journey</div>
+  <div class="eyebrow reveal">Join the journey</div>
+
   <h2 class="reveal">The world is waiting.</h2>
+
   <p class="reveal">
-    Follow the development of Grand World, connect with the community,
-    and be part of what comes next.
+    Follow the development of Grand World, connect with
+    the community, and be part of what comes next.
   </p>
 
-  <div class="community-links reveal">
-    <a class="button button-primary" href="https://discord.gg/8yZ4nhfQhH" target="_blank" rel="noopener">Join Discord ↗</a>
-    <a class="button button-secondary" href="https://www.tiktok.com/@grand_unknow" target="_blank" rel="noopener">Follow on TikTok ↗</a>
+  <div class="community-actions reveal">
+    <a class="btn btn-primary"
+       href="https://discord.gg/8yZ4nhfQhH"
+       target="_blank" rel="noopener">Join Discord ↗</a>
+
+    <a class="btn btn-outline"
+       href="https://www.tiktok.com/@grand_unknow"
+       target="_blank" rel="noopener">Follow TikTok ↗</a>
   </div>
 </section>
 
 </main>
 
+<!-- FOOTER -->
 <footer>
   <div class="footer-brand">
     <img src="grandworld-pfp.webp" alt="">
@@ -807,18 +1248,31 @@ footer {
 </footer>
 
 <script>
+/* LOADING SCREEN */
+
+const loader = document.getElementById("loader");
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    loader.classList.add("done");
+    document.body.classList.remove("loading");
+  }, 1900);
+});
+
+/* NAVIGATION */
+
 const navbar = document.getElementById("navbar");
 const menuToggle = document.getElementById("menuToggle");
 const navLinks = document.getElementById("navLinks");
 
 window.addEventListener("scroll", () => {
-  navbar.classList.toggle("scrolled", window.scrollY > 30);
+  navbar.classList.toggle("scrolled", window.scrollY > 40);
 }, { passive: true });
 
 menuToggle.addEventListener("click", () => {
-  const isOpen = navLinks.classList.toggle("open");
-  menuToggle.setAttribute("aria-expanded", String(isOpen));
-  menuToggle.textContent = isOpen ? "×" : "☰";
+  const open = navLinks.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", String(open));
+  menuToggle.textContent = open ? "×" : "☰";
 });
 
 navLinks.querySelectorAll("a").forEach(link => {
@@ -829,11 +1283,64 @@ navLinks.querySelectorAll("a").forEach(link => {
   });
 });
 
-const observer = new IntersectionObserver(entries => {
+/* INTERACTIVE WORLD MAP */
+
+const regions = [
+  {
+    number: "LOCATION 01",
+    title: "The Unknown",
+    description: "An unexplored location within Grand World. Discover what lies here as you journey through the world."
+  },
+  {
+    number: "LOCATION 02",
+    title: "Lost Frontier",
+    description: "A mysterious region waiting to be explored. Its real history and features can be added when the game region is ready."
+  },
+  {
+    number: "LOCATION 03",
+    title: "Ancient Lands",
+    description: "An ancient-looking location in this concept map. Replace this description with the actual lore of your world."
+  },
+  {
+    number: "LOCATION 04",
+    title: "Hidden Shores",
+    description: "A distant location on the demonstration map. Add the real region details here when they are available."
+  }
+];
+
+const regionTitle = document.getElementById("regionTitle");
+const regionDescription = document.getElementById("regionDescription");
+const regionNumber = document.getElementById("regionNumber");
+
+function selectRegion(index) {
+  const region = regions[index];
+  if (!region) return;
+
+  regionTitle.textContent = region.title;
+  regionDescription.textContent = region.description;
+  regionNumber.textContent = region.number;
+
+  document.querySelectorAll("[data-region]").forEach(element => {
+    element.classList.toggle(
+      "active",
+      Number(element.dataset.region) === index
+    );
+  });
+}
+
+document.querySelectorAll("[data-region]").forEach(element => {
+  element.addEventListener("click", () => {
+    selectRegion(Number(element.dataset.region));
+  });
+});
+
+/* SCROLL REVEAL */
+
+const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add("visible");
-      observer.unobserve(entry.target);
+      revealObserver.unobserve(entry.target);
     }
   });
 }, {
@@ -841,9 +1348,21 @@ const observer = new IntersectionObserver(entries => {
 });
 
 document.querySelectorAll(".reveal").forEach(element => {
-  observer.observe(element);
+  revealObserver.observe(element);
 });
+
+/* DESKTOP CURSOR GLOW */
+
+const cursorGlow = document.getElementById("cursorGlow");
+
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  window.addEventListener("pointermove", event => {
+    cursorGlow.style.left = event.clientX + "px";
+    cursorGlow.style.top = event.clientY + "px";
+  }, { passive: true });
+}
 </script>
 
 </body>
 </html>
+
