@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#20231C">
 
-  <title>Grand World</title>
-  <meta name="description" content="Explore a vast open-world, MMORPG. Discover secrets, fight enemies and create your own adventure in Grand World.">
+  <title>Grand World — Enter the Unknown</title>
+  <meta name="description" content="Explore a vast open-world dark fantasy MMORPG. Discover secrets, fight enemies and create your own adventure in Grand World.">
 
   <link rel="icon" type="image/webp" href="grandworld-pfp.webp">
 
@@ -206,6 +206,40 @@
       letter-spacing: 5px;
       text-transform: uppercase;
       text-shadow: 0 8px 35px rgba(0,0,0,.4);
+    }
+
+    /* DEVELOPMENT STATUS */
+
+    .development-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 25px;
+      padding: 10px 18px;
+      border: 1px solid rgba(201,169,110,.55);
+      color: var(--gold);
+      font-family: var(--sans);
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: rgba(20,22,17,.4);
+      animation: statusAppear 1.5s ease both;
+      transition: .3s ease;
+    }
+
+    .development-status:hover {
+      background: rgba(201,169,110,.12);
+      border-color: var(--gold);
+    }
+
+    .development-dot {
+      width: 7px;
+      height: 7px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 10px var(--gold);
+      animation: pulse 1.8s infinite;
     }
 
     .hero-subtitle {
@@ -458,7 +492,7 @@
       letter-spacing: 1px;
     }
 
-    /* INFORMATION / COMMUNITY */
+    /* COMMUNITY */
 
     .community {
       padding: 145px 0;
@@ -592,6 +626,17 @@
       50% { opacity: 1; }
     }
 
+    @keyframes statusAppear {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     /* MOBILE */
 
     @media (max-width: 800px) {
@@ -683,7 +728,13 @@
       <a href="#features">Experience</a>
       <a href="#world">The World</a>
       <a href="#community">Community</a>
-      <a class="discord-link" href="https://discord.gg/8yZ4nhfQhH" target="_blank" rel="noopener noreferrer">Discord ↗</a>
+
+      <a class="discord-link"
+         href="https://discord.gg/8yZ4nhfQhH"
+         target="_blank"
+         rel="noopener noreferrer">
+        Discord ↗
+      </a>
     </nav>
 
   </header>
@@ -704,11 +755,18 @@
 
         <h1>Grand<br>World</h1>
 
+        <!-- DEVELOPMENT STATUS -->
+        <div class="development-status">
+          <span class="development-dot"></span>
+          Still in Development
+        </div>
+
         <p class="hero-subtitle">
           A world of endless possibilities. A story yet to be written.
         </p>
 
         <div class="hero-actions">
+
           <a href="#about" class="button button-gold">
             Discover Grand World
           </a>
@@ -719,6 +777,7 @@
              class="button button-outline">
             Join our Discord ↗
           </a>
+
         </div>
 
       </div>
@@ -777,6 +836,7 @@
       <div class="section-inner">
 
         <div class="reveal">
+
           <div class="section-label">02 — The experience</div>
 
           <h2 class="section-title">
@@ -787,6 +847,7 @@
             There is more to this world than what first meets the eye.
             Every journey is different. Every discovery has a story.
           </p>
+
         </div>
 
         <div class="feature-grid">
@@ -833,6 +894,7 @@
 
           <div>
             <div class="section-label">03 — The lands beyond</div>
+
             <h2 class="section-title">
               What lies beyond?
             </h2>
@@ -868,7 +930,7 @@
 
     </section>
 
-    <!-- COMMUNITY / MORE INFORMATION -->
+    <!-- COMMUNITY -->
     <section class="community" id="community">
 
       <div class="section-inner reveal">
@@ -928,16 +990,22 @@
     </a>
 
     <div class="footer-links">
+
       <a href="#about">About</a>
       <a href="#world">The World</a>
+
       <a href="https://discord.gg/8yZ4nhfQhH"
-         target="_blank" rel="noopener noreferrer">
+         target="_blank"
+         rel="noopener noreferrer">
         Discord ↗
       </a>
+
       <a href="https://www.tiktok.com/@grand_unknow"
-         target="_blank" rel="noopener noreferrer">
+         target="_blank"
+         rel="noopener noreferrer">
         TikTok ↗
       </a>
+
     </div>
 
     <div class="copyright">
@@ -947,29 +1015,38 @@
   </footer>
 
   <script>
+
     // Mobile navigation
     const menuToggle = document.getElementById("menuToggle");
     const navLinks = document.getElementById("navLinks");
 
     menuToggle.addEventListener("click", () => {
+
       navLinks.classList.toggle("open");
 
       menuToggle.textContent =
         navLinks.classList.contains("open") ? "×" : "☰";
+
     });
 
     navLinks.querySelectorAll("a").forEach(link => {
+
       link.addEventListener("click", () => {
+
         navLinks.classList.remove("open");
         menuToggle.textContent = "☰";
+
       });
+
     });
 
     // Navigation background on scroll
     const navbar = document.getElementById("navbar");
 
     window.addEventListener("scroll", () => {
+
       navbar.classList.toggle("scrolled", window.scrollY > 50);
+
     });
 
     // Scroll reveal animations
@@ -982,8 +1059,10 @@
         entries.forEach(entry => {
 
           if (entry.isIntersecting) {
+
             entry.target.classList.add("visible");
             observer.unobserve(entry.target);
+
           }
 
         });
@@ -1003,6 +1082,7 @@
       });
 
     }
+
   </script>
 
 </body>
