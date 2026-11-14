@@ -18,8 +18,8 @@
       --light-gold: #e1c58e;
       --white: #f4f1e9;
       --muted: #929b96;
-      --panel: rgba(20, 27, 27, .78);
-      --border: rgba(197, 163, 106, .2);
+      --glass: rgba(20, 27, 27, .38);
+      --border: rgba(197, 163, 106, .18);
     }
 
     * {
@@ -113,7 +113,7 @@
       z-index: -2;
       pointer-events: none;
       background:
-        radial-gradient(ellipse at 50% 15%, rgba(116, 91, 53, .13), transparent 45%),
+        radial-gradient(ellipse at 50% 12%, rgba(116, 91, 53, .14), transparent 45%),
         radial-gradient(ellipse at 10% 75%, rgba(38, 66, 60, .12), transparent 45%),
         #080b0c;
     }
@@ -139,9 +139,10 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(8, 11, 12, .72);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,.05);
+      background: rgba(8, 11, 12, .42);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border-bottom: 1px solid rgba(255,255,255,.045);
     }
 
     .nav-logo {
@@ -172,6 +173,7 @@
       padding: 10px 18px;
       border-radius: 3px;
       color: var(--light-gold) !important;
+      background: rgba(197,163,106,.035);
     }
 
     .menu-toggle {
@@ -194,6 +196,8 @@
       text-align: center;
       padding: 150px 20px 100px;
       position: relative;
+      background:
+        radial-gradient(ellipse at center, rgba(197,163,106,.045), transparent 60%);
     }
 
     .hero-eyebrow {
@@ -248,10 +252,12 @@
       transition: .3s;
       border: 1px solid var(--gold);
       cursor: pointer;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .button-primary {
-      background: var(--gold);
+      background: rgba(197,163,106,.9);
       color: #111;
     }
 
@@ -262,7 +268,7 @@
 
     .button-secondary {
       color: var(--light-gold);
-      background: transparent;
+      background: rgba(255,255,255,.025);
     }
 
     .button-secondary:hover {
@@ -311,13 +317,16 @@
     /* ABOUT */
 
     .about {
-      background: #e8e0ce;
-      color: #171a17;
+      position: relative;
       text-align: center;
+      background:
+        linear-gradient(180deg, transparent, rgba(197,163,106,.045), transparent);
+      border-top: 1px solid rgba(197,163,106,.08);
+      border-bottom: 1px solid rgba(197,163,106,.08);
     }
 
     .about .section-label {
-      color: #8c7045;
+      color: var(--light-gold);
     }
 
     .about .section-title {
@@ -326,253 +335,15 @@
     }
 
     .about .section-description {
-      color: #62645d;
+      color: #a7aaa1;
       margin: 28px auto 0;
-    }
-
-    /* WORLD MAP */
-
-    .world-section {
-      text-align: center;
-    }
-
-    .world-section .section-description {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .map-frame {
-      position: relative;
-      max-width: 1100px;
-      height: 570px;
-      margin: 65px auto 0;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background:
-        radial-gradient(ellipse at 50% 50%, rgba(197,163,106,.09), transparent 65%),
-        linear-gradient(135deg, #111a19, #090e0f);
-      box-shadow: 0 25px 100px rgba(0,0,0,.35);
-    }
-
-    /* Minimal map grid — no island images or artwork */
-
-    .map-grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(197,163,106,.055) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(197,163,106,.055) 1px, transparent 1px);
-      background-size: 55px 55px;
-      mask-image: radial-gradient(ellipse, black 25%, transparent 85%);
-    }
-
-    .map-glow {
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      background: rgba(197,163,106,.035);
-      filter: blur(50px);
-    }
-
-    .map-border {
-      position: absolute;
-      inset: 25px;
-      border: 1px solid rgba(197,163,106,.15);
-      pointer-events: none;
-    }
-
-    .map-border::before,
-    .map-border::after {
-      content: "";
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      border-color: var(--gold);
-      border-style: solid;
-    }
-
-    .map-border::before {
-      top: -1px;
-      left: -1px;
-      border-width: 1px 0 0 1px;
-    }
-
-    .map-border::after {
-      bottom: -1px;
-      right: -1px;
-      border-width: 0 1px 1px 0;
-    }
-
-    .map-route {
-      position: absolute;
-      width: 65%;
-      height: 45%;
-      left: 17%;
-      top: 27%;
-      border-top: 1px dashed rgba(197,163,106,.4);
-      border-radius: 50%;
-      transform: rotate(-12deg);
-      pointer-events: none;
-    }
-
-    .map-route-two {
-      position: absolute;
-      width: 42%;
-      height: 55%;
-      left: 30%;
-      top: 20%;
-      border-right: 1px dashed rgba(197,163,106,.25);
-      border-radius: 50%;
-      transform: rotate(20deg);
-      pointer-events: none;
-    }
-
-    .map-compass {
-      position: absolute;
-      top: 45px;
-      right: 45px;
-      color: var(--gold);
-      font-family: "Cinzel", serif;
-      font-size: 1.6rem;
-      opacity: .8;
-    }
-
-    .map-compass small {
-      display: block;
-      text-align: center;
-      font-family: "DM Sans", sans-serif;
-      font-size: .5rem;
-      letter-spacing: .2em;
-    }
-
-    .map-coordinate {
-      position: absolute;
-      bottom: 42px;
-      left: 45px;
-      color: rgba(197,163,106,.55);
-      font-size: .6rem;
-      letter-spacing: .15em;
-    }
-
-    .map-hint {
-      position: absolute;
-      bottom: 42px;
-      right: 45px;
-      color: var(--muted);
-      font-size: .65rem;
-      letter-spacing: .1em;
-    }
-
-    /* MAP MARKERS */
-
-    .map-marker {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      z-index: 5;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      background: none;
-      border: none;
-      color: var(--white);
-      cursor: pointer;
-    }
-
-    .marker-dot {
-      width: 13px;
-      height: 13px;
-      border: 2px solid var(--light-gold);
-      background: #111816;
-      border-radius: 50%;
-      box-shadow: 0 0 0 6px rgba(197,163,106,.09), 0 0 20px rgba(197,163,106,.5);
-      transition: .3s;
-    }
-
-    .map-marker:hover .marker-dot,
-    .map-marker.active .marker-dot {
-      background: var(--light-gold);
-      transform: scale(1.25);
-      box-shadow: 0 0 0 10px rgba(197,163,106,.12), 0 0 30px rgba(197,163,106,.8);
-    }
-
-    .marker-name {
-      color: var(--light-gold);
-      font-size: .65rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      text-shadow: 0 2px 8px #000;
-    }
-
-    .marker-one { left: 28%; top: 37%; }
-    .marker-two { left: 70%; top: 31%; }
-    .marker-three { left: 47%; top: 65%; }
-    .marker-four { left: 78%; top: 72%; }
-
-    /* REGION INFO */
-
-    .region-info {
-      max-width: 1100px;
-      margin: 25px auto 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 25px;
-      text-align: left;
-    }
-
-    .region-panel {
-      padding: 30px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(15px);
-    }
-
-    .region-panel h3 {
-      font-family: "Cinzel", serif;
-      font-weight: 400;
-      color: var(--light-gold);
-      font-size: 1.5rem;
-      margin-bottom: 12px;
-    }
-
-    .region-panel p {
-      color: var(--muted);
-      font-size: .85rem;
-      line-height: 1.8;
-    }
-
-    .region-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .region-option {
-      text-align: left;
-      padding: 14px;
-      background: rgba(255,255,255,.025);
-      border: 1px solid rgba(255,255,255,.07);
-      color: var(--muted);
-      cursor: pointer;
-      transition: .3s;
-    }
-
-    .region-option:hover,
-    .region-option.active {
-      color: var(--light-gold);
-      border-color: var(--border);
-      background: rgba(197,163,106,.07);
     }
 
     /* FEATURES */
 
     .features {
-      background: #0c1111;
+      position: relative;
+      background: transparent;
     }
 
     .features-heading {
@@ -591,15 +362,33 @@
     .feature-card {
       min-height: 280px;
       padding: 35px;
-      background: linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.01));
-      border: 1px solid rgba(255,255,255,.07);
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(255,255,255,.085);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       transition: .4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(197,163,106,.075), transparent 55%);
+      opacity: 0;
+      transition: opacity .4s;
+      pointer-events: none;
     }
 
     .feature-card:hover {
       transform: translateY(-8px);
-      border-color: var(--border);
-      background: rgba(197,163,106,.045);
+      border-color: rgba(197,163,106,.35);
+      background: rgba(255,255,255,.045);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
     }
 
     .feature-number {
@@ -613,12 +402,14 @@
       font-weight: 400;
       font-size: 1.35rem;
       margin: 35px 0 15px;
+      position: relative;
     }
 
     .feature-card p {
       color: var(--muted);
       font-size: .85rem;
       line-height: 1.8;
+      position: relative;
     }
 
     /* STATEMENT */
@@ -627,6 +418,8 @@
       text-align: center;
       padding-top: 160px;
       padding-bottom: 160px;
+      background:
+        radial-gradient(ellipse at center, rgba(197,163,106,.06), transparent 65%);
     }
 
     .statement h2 {
@@ -646,9 +439,11 @@
 
     .community {
       text-align: center;
-      background:
-        radial-gradient(ellipse at center, rgba(197,163,106,.1), transparent 60%),
-        #0c1111;
+      background: rgba(255,255,255,.018);
+      border-top: 1px solid rgba(255,255,255,.05);
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .community .section-description {
@@ -672,6 +467,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 20px;
+      background: rgba(0,0,0,.2);
       border-top: 1px solid rgba(255,255,255,.06);
       color: var(--muted);
       font-size: .7rem;
@@ -728,7 +524,9 @@
         left: 0;
         width: 100%;
         padding: 25px 6%;
-        background: rgba(8,11,12,.97);
+        background: rgba(8,11,12,.88);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
         border-bottom: 1px solid var(--border);
         flex-direction: column;
         align-items: flex-start;
@@ -743,33 +541,12 @@
         padding: 90px 7%;
       }
 
-      .map-frame {
-        height: 470px;
-      }
-
-      .region-info {
-        grid-template-columns: 1fr;
-      }
-
       .feature-grid {
         grid-template-columns: 1fr;
       }
 
       .feature-card {
         min-height: 220px;
-      }
-
-      .map-compass {
-        right: 35px;
-        top: 35px;
-      }
-
-      .map-coordinate {
-        left: 30px;
-      }
-
-      .map-hint {
-        right: 30px;
       }
     }
 
@@ -778,45 +555,9 @@
         font-size: .85rem;
       }
 
-      .map-frame {
-        height: 400px;
-      }
-
-      .map-border {
-        inset: 12px;
-      }
-
-      .map-grid {
-        background-size: 35px 35px;
-      }
-
-      .marker-name {
-        font-size: .52rem;
-      }
-
-      .map-marker {
-        gap: 7px;
-      }
-
-      .region-list {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .region-panel {
-        padding: 22px;
-      }
-
       footer {
         flex-direction: column;
         text-align: center;
-      }
-
-      .map-hint {
-        font-size: .5rem;
-      }
-
-      .map-coordinate {
-        font-size: .5rem;
       }
     }
 
@@ -860,7 +601,6 @@
     <div class="nav-links" id="navLinks">
       <a href="#home">Home</a>
       <a href="#about">About</a>
-      <a href="#world">World</a>
       <a href="#features">Features</a>
       <a href="#community">Community</a>
       <a href="https://discord.gg/8yZ4nhfQhH" target="_blank" rel="noopener" class="nav-discord">Discord</a>
@@ -887,7 +627,7 @@
       </p>
 
       <div class="hero-buttons">
-        <a href="#world" class="button button-primary">Explore the world</a>
+        <a href="#about" class="button button-primary">Discover Grand World</a>
         <a href="https://streamable.com/yq8s3y" target="_blank" rel="noopener" class="button button-secondary">Watch trailer</a>
       </div>
 
@@ -909,86 +649,6 @@
         create your own adventure. There is no single path you must follow.
         Your journey is yours to define.
       </p>
-    </section>
-
-    <!-- WORLD MAP -->
-
-    <section class="world-section reveal" id="world">
-      <p class="section-label">Discover the unknown</p>
-
-      <h2 class="section-title">A world without limits.</h2>
-
-      <p class="section-description">
-        Every location has its own secrets. Choose a destination
-        and discover what awaits beyond the horizon.
-      </p>
-
-      <div class="map-frame">
-        <div class="map-grid"></div>
-        <div class="map-glow"></div>
-
-        <div class="map-border"></div>
-        <div class="map-route"></div>
-        <div class="map-route-two"></div>
-
-        <div class="map-compass">
-          ✧
-          <small>N</small>
-        </div>
-
-        <div class="map-coordinate">GW — 001 / UNKNOWN TERRITORY</div>
-        <div class="map-hint">SELECT A LOCATION</div>
-
-        <!-- CLICKABLE LOCATIONS -->
-
-        <button class="map-marker marker-one active"
-          data-region="Eldoria" aria-label="Eldoria">
-          <span class="marker-dot"></span>
-          <span class="marker-name">Eldoria</span>
-        </button>
-
-        <button class="map-marker marker-two"
-          data-region="Ashen Valley" aria-label="Ashen Valley">
-          <span class="marker-dot"></span>
-          <span class="marker-name">Ashen Valley</span>
-        </button>
-
-        <button class="map-marker marker-three"
-          data-region="Forgotten Lands" aria-label="Forgotten Lands">
-          <span class="marker-dot"></span>
-          <span class="marker-name">Forgotten Lands</span>
-        </button>
-
-        <button class="map-marker marker-four"
-          data-region="The Frontier" aria-label="The Frontier">
-          <span class="marker-dot"></span>
-          <span class="marker-name">The Frontier</span>
-        </button>
-      </div>
-
-      <!-- REGION INFORMATION -->
-
-      <div class="region-info">
-        <div class="region-panel">
-          <p class="section-label">Selected location</p>
-          <h3 id="regionTitle">Eldoria</h3>
-          <p id="regionDescription">
-            A mysterious region waiting to be explored.
-            Discover its secrets and uncover what lies within.
-          </p>
-        </div>
-
-        <div class="region-panel">
-          <p class="section-label">Known locations</p>
-
-          <div class="region-list">
-            <button class="region-option active" data-region="Eldoria">Eldoria</button>
-            <button class="region-option" data-region="Ashen Valley">Ashen Valley</button>
-            <button class="region-option" data-region="Forgotten Lands">Forgotten Lands</button>
-            <button class="region-option" data-region="The Frontier">The Frontier</button>
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- FEATURES -->
@@ -1099,57 +759,6 @@
       link.addEventListener("click", () => {
         navLinks.classList.remove("open");
         menuToggle.textContent = "☰";
-      });
-    });
-
-    // INTERACTIVE WORLD MAP
-
-    const regions = {
-      "Eldoria": {
-        description:
-          "A mysterious region waiting to be explored. Discover its secrets and uncover what lies within."
-      },
-      "Ashen Valley": {
-        description:
-          "A forgotten valley surrounded by mystery. Few know what secrets remain hidden here."
-      },
-      "Forgotten Lands": {
-        description:
-          "An ancient territory filled with unanswered questions and discoveries waiting to be made."
-      },
-      "The Frontier": {
-        description:
-          "The edge of the known world. A place for those willing to venture into the unknown."
-      }
-    };
-
-    function selectRegion(name) {
-      const region = regions[name];
-
-      if (!region) return;
-
-      document.getElementById("regionTitle").textContent = name;
-      document.getElementById("regionDescription").textContent =
-        region.description;
-
-      document.querySelectorAll(".map-marker").forEach(marker => {
-        marker.classList.toggle(
-          "active",
-          marker.dataset.region === name
-        );
-      });
-
-      document.querySelectorAll(".region-option").forEach(option => {
-        option.classList.toggle(
-          "active",
-          option.dataset.region === name
-        );
-      });
-    }
-
-    document.querySelectorAll("[data-region]").forEach(element => {
-      element.addEventListener("click", () => {
-        selectRegion(element.dataset.region);
       });
     });
 
